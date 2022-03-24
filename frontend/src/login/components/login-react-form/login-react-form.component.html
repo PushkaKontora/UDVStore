@@ -1,0 +1,38 @@
+<div class="wrapper">
+    <div class="content">
+        <form [formGroup]="login"
+              (ngSubmit)="onSubmit()">
+            <div class="fieldRegistration">
+                <div class="value">
+                    <label for="email">Почта</label>
+                    <input id="email"
+                           type="email"
+                           formControlName="mail"
+                           tabindex="1"
+                           class="form__input"
+                           placeholder="Введите почту:"
+                    />
+                </div>
+                <div class="value password__label">
+                    <label for="password">Пароль</label>
+                    <input id="password"
+                           type="password"
+                           formControlName="password"
+                           class="form__input password__input"
+                           #password
+                    />
+<!--                    <div #btn class="password__btn"></div>-->
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li>Забыли пароль?</li> <!-- - Заглушка-->
+                </ul>
+                <button type="submit" class="btn">
+                  ВОЙТИ
+                </button>
+            </nav>
+        </form>
+    </div>
+</div>
+
