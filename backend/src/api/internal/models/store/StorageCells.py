@@ -1,5 +1,5 @@
-from django.db import models
 from django.core.validators import MinValueValidator
+from django.db import models
 
 from .Products import Products
 
@@ -25,5 +25,5 @@ class StorageCells(models.Model):
 
     # свойства товаров
     size = models.IntegerField(
-        choices=SizeChoices,
+        choices=SizeChoices.choices,
         default=SizeChoices.M)

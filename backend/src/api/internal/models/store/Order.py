@@ -1,9 +1,9 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from api.internal.services import generate_new_file_name
-from .Transactions import Transactions
 from .StorageCells import StorageCells
+from .Transactions import Transactions
+
 
 class StatusChoices(models.IntegerChoices):
     NEW = 0
@@ -14,8 +14,8 @@ class StatusChoices(models.IntegerChoices):
 
 class Order(models.Model):
     status = models.IntegerField(
-        choices = StatusChoices,
-        default = StatusChoices.NEW
+        choices=StatusChoices.choices,
+        default=StatusChoices.NEW
     )
     amount = models.BigIntegerField(
         validators=[MinValueValidator(0)]
@@ -35,4 +35,3 @@ class Order(models.Model):
         StorageCells,
         related_name="related_orders"
     )
-

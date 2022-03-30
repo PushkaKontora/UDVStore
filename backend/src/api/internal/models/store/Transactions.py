@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+
 from api.internal.models.profile.Profile import Profile
 
 
@@ -11,7 +12,7 @@ class TransactionType(models.IntegerChoices):
 
 class Transactions(models.Model):
 
-    type = models.IntegerField(choices=TransactionType, default=TransactionType.BUYING)
+    type = models.IntegerField(choices=TransactionType.choices, default=TransactionType.BUYING)
     profile = models.OneToOneField(Profile, on_delete=models.PROTECT)
     destination_user = models.ForeignKey(
         Profile, on_delete=models.PROTECT,
@@ -21,4 +22,3 @@ class Transactions(models.Model):
     accural = models.FloatField()
     description = models.CharField(max_length=2048)
     created_at = models.DateTimeField(auto_now=True)
-
