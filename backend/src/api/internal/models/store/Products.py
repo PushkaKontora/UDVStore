@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 
-from src.api.internal import generate_new_file_name
+from api.internal.services import generate_new_file_name
 
 
 class Products(models.Model):

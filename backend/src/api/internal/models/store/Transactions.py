@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from profile import Profile
+from api.internal.models.profile.Profile import Profile
 
 
 class TransactionType(models.IntegerChoices):

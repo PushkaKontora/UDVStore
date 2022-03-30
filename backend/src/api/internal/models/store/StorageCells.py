@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 
-from Products import Products
+from .Products import Products
 
 
 class SizeChoices(models.IntegerChoices):

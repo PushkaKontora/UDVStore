@@ -1,9 +1,9 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from src.api.internal.services import generate_new_file_name
-from src.api.internal.models.store import Products, Transactions, StorageCells
-
+from api.internal.services import generate_new_file_name
+from .Transactions import Transactions
+from .StorageCells import StorageCells
 
 class StatusChoices(models.IntegerChoices):
     NEW = 0
@@ -32,7 +32,7 @@ class Order(models.Model):
         related_name="related_orders"
     )
     storage_cell = models.ManyToManyField(
-        StorageCells, on_delete=models.PROTECT,
+        StorageCells,
         related_name="related_orders"
     )
 

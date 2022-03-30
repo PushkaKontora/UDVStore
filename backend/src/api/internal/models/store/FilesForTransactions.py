@@ -1,6 +1,6 @@
 from django.db import models
-from Transactions import Transactions
-from src.api.internal.services import generate_new_file_name
+from .Transactions import Transactions
+from api.internal.services import generate_new_file_name
 
 
 class FilesForTransactions(models.Model):
