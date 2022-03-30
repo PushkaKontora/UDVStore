@@ -1,3 +1,2 @@
-from django.db import models
-
-# Create your models here.
+from .internal.models.profile import *
+from .internal.models.store import *
