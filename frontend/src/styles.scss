@@ -1,1 +1,43 @@
-/* You can add global styles to this file, and also import other style files */
+
+@import "null";
+
+@font-face {
+    font-family: "KarpaNuenPro";
+    src: url("fonts/TypoforgeStudio-KapraNeueProRegularRounded.otf") format("woff2"),
+    url("fonts/TypoforgeStudio-KapraNeueProRegularRounded.otf") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "KarpaNuenPro";
+    src: url("fonts/TypoforgeStudio-KapraNeueProMediumRounded.otf") format("woff2"),
+    url("fonts/TypoforgeStudio-KapraNeueProMediumRounded.otf") format("woff");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "KarpaNuenPro";
+    src: url("fonts/TypoforgeStudio-KapraNeueProLightRounded.otf") format("woff2"),
+    url("fonts/TypoforgeStudio-KapraNeueProLightRounded.otf") format("woff");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "AstraProAlternative";
+    src: url("fonts/Arista-Pro-Alternate-Regular-trial.ttf") format("woff2"),
+    url("fonts/Arista-Pro-Alternate-Regular-trial.ttf") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+body{
+    font-family: KarpaNuenPro, Arial, sans-serif ;
+    font-weight: 500;
+}
