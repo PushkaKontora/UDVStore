@@ -29,8 +29,8 @@ export class LoginReactFormComponent implements OnInit {
 
     private _createForm() {
         this.login = new FormGroup({
-            email: new FormControl(''),
-            password: new FormControl(''),
+            email: new FormControl('', [Validators.required]),
+            password: new FormControl('', [Validators.required]),
         })
     }
 

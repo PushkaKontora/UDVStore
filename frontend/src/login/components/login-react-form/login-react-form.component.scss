@@ -1,0 +1,106 @@
+$widthFieldForm: 392px;
+
+.wrapper {
+    font-weight: 400;
+    color: #1C1B1B;
+    size: 18px;
+    line-height: 21.6px;
+    background-color: #3A3A3A;
+    height: 100%;
+    position: relative;
+
+    .left_leg {
+        position: absolute;
+        height: 95%;
+        left: 0;
+        bottom: 0;
+    }
+
+    .right_leg {
+        position: absolute;
+        height: 70%;
+        right: 0;
+        bottom: 0;
+    }
+
+    .content {
+        padding-top: 3em;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 30%;
+        text-align: center;
+
+        img {
+            padding: 1.2em;
+            display: inline-block;
+            width: $widthFieldForm;
+        }
+
+        .form_auth {
+            background-color: #FFFFFF;
+            height: 328px;
+
+            form {
+                padding-top: 40px;
+                padding-bottom: 40px;
+                margin-left: auto;
+                margin-right: auto;
+                width: $widthFieldForm;
+                text-align: start;
+
+                .value:first-child {
+                    padding-bottom: 20px;
+                }
+
+
+                label {
+                    text-align: left;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                }
+
+                .input {
+                    display: flex;
+                    text-align: center;
+
+                    .done__email:before {
+                        content: '';
+                        display: inline-block;
+                        height: 100%;
+                        vertical-align: middle;
+                    }
+
+                    .done__email {
+                        width: 25%;
+                        display: inline-block;
+                        vertical-align: middle;
+                    }
+                }
+
+                .form__input {
+                    border: 1px black solid;
+                    height: 43px;
+                    padding: 5px;
+                    width: 100%;
+                }
+
+
+                button {
+                    width: 100%;
+                    padding: 10px;
+                    size: 28px;
+                    font-size: 28px;
+                    line-height: 34px;
+                    letter-spacing: 0.05em;
+                    background-color: #2CF2B3;
+                    margin-top: 1.5em;
+                }
+
+                button:disabled, button[disabled] {
+                    background-color: #B5FCE5;
+                    color: #888888;
+                }
+            }
+        }
+    }
+}
