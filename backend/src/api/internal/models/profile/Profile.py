@@ -4,4 +4,4 @@ from django.db import models
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    balance = models.FloatField()
+    balance = models.FloatField(default=0.0)
