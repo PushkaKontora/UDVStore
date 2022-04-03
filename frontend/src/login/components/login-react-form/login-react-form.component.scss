@@ -40,6 +40,15 @@ $widthFieldForm: 392px;
             background-color: #FFFFFF;
             height: 328px;
 
+            input {
+                font-size: 20px;
+                font-weight: 300;
+                line-height: 24px;
+                letter-spacing: 0.05em;
+                text-indent: 3px;
+                color: #1C1B1B;
+            }
+
             form {
                 padding-top: 40px;
                 padding-bottom: 40px;
@@ -50,6 +59,18 @@ $widthFieldForm: 392px;
 
                 .value:first-child {
                     padding-bottom: 20px;
+                }
+
+                .value.password__label {
+                    position: relative;
+
+                    .password-control {
+                        position: absolute;
+                        padding: 5px;
+                        width: 2.1em;
+                        bottom: 7px;
+                        right: 0.4em;
+                    }
                 }
 
 
@@ -74,6 +95,11 @@ $widthFieldForm: 392px;
                         width: 25%;
                         display: inline-block;
                         vertical-align: middle;
+                        background-color: #F2F2F2;
+                        font-size: 20px;
+                        font-weight: 300;
+                        line-height: 24px;
+                        letter-spacing: 0.05em;
                     }
                 }
 
@@ -94,13 +120,16 @@ $widthFieldForm: 392px;
                     letter-spacing: 0.05em;
                     background-color: #2CF2B3;
                     margin-top: 1.5em;
+                    transition: 0.5s;
                 }
 
                 button:disabled, button[disabled] {
                     background-color: #B5FCE5;
                     color: #888888;
+                    transition: 0.5s;
                 }
             }
         }
     }
 }
+

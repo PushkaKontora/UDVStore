@@ -14,11 +14,13 @@ export class PeopleService {
 
     public showPassword(btn: HTMLElement, input: Element) {
         btn.onclick = () => {
-            btn.classList.toggle('active');
+            // btn.classList.toggle('active');
             if (input.getAttribute('type') === 'password') {
                 input.setAttribute('type', 'text');
+                btn.setAttribute('src', '/assets/images/openEye.svg');
             } else {
                 input.setAttribute('type', 'password');
+                btn.setAttribute('src', '/assets/images/closeEye.svg');
             }
         }
     }
