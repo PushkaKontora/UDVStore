@@ -1,7 +1,7 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from .Products import Products
+from .Product import Product
 
 
 class SizeChoices(models.IntegerChoices):
@@ -14,9 +14,9 @@ class SizeChoices(models.IntegerChoices):
     XXXL = 7
 
 
-class StorageCells(models.Model):
+class StorageCell(models.Model):
     product = models.ForeignKey(
-        Products, on_delete=models.CASCADE,
+        Product, on_delete=models.CASCADE,
         related_name="cells_in_storage"
     )
     amount = models.BigIntegerField(
@@ -27,3 +27,8 @@ class StorageCells(models.Model):
     size = models.IntegerField(
         choices=SizeChoices.choices,
         default=SizeChoices.M)
+
+    class Meta:
+        db_table = "storage_cells"
+        verbose_name = "Storage Cell"
+        verbose_name_plural = "Storage Cells"

@@ -1,11 +1,14 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from api.internal.services.generate_new_file_name import generate_new_file_name
 
-
-class Products(models.Model):
+class Product(models.Model):
     name = models.CharField(max_length=128)
-    photo = models.ImageField(upload_to=generate_new_file_name)
+    photo = models.ImageField(upload_to="products")
     description = models.CharField(max_length=5000)
     price = models.FloatField(validators=[MinValueValidator(0)])
+
+    class Meta:
+        db_table = "products"
+        verbose_name = "Product"
+        verbose_name_plural = "Products"

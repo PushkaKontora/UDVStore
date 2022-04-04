@@ -5,8 +5,6 @@ import django.db.models.deletion
 from django.conf import settings
 from django.db import migrations, models
 
-import api.internal.services.generate_new_file_name
-
 
 class Migration(migrations.Migration):
 
@@ -22,7 +20,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=128)),
-                ('photo', models.ImageField(upload_to=api.internal.services.generate_new_file_name)),
+                ('photo', models.ImageField(upload_to='products')),
                 ('description', models.CharField(max_length=5000)),
                 ('price', models.FloatField(validators=[django.core.validators.MinValueValidator(0)])),
             ],
@@ -70,7 +68,7 @@ class Migration(migrations.Migration):
             name='FilesForTransactions',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('filename', models.FileField(upload_to=api.internal.services.generate_new_file_name)),
+                ('filename', models.FileField(upload_to='transaction_files')),
                 ('transaction', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='files', to='api.transactions')),
             ],
         ),
