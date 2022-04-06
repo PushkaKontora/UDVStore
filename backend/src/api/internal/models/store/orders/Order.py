@@ -1,15 +1,9 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from .StorageCell import StorageCell
-from .Transaction import Transaction
-
-
-class StatusChoices(models.IntegerChoices):
-    NEW = 0
-    DELIVER = 1
-    IN_PROCESS = 2
-    DONE = 3
+from api.internal.models.store.storage_cells.StorageCell import StorageCell
+from api.internal.models.store.orders.StatusChoices import StatusChoices
+from api.internal.models.store.transactions.Transaction import Transaction
 
 
 class Order(models.Model):
@@ -20,13 +14,6 @@ class Order(models.Model):
     amount = models.BigIntegerField(
         validators=[MinValueValidator(0)]
     )
-
-    # ! product_id есть в storage
-    # product = models.ForeignKey(
-    #     Products, on_delete=models.PROTECT,
-    #     default=None,
-    #     related_name="related_orders"
-    # )
     transaction = models.ForeignKey(
         Transaction, on_delete=models.PROTECT,
         related_name="related_orders"

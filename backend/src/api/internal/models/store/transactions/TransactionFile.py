@@ -1,6 +1,6 @@
 from django.db import models
 
-from .Transaction import Transaction
+from api.internal.models.store.transactions.Transaction import Transaction
 
 
 class TransactionFile(models.Model):
