@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from api.internal.transport.rest.auth_views import *
 from api.internal.transport.rest.profile_views import *
