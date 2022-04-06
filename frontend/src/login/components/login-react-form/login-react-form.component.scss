@@ -5,7 +5,8 @@ $widthFieldForm: 392px;
     color: #1C1B1B;
     size: 18px;
     line-height: 21.6px;
-    background-color: #3A3A3A;
+    background-color: #1C1B1B;
+;
     height: 100%;
     position: relative;
 
@@ -127,6 +128,10 @@ $widthFieldForm: 392px;
                     background-color: #B5FCE5;
                     color: #888888;
                     transition: 0.5s;
+                }
+
+                button:hover{
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
                 }
             }
         }

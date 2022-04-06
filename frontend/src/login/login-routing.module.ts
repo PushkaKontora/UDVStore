@@ -3,7 +3,10 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginReactFormComponent} from "./components/login-react-form/login-react-form.component";
 
 const routes: Routes = [
-    {path: 'uwu', component: LoginReactFormComponent},
+    {
+        path: 'main-page', loadChildren: () => import('../main-page/main-page.module')
+            .then(mod => mod.MainPageModule)
+    },
     {path: '', component: LoginReactFormComponent},
     {path: '**', component: LoginReactFormComponent}
 ];
