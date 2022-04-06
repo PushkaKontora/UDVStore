@@ -5,10 +5,10 @@ run:
 	make command c="runserver"
 
 migrate:
-	make command c="migrate"
+	make command c="migrate" ${o}
 
 makemigrations:
-	make command c="makemigrations"
+	make command c="makemigrations" ${o}
 
 createsuperuser:
 	make command c="createsuperuser"

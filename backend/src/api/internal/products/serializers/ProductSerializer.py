@@ -7,7 +7,7 @@ from api.internal.products.serializers.StorageCellSerializer import StorageCellS
 class ProductSerializer(ModelSerializer):
     cells_in_storage = StorageCellSerializer(many=True, required=False)
 
-    def create(self, validated_data):
+    def create(self, validated_data) -> Product:
         product = Product.objects.create(
             name=validated_data.get("name"),
             photo=validated_data.get("photo"),

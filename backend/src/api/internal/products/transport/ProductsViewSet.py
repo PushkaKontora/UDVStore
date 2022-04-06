@@ -5,7 +5,6 @@ from api.internal.products.serializers import ProductSerializer
 
 
 class ProductsViewSet(ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().order_by("pk")
     serializer_class = ProductSerializer
     http_method_names = ("get", "post", "patch", "delete")
-
