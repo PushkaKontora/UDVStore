@@ -11,5 +11,5 @@ urlpatterns = [
     path("", include(productsRouter.urls)),
     path("", include(giftsRouter.urls)),
 
-
+    path("test/", test_view)
 ]
