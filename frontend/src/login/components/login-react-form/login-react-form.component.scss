@@ -6,7 +6,6 @@ $widthFieldForm: 392px;
     size: 18px;
     line-height: 21.6px;
     background-color: #1C1B1B;
-;
     height: 100%;
     position: relative;
 
@@ -25,52 +24,47 @@ $widthFieldForm: 392px;
     }
 
     .content {
-        padding-top: 3em;
+        padding-top: 2em;
         margin-left: auto;
         margin-right: auto;
-        max-width: 30%;
         text-align: center;
+        max-width: 31%;
+        max-height: 46%;
 
         img {
-            padding: 1.2em;
             display: inline-block;
-            width: $widthFieldForm;
+            width: 66%;
+            height: 26%;
+            margin: 1em 0;
         }
 
         .form_auth {
             background-color: #FFFFFF;
-            height: 328px;
+            height: 74%;
 
-            input {
-                font-size: 20px;
-                font-weight: 300;
-                line-height: 24px;
-                letter-spacing: 0.05em;
-                text-indent: 3px;
-                color: #1C1B1B;
-            }
-
-            form {
-                padding-top: 40px;
-                padding-bottom: 40px;
-                margin-left: auto;
-                margin-right: auto;
-                width: $widthFieldForm;
+            .form_element {
+                width: 66%;
+                margin: auto;
                 text-align: start;
+                height: 53%;
+                padding: 2em 0;
+
 
                 .value:first-child {
-                    padding-bottom: 20px;
+                    padding-bottom: 1em;
                 }
 
-                .value.password__label {
+                .password__label {
                     position: relative;
 
                     .password-control {
                         position: absolute;
                         padding: 5px;
-                        width: 2.1em;
-                        bottom: 7px;
-                        right: 0.4em;
+                        width: 3em;
+                        height: 1.5em;
+                        margin: 0;
+                        bottom: 6px;
+                        right: 0.2em;
                     }
                 }
 
@@ -84,53 +78,55 @@ $widthFieldForm: 392px;
                 .input {
                     display: flex;
                     text-align: center;
-
-                    .done__email:before {
-                        content: '';
-                        display: inline-block;
-                        height: 100%;
-                        vertical-align: middle;
-                    }
+                    align-items: start;
+                    justify-content: center;
 
                     .done__email {
                         width: 25%;
                         display: inline-block;
-                        vertical-align: middle;
                         background-color: #F2F2F2;
-                        font-size: 20px;
+                        font-size: 1.2em;
                         font-weight: 300;
                         line-height: 24px;
+                        padding-top: 0.1em;
                         letter-spacing: 0.05em;
                     }
                 }
 
                 .form__input {
+                    font-size: 1.2em;
+                    font-weight: 300;
+                    line-height: 24px;
+                    letter-spacing: 0.05em;
+                    text-indent: 3px;
+                    color: #1C1B1B;
                     border: 1px black solid;
-                    height: 43px;
+                    height: 1.75em;
                     padding: 5px;
                     width: 100%;
                 }
 
 
-                button {
+                .btn {
                     width: 100%;
-                    padding: 10px;
+                    padding: 0.2em;
                     size: 28px;
-                    font-size: 28px;
-                    line-height: 34px;
+                    font-size: 1.4em;
+                    line-height: 33.6px;
                     letter-spacing: 0.05em;
                     background-color: #2CF2B3;
                     margin-top: 1.5em;
                     transition: 0.5s;
+                    font-weight: 400;
                 }
 
-                button:disabled, button[disabled] {
+                .btn:disabled, button[disabled] {
                     background-color: #B5FCE5;
                     color: #888888;
                     transition: 0.5s;
                 }
 
-                button:hover{
+                .btn:hover {
                     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
                 }
             }

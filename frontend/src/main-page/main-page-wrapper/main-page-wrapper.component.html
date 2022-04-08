@@ -1,0 +1,45 @@
+<div class="wrapper">
+    <div class="header">
+        <a href="#" class="logo"><img src="../../../assets/images/logoUDVstore.svg" alt="logo UDVstor"></a>
+        <nav class="header_nav">
+            <nav class="header_nav-page">
+                <ul class="menu_top_page">
+                    <li><a href="#" routerLinkActive="active-link" routerLink="./merch">
+                        <div class="text">МЕРЧ</div>
+                        <hr class="merch">
+                    </a>
+                    </li>
+                    <li><a href="#" routerLinkActive="active-link" routerLink="./regulation">ПРАВИЛА
+                        <hr class="rules">
+                    </a>
+                    </li>
+                </ul>
+            </nav>
+            <nav class="header_nav-icons">
+                <ul class="menu_top_icons">
+                    <li><a href="#" class="li_cart"><img src="../../../assets/images-main-page/cart.svg"
+                                                         alt="cart"></a></li>
+                    <li class="li_gift"><a href="#"><img src="../../../assets/images-main-page/gift.svg"
+                                                         alt="gift"></a></li>
+                    <li><a href="#" class="li_account" routerLink="./personal-area"><img
+                        src="../../../assets/images-main-page/account.svg"
+                        alt="account - octopus"></a></li>
+                    <li><a href="#" class="li_blockCoins">
+                        <ul>
+                            <li class="wrapper_num">
+                                5
+                            </li>
+                            <li>
+                                <img src="../../../assets/images-main-page/greenBlockCoins.svg" alt="greenBlockCoins">
+                            </li>
+                        </ul>
+                    </a></li>
+                </ul>
+            </nav>
+        </nav>
+    </div>
+</div>
+
+<p>
+    <router-outlet></router-outlet>
+</p>

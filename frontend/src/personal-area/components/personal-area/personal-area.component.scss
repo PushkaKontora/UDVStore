@@ -1,0 +1,20 @@
+.wrapper {
+    background-color: #380159;
+    position: relative;
+    height: 87vh;
+
+
+    .left_leg {
+        position: absolute;
+        height: 90%;
+        left: 0;
+        bottom: 0;
+    }
+
+    .right_leg{
+        position: absolute;
+        height: 35%;
+        right: 0;
+        bottom: 0;
+    }
+}
