@@ -1,6 +1,11 @@
 
 @import "null";
 
+@mixin utils(){
+    height: 5.1rem;
+}
+
+
 @font-face {
     font-family: "KarpaNuenPro";
     src: url("fonts/TypoforgeStudio-KapraNeueProRegularRounded.otf") format("woff2"),

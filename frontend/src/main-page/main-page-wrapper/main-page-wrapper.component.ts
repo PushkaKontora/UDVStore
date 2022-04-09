@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'main-page-wrapper',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainPageWrapperComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _router: Router) {
+      _router.navigate(["/main-page/merch"]);
+  }
 
   ngOnInit(): void {
   }
