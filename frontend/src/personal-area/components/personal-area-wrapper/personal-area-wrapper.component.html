@@ -10,19 +10,20 @@
                     <img src="../../../assets/images-personal-area/human.svg" alt="avatar">
                     <!--                <img class="imageCompanyItem" src="{{companyItem.logo}}" alt="rr"> будет так -->
                 </div>
-                <div class="nav">
-                    <button class="button_value" routerLink="./data"  routerLinkActive="active-link">ЛИЧНЫЕ ДАННЫЕ</button>
-                    <button class="button_value" routerLinkActive="active-link">ЗАКАЗЫ</button>
-                    <button class="button_value" routerLinkActive="active-link">ИСТОРИЯ</button>
-                    <button class="button_value" routerLinkActive="active-link">НАПИСАТЬ ОБ АКТИВНОСТИ</button>
-                </div>
+                <nav class="nav">
+                    <button class="button_value" routerLink="./data" routerLinkActive="active-link">ЛИЧНЫЕ ДАННЫЕ
+                    </button>
+                    <button class="button_value" routerLink="./orders" routerLinkActive="active-link">ЗАКАЗЫ</button>
+                    <button class="button_value" routerLink="./history" routerLinkActive="active-link">ИСТОРИЯ</button>
+                    <button class="button_value" routerLink="./write-activity" routerLinkActive="active-link">
+                        НАПИСАТЬ ОБ АКТИВНОСТИ
+                    </button>
+                </nav>
             </div>
         </div>
         <div class="value_grid__content value_grid">
             <div class="content_item">
-                <p>
-                    <router-outlet></router-outlet>
-                </p>
+                <router-outlet></router-outlet>
             </div>
         </div>
     </div>

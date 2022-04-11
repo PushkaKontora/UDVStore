@@ -4,7 +4,6 @@
     position: relative;
     height: calc(100vh - 5.1rem);
 
-
     .left_leg {
         position: absolute;
         height: 90%;
@@ -38,24 +37,29 @@
                 box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
             }
 
+            &__content{
+                background-color: #FFFFFF;
+            }
+
             .content_item {
                 align-items: center;
                 justify-content: center;
-                margin: 2em 1em;
+                margin: 1.8rem;
 
                 .figure img {
                     margin: 0 auto;
                     display: block;
-                    height: 4.7em;
+                    height: 5.1em;
                 }
 
                 .nav {
-                    margin-top: 1.8em;
+                    margin-top: 1.4em;
                     display: flex;
                     flex-direction: column;
                     width: 100%;
 
                     .button_value {
+                        z-index: 2;
                         width: 90%;
                         background-color: #EBEBEB;
                         color: #797979;
