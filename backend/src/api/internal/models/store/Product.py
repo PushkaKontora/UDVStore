@@ -9,6 +9,7 @@ class Product(models.Model):
     price = models.IntegerField(validators=[MinValueValidator(0)])
 
     class Meta:
+        ordering = ("pk", )
         db_table = "products"
         verbose_name = "Product"
         verbose_name_plural = "Products"

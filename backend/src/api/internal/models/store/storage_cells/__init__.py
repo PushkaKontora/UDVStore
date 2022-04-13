@@ -1,1 +1,1 @@
-from .SizeChoices import SizeChoices
+from .StorageCell import StorageCell

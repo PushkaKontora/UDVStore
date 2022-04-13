@@ -5,12 +5,12 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from api.models import Transaction
-from api.internal.gifts.serializers import GiftSerializer
+from api.internal.gift.serializers import GiftSerializer
 from api.internal.services.request import get_parameters_from_get_request, validate_get_parameters_for_filtering
 
 
-class GiftsViewSet(ModelViewSet):
-    queryset = Transaction.objects.all().order_by("pk")
+class GiftViewSet(ModelViewSet):
+    queryset = Transaction.objects.all()
     serializer_class = GiftSerializer
     http_method_names = ("get", "post")
     permission_classes = (IsAuthenticated,)
