@@ -5,7 +5,7 @@ from api.models import Product
 
 
 class ProductSerializer(ModelSerializer):
-    cells_in_storage = StorageCellSerializer(many=True)
+    cells_in_storage = StorageCellSerializer(many=True, required=False)
 
     class Meta:
         model = Product
