@@ -11,5 +11,5 @@ class TransactionSerializer(ModelSerializer):
 
     class Meta:
         model = Transaction
-        exclude = ("id", "type", "from_profile", "to_profile", "accrual",
+        fields = ("id", "type", "from_profile", "to_profile", "accrual",
                    "description", "created_at")

@@ -23,8 +23,5 @@ class ProfileViewSet(mixins.ListModelMixin,
         cur_user = request.user
         cur_profile = Profile.objects.filter(user=cur_user)[0]
         transactions = Transaction.objects.filter(source=cur_profile)
-        ser = TransactionSerializer(data=transactions, many=True)
-        if ser.is_valid():
-            return Response(ser.validated_data)
-        else:
-            return Response("Произошла ошибка", status=404)
+        ser = TransactionSerializer(transactions, many=True)
+        return Response(ser.data)
