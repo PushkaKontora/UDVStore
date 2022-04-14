@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
     selector: 'personal-activity',
@@ -7,12 +7,23 @@ import {FormControl, Validators} from "@angular/forms";
     styleUrls: ['./admin-accrual.component.scss']
 })
 export class AdminAccrualComponent implements OnInit {
-    public inputControl: FormControl = new FormControl('', [Validators.required]);
-
+    public writePers: FormGroup = new FormGroup({})
     constructor() {
     }
 
     ngOnInit(): void {
+        this.createForm();
     }
 
+    public onSubmit(){
+
+    }
+
+    private createForm(): void {
+        this.writePers = new FormGroup({
+            employee: new FormControl('', [Validators.required]),
+            coins: new FormControl('', [Validators.required]),
+            activity: new FormControl('', [Validators.required]),
+        });
+    }
 }
