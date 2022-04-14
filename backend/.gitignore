@@ -1,0 +1,9 @@
+.vscode
+.idea
+/venv/
+/env/
+media/
+local_settings.py
+/src/config/.env
+__pycache__
+*.pyc
