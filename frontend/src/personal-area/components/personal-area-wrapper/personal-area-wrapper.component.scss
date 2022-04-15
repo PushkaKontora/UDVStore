@@ -1,0 +1,85 @@
+
+.wrapper {
+    background-color: #380159;
+    position: relative;
+    height: calc(100vh - 5.1rem);
+
+    .left_leg {
+        position: absolute;
+        height: 90%;
+        left: 0;
+        bottom: 0;
+    }
+
+    .right_leg {
+        position: absolute;
+        height: 35%;
+        right: 0;
+        bottom: 0;
+    }
+
+    .grid {
+        padding-top: 1rem;
+        max-width: 63%;
+        margin: 0 auto;
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: 31% auto;
+        height: 100%;
+
+        .value_grid {
+            background-color: #F7F7F7;
+            border-radius: 0.1em;
+            height: 100%;
+
+            &__account {
+                height: 45%;
+                box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+            }
+
+            &__content{
+                background-color: #FFFFFF;
+            }
+
+            .content_item {
+                align-items: center;
+                justify-content: center;
+                margin: 1.8rem;
+
+                .figure img {
+                    margin: 0 auto;
+                    display: block;
+                    height: 5.1em;
+                }
+
+                .nav {
+                    margin-top: 1.4em;
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+
+                    .button_value {
+                        z-index: 2;
+                        width: 90%;
+                        background-color: #EBEBEB;
+                        color: #797979;
+                        margin: 0.1em auto;
+                        font-size: 1em;
+                        line-height: 1.2em;
+                        padding: 0.185em 0;
+                    }
+
+                    .button_value:first-child {
+                        margin-top: 0;
+                    }
+
+                    .active-link {
+                        width: 100%;
+                        background-color: #2CF2B3;
+                        color: #1C1B1B;
+                    }
+                }
+            }
+        }
+    }
+}
