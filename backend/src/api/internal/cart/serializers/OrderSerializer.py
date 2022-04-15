@@ -12,4 +12,3 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ("profile", "status", "product", "amount", "in_cart")
-        read_only_fields = ("profile", "status", "product", "amount", "in_cart")

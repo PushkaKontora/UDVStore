@@ -29,7 +29,7 @@ class CartViewSet(ModelViewSet):
 
         order = serializer.save()
         if validate_new_order(order, profile):
-            serialized_order = OrderSerializer(order)
+            serialized_order = OrderSerializer(order, context={"request": request})
             order.save()
 
             return Response(data=serialized_order.data)
