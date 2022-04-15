@@ -1,7 +1,7 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ViewSet
 
 from api.internal.cart.serializers import OrderSerializer, CartSerializer
 from api.internal.models.profile import Profile
@@ -10,26 +10,32 @@ from api.internal.services.cart import (
     validate_new_order,
     get_order,
     validate_amount,
-    get_orders_in_cart
+    get_orders_by_user
 )
 from api.internal.services.user import get_profile_by_user
 
 
-class CartViewSet(ModelViewSet):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+class CartViewSet(ViewSet):
     permission_classes = (IsAuthenticated, )
     http_method_names = ("get", "post", "patch", "delete")
 
-    def list(self, request: Request, *args, **kwargs) -> Response:
-        profile = get_profile_by_user(request.user)
-        orders = get_orders_in_cart(profile)
+    def list(self, request: Request) -> Response:
+        orders = get_orders_by_user(request.user)
 
-        serializer = OrderSerializer(orders, many=True)
+        serializer = OrderSerializer(orders, many=True, context={"request": request})
 
         return Response(data=serializer.data)
 
-    def create(self, request: Request, *args, **kwargs) -> Response:
+    def retrieve(self, request: Request, pk=None) -> Response:
+        profile = get_profile_by_user(request.user)
+        order = get_order(pk, profile)
+
+        if not order:
+            return Response(status=404)
+
+        return Response(data=OrderSerializer(order, context={"request": request}).data)
+
+    def create(self, request: Request) -> Response:
         profile = get_profile_by_user(request.user)
         data = self._get_data(request, profile)
 
@@ -44,11 +50,11 @@ class CartViewSet(ModelViewSet):
 
         return Response(status=400)
 
-    def update(self, request: Request, pk=None, *args, **kwargs) -> Response:
+    def partial_update(self, request: Request, pk=None) -> Response:
         profile = get_profile_by_user(request.user)
         data = self._get_data(request, profile)
 
-        order = get_order(pk)
+        order = get_order(pk, profile)
         if not order:
             return Response(status=400)
 
@@ -63,6 +69,16 @@ class CartViewSet(ModelViewSet):
         updated_order.save()
 
         return Response(OrderSerializer(updated_order, context={"request": request}).data)
+
+    def destroy(self, request: Request, pk=None) -> Response:
+        profile = get_profile_by_user(request.user)
+        order = get_order(pk, profile)
+
+        if not order:
+            return Response(status=404)
+
+        order.delete()
+        return Response(status=200)
 
     def _get_data(self, request: Request, profile: Profile) -> dict:
         data = {
