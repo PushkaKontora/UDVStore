@@ -1,16 +1,18 @@
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
-from api.internal.cart.serializers import OrderSerializer, CartSerializer
+from api.internal.cart.serializers import OrderSerializer, CartSerializer, TransactionSerializer
 from api.internal.models.profile import Profile
 from api.internal.models.store import Order
 from api.internal.services.cart import (
     validate_new_order,
     get_order,
     validate_amount,
-    get_orders_by_user
+    get_orders_by_user,
+    pay,
 )
 from api.internal.services.user import get_profile_by_user
 
@@ -79,6 +81,22 @@ class CartViewSet(ViewSet):
 
         order.delete()
         return Response(status=200)
+
+    @action(methods=["post"], detail=True,
+            url_path="pay", url_name="pay",
+            permission_classes=[IsAuthenticated])
+    def pay(self, request: Request, pk=None) -> Response:
+        profile = get_profile_by_user(request.user)
+        order = get_order(pk, profile)
+
+        if not order:
+            return Response(status=404)
+
+        transaction = pay(order)
+        if not transaction:
+            return Response(status=406)
+
+        return Response(data=TransactionSerializer(transaction).data)
 
     def _get_data(self, request: Request, profile: Profile) -> dict:
         data = {

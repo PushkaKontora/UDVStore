@@ -3,6 +3,7 @@ from rest_framework import serializers
 from api.internal.models.store import Order
 from .ProductDetailsSerializer import ProductDetailsSerializer
 from api.internal.profile.serializers import ProfileSerializer
+from api.internal.services.cart import get_total
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -11,7 +12,7 @@ class OrderSerializer(serializers.ModelSerializer):
     total = serializers.SerializerMethodField(method_name="get_total")
 
     def get_total(self, order: Order) -> int:
-        return order.storage_cell.product.price * order.amount
+        return get_total(order)
 
     class Meta:
         model = Order
