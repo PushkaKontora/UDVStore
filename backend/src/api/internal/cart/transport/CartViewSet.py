@@ -6,7 +6,12 @@ from rest_framework.viewsets import ModelViewSet
 from api.internal.cart.serializers import OrderSerializer, CartSerializer
 from api.internal.models.profile import Profile
 from api.internal.models.store import Order
-from api.internal.services.cart import validate_new_order, get_order, validate_amount
+from api.internal.services.cart import (
+    validate_new_order,
+    get_order,
+    validate_amount,
+    get_orders_in_cart
+)
 from api.internal.services.user import get_profile_by_user
 
 
@@ -15,6 +20,14 @@ class CartViewSet(ModelViewSet):
     serializer_class = OrderSerializer
     permission_classes = (IsAuthenticated, )
     http_method_names = ("get", "post", "patch", "delete")
+
+    def list(self, request: Request, *args, **kwargs) -> Response:
+        profile = get_profile_by_user(request.user)
+        orders = get_orders_in_cart(profile)
+
+        serializer = OrderSerializer(orders, many=True)
+
+        return Response(data=serializer.data)
 
     def create(self, request: Request, *args, **kwargs) -> Response:
         profile = get_profile_by_user(request.user)

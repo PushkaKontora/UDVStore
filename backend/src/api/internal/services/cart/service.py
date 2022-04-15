@@ -1,9 +1,7 @@
 from typing import Union, Optional
 
 from django.db.models import QuerySet
-from rest_framework.request import Request
 
-from api.internal.cart.serializers import CartSerializer
 from api.internal.models.profile import Profile
 from api.internal.models.store import StorageCell, Order
 
