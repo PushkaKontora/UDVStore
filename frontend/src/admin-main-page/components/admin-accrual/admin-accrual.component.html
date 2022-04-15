@@ -1,0 +1,39 @@
+<div class="wrapper">
+    <form [formGroup]="writePers"
+          (ngSubmit)="onSubmit()">
+        <div class="value">
+            <div class="title">СОТРУДНИК</div>
+            <div class="content">
+                <input type="text"
+                       placeholder="Фамилия Имя Отчество"
+                       class="inputField inputField__name"
+                       formControlName="employee"
+                >
+            </div>
+        </div>
+        <div class="value">
+            <div class="title title__coins">UCoins <img src="../../../assets/images-main-page/greenBlockCoins.svg"
+                                                        alt="greenBlockCoins"></div>
+            <div class="content"><input type="text"
+                                        placeholder="Количество койнов "
+                                        class="inputField"
+                                        formControlName="coins"
+            ></div>
+        </div>
+        <div class="value">
+            <div class="title">АКТИВНОСТЬ</div>
+            <div class="content">
+                <input type="text"
+                       placeholder="Напишите что-нибудь..."
+                       class="inputField"
+                       formControlName="activity"
+                >
+                <button class="button" [disabled]="writePers.invalid">НАЧИСЛИТЬ</button>
+            </div>
+        </div>
+    </form>
+    <div class="value">
+        <div class="title">ИСТОРИЯ</div>
+        <div class="content">Разверните карточку, чтобы увидеть историю сотрудника</div>
+    </div>
+</div>
