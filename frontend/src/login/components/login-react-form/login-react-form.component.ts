@@ -41,10 +41,12 @@ export class LoginReactFormComponent implements OnInit {
     public onSubmit() {
         console.log('login-react.component отправил форму');
         const loginEmail = this.login.value.email + "@ussc.ru";
-        this.activeUser = this._peopleService.getUser(loginEmail, this.login.value.password, this.login);
+        this._peopleService.postToken(loginEmail, this.login.value.password, this.login);
+        // this.activeUser = this._peopleService.getUser(loginEmail, this.login.value.password, this.login);
     }
 
     public ngAfterViewInit() {
         this._peopleService.showPassword(this.btn.nativeElement, this.password.nativeElement);
     }
-}
+}//
+//

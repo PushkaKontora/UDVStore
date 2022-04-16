@@ -8,3 +8,6 @@ export interface IUser {
     balance: number;
     image?: string;
 }
+//
+//
+// --proxy-config proxy.config.json
