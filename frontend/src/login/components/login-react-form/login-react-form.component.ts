@@ -3,6 +3,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {PeopleService} from "../../people.service";
+import {IUser} from "../../../interfaces";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-login-react-form',
@@ -11,6 +13,7 @@ import {PeopleService} from "../../people.service";
 })
 export class LoginReactFormComponent implements OnInit {
     public login: FormGroup = new FormGroup({});
+    public activeUser?: Subscription;
 
     @ViewChild('btn')
     btn!: ElementRef;
@@ -38,7 +41,7 @@ export class LoginReactFormComponent implements OnInit {
     public onSubmit() {
         console.log('login-react.component отправил форму');
         const loginEmail = this.login.value.email + "@ussc.ru";
-        this._peopleService.getUser(loginEmail, this.login.value.password, this.login);
+        this.activeUser = this._peopleService.getUser(loginEmail, this.login.value.password, this.login);
     }
 
     public ngAfterViewInit() {
