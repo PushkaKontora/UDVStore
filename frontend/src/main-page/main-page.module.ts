@@ -4,17 +4,21 @@ import {MainPageRoutingModule} from "./main-page-routing.module";
 import {MerchStoreComponent} from "./merch-store/merch-store.component";
 import {MainPageWrapperComponent} from "./main-page-wrapper/main-page-wrapper.component";
 import {MainRegulationsComponent} from "./main-regulations/main-regulations.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+
 
 
 @NgModule({
     declarations: [
         MerchStoreComponent,
         MainPageWrapperComponent,
-        MainRegulationsComponent
+        MainRegulationsComponent,
     ],
     imports: [
         CommonModule,
-        MainPageRoutingModule
+        MainPageRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
     ]
 })
 export class MainPageModule {

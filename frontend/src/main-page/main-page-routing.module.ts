@@ -4,11 +4,15 @@ import {LoginReactFormComponent} from "../login/components/login-react-form/logi
 import {MerchStoreComponent} from "./merch-store/merch-store.component";
 import {MainPageWrapperComponent} from "./main-page-wrapper/main-page-wrapper.component";
 import {MainRegulationsComponent} from "./main-regulations/main-regulations.component";
-import {PersonalAreaModule} from "../personal-area/personal-area.module";
 
 
-const childrenRoutes:Routes =[
-    {path: 'merch', component: MerchStoreComponent},
+
+const childrenRoutes: Routes = [
+    {
+        path: 'merch', component: MerchStoreComponent, children: [
+             // {path: 'present', component: MainPresentComponent}
+        ]
+    },
     {path: 'regulation', component: MainRegulationsComponent},
     {
         path: 'personal-area', loadChildren: () => import('../personal-area/personal-area.module')
@@ -19,11 +23,13 @@ const childrenRoutes:Routes =[
 
 const routes: Routes = [
     {path: 'main-page', component: MainPageWrapperComponent},
-    {path: '', component: MainPageWrapperComponent, children: childrenRoutes}
+    {path: '', component: MainPageWrapperComponent, children: childrenRoutes},
+    {path: '**', component: MainPageWrapperComponent}
 ];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class MainPageRoutingModule {}
+export class MainPageRoutingModule {
+}

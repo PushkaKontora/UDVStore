@@ -11,6 +11,7 @@ import {PeopleService} from "../../people.service";
 })
 export class LoginReactFormComponent implements OnInit {
     public login: FormGroup = new FormGroup({});
+
     @ViewChild('btn')
     btn!: ElementRef;
 
@@ -23,7 +24,7 @@ export class LoginReactFormComponent implements OnInit {
         this._createForm();
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
     }
 
 
@@ -35,8 +36,9 @@ export class LoginReactFormComponent implements OnInit {
     }
 
     public onSubmit() {
-        console.log('login-react.component отправил форму')
-        // this._peopleService.GetUser(this.login);
+        console.log('login-react.component отправил форму');
+        const loginEmail = this.login.value.email + "@ussc.ru";
+        this._peopleService.getUser(loginEmail, this.login.value.password, this.login);
     }
 
     public ngAfterViewInit() {

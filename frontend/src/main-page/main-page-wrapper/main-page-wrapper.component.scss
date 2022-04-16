@@ -1,10 +1,12 @@
+@import "../../usedCSS/fieldFindUser.scss";
+
 img {
     width: 100%;
 }
 
 .wrapper {
     background-color: #1C1B1B;
-    height: 5.1rem;
+    height: 4.7rem;
 
     .header {
         margin: 0 auto;
@@ -15,7 +17,6 @@ img {
         display: flex;
         -ms-flex-align: center;
         align-items: center;
-
 
 
         .logo {
@@ -83,11 +84,15 @@ img {
 
                     margin-left: 1.5em;
 
-                    a {
+                    a, .a-button {
                         display: block;
                     }
 
-                    img{
+                    .a-button {
+                        background-color: #1C1B1B;
+                    }
+
+                    img {
                         width: 1.8em;
                     }
 
@@ -121,11 +126,11 @@ img {
 
                 li.li_gift {
                     img {
-                        width: 1.75em;
+                        width: 2em;
                     }
                 }
 
-                li.li_cart{
+                li.li_cart {
                     img {
                         width: 2em;
                     }
@@ -135,5 +140,74 @@ img {
     }
 }
 
+.modal-wrapper {
+    display: none;
 
-//добавить active  в случае переключения на другие страницы - речь про МЕРЧ ПРАВИЛА
+    .modelBackground {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background-color: black;
+        opacity: 0.4;
+        z-index: 900;
+    }
+
+    .model {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+
+        z-index: 1000;
+        overflow: auto;
+
+        .modelBody {
+            padding: 2rem;
+            background-color: #FFFFFF;
+            margin: calc(0.5rem + 4.7rem) auto;
+            max-width: 41%;
+
+            .mainTitle {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 1.4em;
+                padding-bottom: 1.5rem;
+                button{
+                    background-color: #FFFFFF;
+                    width: 1.2em;
+                }
+            }
+
+            form{
+                padding: 0 2rem;
+                .value{
+                    font-weight: 500;
+                    color: #1C1B1B;
+                    font-size: 1em;
+                }
+            }
+
+            .button {
+                width: 100%;
+                padding: 0.3em;
+                background-color: #2CF2B3;
+                margin-top: 0.5rem;
+                font-size: 1.2em;
+                line-height: 1.2em;
+                letter-spacing: 0.05em;
+                transition: 1s;
+
+                &[disabled] {
+                    color: #888888;
+                    background-color: #B5FCE5;
+                }
+            }
+        }
+    }
+}
+
+
