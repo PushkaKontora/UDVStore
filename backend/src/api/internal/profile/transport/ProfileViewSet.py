@@ -20,6 +20,13 @@ class ProfileViewSet(mixins.ListModelMixin,
     http_method_names = ("get", "post", "patch", "delete")
 
     @action(detail=False, methods=['get'])
+    def current(self, request):
+        cur_user = request.user
+        cur_profile = Profile.objects.filter(user=cur_user)[0]
+        ser = ProfileSerializer(cur_profile)
+        return Response(ser.data)
+
+    @action(detail=False, methods=['get'])
     def history(self, request):
         cur_user = request.user
         cur_profile = Profile.objects.filter(user=cur_user)[0]
