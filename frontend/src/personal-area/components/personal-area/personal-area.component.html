@@ -7,14 +7,14 @@
             <div class="field">ФАМИЛИЯ</div>
             <div class="block_data">
                 <img src="../../../assets/images-personal-area/littleGreenOctopus.svg" alt="littleGreenOctopus">
-                <div class="text-data">Загумёнова</div>
+                <div class="text-data">{{user?.last_name | titlecase}}</div>
             </div>
         </div>
         <div class="stroke">
             <div class="field">ИМЯ</div>
             <div class="block_data">
                 <img src="../../../assets/images-personal-area/littleGreenOctopus.svg" alt="littleGreenOctopus">
-                <div class="text-data">Марина</div>
+                <div class="text-data">{{user?.first_name | titlecase}}</div>
             </div>
         </div>
 
@@ -22,7 +22,7 @@
             <div class="field">ОТЧЕСТВО</div>
             <div class="block_data">
                 <img src="../../../assets/images-personal-area/littleGreenOctopus.svg" alt="littleGreenOctopus">
-                <div class="text-data">Валерьевна</div>
+                <div class="text-data">{{user?.patronymic | titlecase}}</div>
             </div>
         </div>
 
@@ -30,7 +30,7 @@
             <div class="field">КОРПОРАТИВНАЯ ПОЧТА</div>
             <div class="block_data">
                 <img src="../../../assets/images-personal-area/mail.svg" alt="mail" class="mail">
-                <div class="text-data">marina_zagumenova@ussc.ru</div>
+                <div class="text-data">{{user?.username | titlecase}}</div>
             </div>
         </div>
     </div>

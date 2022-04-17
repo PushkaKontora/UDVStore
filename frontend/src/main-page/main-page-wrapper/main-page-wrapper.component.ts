@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {IUser} from "../../interfaces";
+import {PeopleService} from "../../login/people.service";
 
 @Component({
     selector: 'main-page-wrapper',
@@ -9,9 +11,11 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class MainPageWrapperComponent implements OnInit {
     public writePers: FormGroup = new FormGroup({})
+    public user?: IUser;
 
-    constructor(private _router: Router, private _route: ActivatedRoute) {
+    constructor(private _router: Router, private _route: ActivatedRoute, private _peopleService: PeopleService) {
         _router.navigate(["/main-page/merch"]);
+        this.user = _peopleService.findUser;
     }
 
     ngOnInit(): void {
@@ -34,7 +38,7 @@ export class MainPageWrapperComponent implements OnInit {
         document.body.classList.remove('modalOpen');
     }
 
-    public onSubmit(){
+    public onSubmit() {
         //ЗДЕСЬ ОТПРАВИТЬ ДАННЫЕ В БД
         this.closeModel();
         this.writePers.reset();
