@@ -1,15 +1,20 @@
 import {ElementRef, Injectable, ViewChild} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {FormGroup} from "@angular/forms";
 import {IUser} from "../interfaces";
+import {Subscription} from "rxjs";
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class PeopleService {
-    private _urlLoginUser: string = 'http://127.0.0.1:8000/auth/token/login';
+    private _urlLoginUser: string = 'http://127.0.0.1:8000/api/profile/current/';
+    private _urlLoginTokenUser: string = 'http://127.0.0.1:8000/auth/token/login';
+    public token?: string;
+    public options: any;
+    public findUser?: IUser;
 
     constructor(private _http: HttpClient, private _router: Router) {
     }
@@ -28,13 +33,32 @@ export class PeopleService {
         }
     }
 
-    public getUser(loginEmail: string, loginPassword: string, login: FormGroup): void {
-        this._http.get<IUser[]>(this._urlLoginUser)
-            .subscribe((res: IUser[]) => {
-                const user: IUser | undefined = res.find((a: IUser) => {
-                    return a.email === loginEmail && a.password === loginPassword;
+    public postToken(username: string, password: string, login: FormGroup) {
+        this._http.post<any>(this._urlLoginTokenUser, {
+            "username": username,
+            "password": password
+        })
+            .subscribe(
+                (res: any) => {
+                    login.reset();
+                    this.token = res?.auth_token;
+                    console.log(this.token)
+                    this.getUser();
                 });
+    }
 
+    public getUser(): Subscription {
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': "Token " + this.token });
+        let options = { headers: headers };
+        return this._http.get<IUser>(this._urlLoginUser, options )
+            .subscribe((user: IUser) => {
+                if (user) {
+                    this._router.navigate(['/main-page/' + user.id]);
+                    this.findUser = user;
+                    console.log('getUser() -done! ' + user.id);
+                }
 
                 // if (user) {
                 //     if (user.isAdmin === false) {
@@ -48,18 +72,10 @@ export class PeopleService {
                 //     alert('user not found');
                 // }
 
-
-                if (user) {
-                    this._router.navigate(['/main-page/' + user.id]);
-                    login.reset();
-                } else {
-                    alert('user not found');
-                }
             }, () => {
                 alert('Something went wrong');
             });
     }
 }
-
 
 
