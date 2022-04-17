@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     "api",
     "django_cleanup",
     "djoser",
-    "rest_framework.authtoken"
+    "rest_framework.authtoken",
+    "corsheaders"
 ]
 
 MIDDLEWARE = [
@@ -67,7 +68,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "api.internal.middleware.MyMiddleware"
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware'
+    #"api.internal.middleware.MyMiddleware"
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -169,6 +172,11 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+    "http://localhost:4200",
+]
 
 # DJOSER = {
 #     "LOGIN_FIELD": "email"

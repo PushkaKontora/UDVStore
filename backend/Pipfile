@@ -17,6 +17,7 @@ django-filter = "==21.1"
 pillow = "==9.0.1"
 django-cleanup = "==6.0.0"
 djoser = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
