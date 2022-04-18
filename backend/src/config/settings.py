@@ -26,6 +26,7 @@ env = Env(
     POSTGRES_PORT=(str, ""),
     ALLOWED_HOSTS=(str, ""),
     SECRET_KEY=(str, ""),
+    IS_BACKEND=(bool, False),
     DEBUG=(bool, False),
 )
 Env.read_env()
@@ -115,8 +116,7 @@ POSTGRES = {
     }
 }
 
-DATABASES = POSTGRES if DEBUG else SQLITE
-
+DATABASES = POSTGRES if env("IS_BACKEND") else SQLITE
 
 
 # Password validation
