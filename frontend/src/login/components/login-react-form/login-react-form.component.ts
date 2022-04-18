@@ -39,9 +39,7 @@ export class LoginReactFormComponent implements OnInit {
     }
 
     public onSubmit() {
-        console.log('login-react.component отправил форму');
         const loginEmail = this.login.value.email + "@ussc.ru";
-        console.log(loginEmail);
         this._peopleService.postToken(loginEmail, this.login.value.password, this.login);
         // this.activeUser = this._peopleService.getUser(loginEmail, this.login.value.password, this.login);
     }

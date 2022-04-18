@@ -2,5 +2,25 @@
     <div class="banner">
         <img src="../../../assets/images-main-page/banner.svg" alt="banner">
     </div>
-    <div class="content"></div>
+    <div class="content">
+        <div class="wrapperGrid">
+        <div class="contentGrid" *ngFor="let item of storeProducts">
+            <div class="content_image"><img src="{{item?.photo}}" alt="product image"></div>
+            <div class="cardFilling">
+                <div class="text">{{item?.name}}</div>
+                <div class="price">
+                    <ul class="coins">
+                        <li class="wrapper_num">
+                            {{item?.price}}
+                        </li>
+                        <li>
+                            <img src="../../../assets/images-main-page/purpleBlockCoins.svg"
+                                 alt="purpleBlockCoins">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>

@@ -2,7 +2,7 @@ import {ElementRef, Injectable, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {FormGroup} from "@angular/forms";
-import {IUser} from "../interfaces";
+import {IUser, products} from "../interfaces";
 import {Subscription} from "rxjs";
 
 
@@ -12,9 +12,11 @@ import {Subscription} from "rxjs";
 export class PeopleService {
     private _urlLoginUser: string = 'http://127.0.0.1:8000/api/profile/current/';
     private _urlLoginTokenUser: string = 'http://127.0.0.1:8000/auth/token/login';
+    private _urlApiProducts: string = 'http://127.0.0.1:8000/api/products/';
     public token?: string;
     public options: any;
     public findUser?: IUser;
+    public storeProducts!: products[];
 
     constructor(private _http: HttpClient, private _router: Router) {
     }
@@ -33,6 +35,20 @@ export class PeopleService {
         }
     }
 
+    public getProducts(): Subscription {
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': "Token " + this.token
+        });
+        let options = {headers: headers};
+        return this._http.get<products[]>(this._urlApiProducts, options)
+            .subscribe((res: products[]) => {
+                this.storeProducts = res;
+            }, () => {
+                alert('Something went wrong - getProducts');
+            });
+    }
+
     public postToken(username: string, password: string, login: FormGroup) {
         this._http.post<any>(this._urlLoginTokenUser, {
             "username": username,
@@ -42,8 +58,8 @@ export class PeopleService {
                 (res: any) => {
                     login.reset();
                     this.token = res?.auth_token;
-                    console.log(this.token)
                     this.getUser();
+                    this.getProducts();
                 });
     }
 
@@ -57,7 +73,6 @@ export class PeopleService {
                 if (user) {
                     this._router.navigate(['/main-page/' + user.id]);
                     this.findUser = user;
-                    console.log('getUser() -done! ' + user.id);
                 }
 
                 // if (user) {

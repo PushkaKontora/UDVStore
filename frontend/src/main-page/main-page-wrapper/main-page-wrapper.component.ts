@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {IUser} from "../../interfaces";
 import {PeopleService} from "../../login/people.service";
+import {StoreService} from "../store.service";
 
 @Component({
     selector: 'main-page-wrapper',
@@ -13,7 +14,7 @@ export class MainPageWrapperComponent implements OnInit {
     public writePers: FormGroup = new FormGroup({})
     public user?: IUser;
 
-    constructor(private _router: Router, private _route: ActivatedRoute, private _peopleService: PeopleService) {
+    constructor(private _router: Router, private _route: ActivatedRoute, private _peopleService: PeopleService, private _storeService: StoreService) {
         _router.navigate(["/main-page/merch"]);
         this.user = _peopleService.findUser;
     }

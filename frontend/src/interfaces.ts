@@ -8,8 +8,21 @@ export interface IUser {
     balance: number;
     image?: string; // фото - пока нет.
 }
-// --proxy-config proxy.config.json
-// "options": {
-//     "browserTarget": "frontend:build",
-//         "proxyConfig": "proxy.config.json"
-// },
+
+export interface products {
+    id: number,
+    name: string,
+    description: string,
+    price: number,
+    photo: string,
+    cells: cell[],
+}
+
+export interface cell {
+    id: number,
+    name: string,
+    size: number,
+    amount: number
+}
+
+

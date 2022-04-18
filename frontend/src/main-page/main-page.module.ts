@@ -5,7 +5,7 @@ import {MerchStoreComponent} from "./merch-store/merch-store.component";
 import {MainPageWrapperComponent} from "./main-page-wrapper/main-page-wrapper.component";
 import {MainRegulationsComponent} from "./main-regulations/main-regulations.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-
+import {StoreService} from "./store.service";
 
 
 @NgModule({
@@ -19,7 +19,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         MainPageRoutingModule,
         FormsModule,
         ReactiveFormsModule,
-    ]
+    ],
+    providers: [StoreService]
 })
 export class MainPageModule {
 }
