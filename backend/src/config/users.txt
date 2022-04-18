@@ -1,0 +1,16 @@
+### Default
+
+username/email: yuraperov@ussc.ru
+password: KTM85SX36
+token: 792304758f942cd3aa656eb407c9bf3be900d6e4
+
+username/email: samkov@ussc.ru
+password: KTM85SX36
+token: 8ec7e4f8eee436de9f4f57c883dd589157dc5d3c
+
+username/email: dude@ussc.ru
+password: KTM85SX36
+token: c2546fdab7016312669b5c7cc793053151832bfe
+
+
+
