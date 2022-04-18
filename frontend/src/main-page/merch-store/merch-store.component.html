@@ -7,15 +7,15 @@
         <div class="contentGrid" *ngFor="let item of storeProducts">
             <div class="content_image"><img src="{{item?.photo}}" alt="product image"></div>
             <div class="cardFilling">
-                <div class="text">{{item?.name}}</div>
+                <div class="text">{{item?.name | uppercase}}</div>
                 <div class="price">
                     <ul class="coins">
                         <li class="wrapper_num">
                             {{item?.price}}
                         </li>
                         <li>
-                            <img src="../../../assets/images-main-page/purpleBlockCoins.svg"
-                                 alt="purpleBlockCoins">
+                            <img src="../../../assets/images-main-page/greenBlockCoins.svg"
+                                 alt="greenBlockCoins">
                         </li>
                     </ul>
                 </div>
