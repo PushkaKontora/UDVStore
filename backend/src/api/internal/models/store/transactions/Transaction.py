@@ -7,7 +7,7 @@ from api.internal.models.store.transactions.TransactionTypes import TransactionT
 
 class Transaction(models.Model):
     type = models.IntegerField(choices=TransactionTypes.choices, default=TransactionTypes.BUYING)
-    source = models.ForeignKey(Profile, on_delete=models.PROTECT)
+    source = models.ForeignKey(Profile, on_delete=models.PROTECT, null=True)
     destination = models.ForeignKey(
         Profile, on_delete=models.PROTECT,
         default=None, null=True,
