@@ -8,7 +8,7 @@ from api.internal.models.profile import Profile
 from api.internal.models.store import Transaction
 from api.internal.profile.serializers.ProfileSerializer import ProfileSerializer
 from api.internal.profile.serializers.TransactionSerializer import TransactionSerializer
-from api.internal.services.profile.history import get_profile_history
+from api.internal.services.profile import get_profile_history
 
 
 class ProfileViewSet(mixins.ListModelMixin,
@@ -30,4 +30,6 @@ class ProfileViewSet(mixins.ListModelMixin,
     def history(self, request):
         cur_user = request.user
         cur_profile = Profile.objects.filter(user=cur_user)[0]
-        return get_profile_history(cur_profile)
+        transactions = get_profile_history(cur_profile)
+        ser = TransactionSerializer(transactions, many=True)
+        return Response(ser.data)
