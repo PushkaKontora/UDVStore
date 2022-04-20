@@ -1,4 +1,4 @@
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, viewsets, filters
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -18,6 +18,9 @@ class ProfileViewSet(mixins.ListModelMixin,
     serializer_class = ProfileSerializer
     permission_classes = (IsAuthenticated,)
     http_method_names = ("get", "post", "patch", "delete")
+
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["^user__first_name", "^user__last_name", "^patronymic"]
 
     @action(detail=False, methods=['get'])
     def current(self, request):
