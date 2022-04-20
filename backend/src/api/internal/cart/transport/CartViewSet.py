@@ -4,9 +4,10 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
-from api.internal.cart.serializers import OrderSerializer, CartSerializer, TransactionSerializer
+from api.internal.cart.serializers import CartSerializer, TransactionSerializer
 from api.internal.models.profile import Profile
 from api.internal.models.store import Order
+from api.internal.orders.serializers import OrderSerializer
 from api.internal.services.cart import (
     validate_new_order,
     get_order,

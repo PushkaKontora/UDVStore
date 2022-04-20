@@ -1,6 +1,7 @@
 from django.urls import path, include
 
 from api.internal.cart import cart_router
+from api.internal.orders import order_router
 from api.internal.profile import profileRouter
 from api.internal.transport.rest.auth_views import *
 from api.internal.transport.rest.profile_views import *
@@ -15,6 +16,7 @@ urlpatterns = [
     path("", include(gift_router.urls)),
     path("", include(cart_router.urls)),
     path("", include(profileRouter.urls)),
+    path("", include(order_router.urls)),
 
     path("test/", test_view)
 ]
