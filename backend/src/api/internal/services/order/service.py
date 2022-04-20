@@ -11,3 +11,7 @@ def get_user_formed_orders(profile_id: int) -> QuerySet[Order]:
     formed_orders = get_formed_orders()
 
     return formed_orders.filter(profile=profile_id)
+
+
+def get_formed_order_by_transaction(transaction_id: int) -> Order:
+    return Order.objects.filter(transaction=transaction_id).first()
