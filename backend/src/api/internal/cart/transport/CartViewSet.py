@@ -13,7 +13,7 @@ from api.internal.services.cart import (
     get_order,
     validate_amount,
     get_orders_by_user,
-    pay,
+    pay, get_orders_by_profile,
 )
 from api.internal.services.user import get_profile_by_user
 
@@ -83,21 +83,21 @@ class CartViewSet(ViewSet):
         order.delete()
         return Response(status=200)
 
-    @action(methods=["post"], detail=True,
+    @action(methods=["post"], detail=False,
             url_path="pay", url_name="pay",
             permission_classes=[IsAuthenticated])
-    def pay(self, request: Request, pk=None) -> Response:
+    def pay(self, request: Request) -> Response:
         profile = get_profile_by_user(request.user)
-        order = get_order(pk, profile)
+        orders = get_orders_by_profile(profile)
 
-        if not order:
+        if not orders:
             return Response(status=404)
 
-        transaction = pay(order)
-        if not transaction:
+        transactions = pay(orders)
+        if not transactions:
             return Response(status=406)
 
-        return Response(data=TransactionSerializer(transaction).data)
+        return Response(data=TransactionSerializer(transactions, many=True).data)
 
     def _get_data(self, request: Request, profile: Profile) -> dict:
         data = {
