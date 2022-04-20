@@ -1,27 +1,33 @@
-from rest_framework.exceptions import ParseError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ViewSet
 
-from api.models import Transaction
 from api.internal.gift.serializers import GiftSerializer
-from api.internal.services.request import get_parameters_from_get_request, validate_get_parameters_for_filtering
+from api.internal.profile.serializers import TransactionSerializer
+from api.internal.services.gift import try_transfer
+from api.internal.services.user import get_profile_by_user, get_profile
 
 
-class GiftViewSet(ModelViewSet):
-    queryset = Transaction.objects.all()
-    serializer_class = GiftSerializer
-    http_method_names = ("get", "post")
+class GiftViewSet(ViewSet):
     permission_classes = (IsAuthenticated,)
 
-    def list(self, request: Request, *args, **kwargs) -> Response:
-        parameters = get_parameters_from_get_request(request, ["source", "destination"])
+    def create(self, request: Request) -> Response:
+        source = get_profile_by_user(request.user)
+        data = {
+            "source": source.id,
+            "destination": request.data.get("destination"),
+            "description": request.data.get("description"),
+            "accrual": request.data.get("accrual")
+        }
 
-        if not validate_get_parameters_for_filtering(self.queryset, parameters):
-            return Response(ParseError().get_full_details(), status=400)
+        serializer = GiftSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
 
-        gifts = self.queryset.filter(**parameters)
-        serialized = self.serializer_class(gifts, many=True)
+        destination = get_profile(serializer.data["destination"])
+        description = serializer.data["description"]
+        accrual = serializer.data["accrual"]
 
-        return Response(serialized.data)
+        transaction = try_transfer(source, destination, description, accrual)
+
+        return Response(data=TransactionSerializer(transaction).data) if transaction else Response(status=400)

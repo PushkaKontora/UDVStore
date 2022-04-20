@@ -1,16 +1,12 @@
 from rest_framework import serializers
 
-from api.internal.models.store.transactions import Transaction, TransactionTypes
+from api.internal.models.profile import Profile
+from api.internal.models.store.transactions import Transaction
 
 
 class GiftSerializer(serializers.ModelSerializer):
-    def create(self, validated_data) -> Transaction:
-        gift = Transaction(**validated_data)
-        gift.type = TransactionTypes.COIN_GIFTING
-        gift.save()
-
-        return gift
+    destination = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
 
     class Meta:
         model = Transaction
-        exclude = ("type",)
+        fields = ("source", "destination", "description", "accrual")
