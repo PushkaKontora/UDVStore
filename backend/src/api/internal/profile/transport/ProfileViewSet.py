@@ -33,3 +33,7 @@ class ProfileViewSet(mixins.ListModelMixin,
         transactions = get_profile_history(cur_profile)
         ser = TransactionSerializer(transactions, many=True)
         return Response(ser.data)
+
+    @action(detail=False, methods=['get'])
+    def search(self, request):
+        pass
