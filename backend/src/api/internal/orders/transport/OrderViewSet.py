@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
@@ -7,6 +8,8 @@ from api.internal.services.order import get_formed_order_by_transaction, change_
 
 
 class OrderViewSet(GenericViewSet):
+    permission_classes = (IsAuthenticated, )
+
     def retrieve(self, request: Request, pk=None) -> Response:
         order = get_formed_order_by_transaction(pk)
 

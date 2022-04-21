@@ -61,12 +61,12 @@ class CartViewSet(ViewSet):
         if not order:
             return Response(status=400)
 
-        cart_serializer = CartSerializer(order, data=data, context=CartSerializer.UPDATE_CONTEXT)
+        cart_serializer = CartSerializer(order, data=data, partial=True)
         cart_serializer.is_valid(raise_exception=True)
 
         updated_order: Order = cart_serializer.save()
 
-        if not validate_amount(updated_order):
+        if not validate_amount([updated_order]):
             return Response(status=400)
 
         updated_order.save()
