@@ -14,7 +14,5 @@ urlpatterns = [
     path("", include(profileRouter.urls)),
     path("", include(orders_router.urls)),
     path("", include(order_router.urls)),
-
-    path("test/", test_view)
     path("", include(adminRouter.urls)),
 ]
