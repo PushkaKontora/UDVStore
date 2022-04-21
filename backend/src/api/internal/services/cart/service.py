@@ -1,4 +1,4 @@
-from typing import Union, Optional, List
+from typing import Union, Optional, List, Iterable
 
 from django.contrib.auth.models import User
 from django.db import IntegrityError, transaction
@@ -30,11 +30,11 @@ def get_total(order: Order) -> int:
     return order.storage_cell.product.price * order.amount
 
 
-def validate_amount(orders: List[Order]) -> bool:
+def validate_amount(orders: Iterable[Order]) -> bool:
     return all(order.amount <= order.storage_cell.amount for order in orders)
 
 
-def validate_balance(orders: List[Order]) -> bool:
+def validate_balance(orders: Iterable[Order]) -> bool:
     return all(order.profile.balance >= get_total(order) for order in orders)
 
 
@@ -47,7 +47,7 @@ def validate_new_order(order: Order) -> bool:
     return validate_amount([order])
 
 
-def pay(orders: List[Order]) -> List[Transaction]:
+def pay(orders: Iterable[Order]) -> List[Transaction]:
     if not validate_amount(orders) or not validate_balance(orders):
         return []
 
@@ -62,28 +62,28 @@ def pay(orders: List[Order]) -> List[Transaction]:
         return []
 
 
-def _extract_amount_in_storage(orders: List[Order]) -> None:
+def _extract_amount_in_storage(orders: Iterable[Order]) -> None:
     for order in orders:
         storage = order.storage_cell
         storage.amount -= order.amount
         storage.save()
 
 
-def _extract_total_from_balance(orders: List[Order]) -> None:
+def _extract_total_from_balance(orders: Iterable[Order]) -> None:
     for order in orders:
         profile = order.profile
         profile.balance -= get_total(order)
         profile.save()
 
 
-def _mark_order_as_ready(orders: List[Order]) -> None:
+def _mark_order_as_ready(orders: Iterable[Order]) -> None:
     for order in orders:
         order.in_cart = False
         order.status = StatusChoices.IN_PROCESS
         order.save()
 
 
-def _get_transactions(orders: List[Order]) -> List[Transaction]:
+def _get_transactions(orders: Iterable[Order]) -> List[Transaction]:
     return [Transaction.objects.create(
         type=TransactionTypes.BUYING,
         source=order.profile,
