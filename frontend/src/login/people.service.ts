@@ -76,10 +76,10 @@ export class PeopleService {
                 }
 
                 // if (user) {
-                //     if (user.isAdmin === false) {
+                //     if (user.isStaff === false) {
                 //         this._router.navigate(['/main-page/' + user.id]);
                 //         login.reset();
-                //     } else if (user.isAdmin === true) {
+                //     } else if (user.isStaff === true) {
                 //         this._router.navigate(['/admin/' + user.id]);
                 //         login.reset();
                 //     }
