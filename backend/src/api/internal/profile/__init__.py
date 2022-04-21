@@ -1,1 +1,1 @@
-from .routers import profileRouter
+from .routers import *

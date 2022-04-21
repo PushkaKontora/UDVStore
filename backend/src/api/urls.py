@@ -14,5 +14,5 @@ urlpatterns = [
     path("", include(profileRouter.urls)),
     path("", include(orders_router.urls)),
     path("", include(order_router.urls)),
-    path("", include(adminRouter.urls)),
+    path("", include(adminRouter.urls))
 ]

@@ -7,6 +7,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     patronymic = models.CharField(max_length=256, default="", blank=True)
     balance = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+    photo = models.ImageField(upload_to="profile", null=True)
 
     class Meta:
         db_table = "profiles"
