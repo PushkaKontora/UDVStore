@@ -70,22 +70,25 @@ export class PeopleService {
         let options = { headers: headers };
         return this._http.get<IUser>(this._urlLoginUser, options )
             .subscribe((user: IUser) => {
-                if (user) {
-                    this._router.navigate(['/main-page/' + user.id]);
-                    this.findUser = user;
-                }
-
                 // if (user) {
-                //     if (user.isStaff === false) {
-                //         this._router.navigate(['/main-page/' + user.id]);
-                //         login.reset();
-                //     } else if (user.isStaff === true) {
-                //         this._router.navigate(['/admin/' + user.id]);
-                //         login.reset();
-                //     }
-                // } else {
-                //     alert('user not found');
+                //     this._router.navigate(['/main-page/' + user.id]);
+                //     this.findUser = user;
                 // }
+
+                if (user) {
+                    if (!user.is_staff) {
+                        this._router.navigate(['/main-page/' + user.id]);
+                        this.findUser = user;
+                       console.log('!user.is_staff')
+                        console.log(this.findUser)
+                    } else if (user.is_staff) {
+                        this._router.navigate(['/admin/']);
+                        this.findUser = user;
+                        console.log('user.is_staff')
+                    }
+                } else {
+                    alert('user not found');
+                }
 
             }, () => {
                 alert('Something went wrong');

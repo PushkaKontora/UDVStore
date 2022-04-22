@@ -7,6 +7,7 @@ export interface IUser {
     patronymic: string;
     balance: number;
     image?: string; // фото - пока нет.
+    is_staff: boolean
 }
 
 export interface products {
