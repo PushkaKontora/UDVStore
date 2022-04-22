@@ -11,6 +11,7 @@ import {AdminRulesComponent} from "./components/admin-rules/admin-rules.componen
 import {TuiAvatarModule, TuiDataListWrapperModule, TuiMultiSelectModule} from "@taiga-ui/kit";
 import {TuiDataListModule, TuiDropdownControllerModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
 import {TuiLetModule} from "@taiga-ui/cdk";
+import {AdminService} from "./admin.service";
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import {TuiLetModule} from "@taiga-ui/cdk";
         TuiLetModule,
         TuiAvatarModule,
         TuiDropdownControllerModule,
-    ]
+    ],
+     providers: [AdminService]
 })
 export class AdminMainPageModule {
 }

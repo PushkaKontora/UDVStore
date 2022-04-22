@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {delay, filter, Observable, of, startWith, Subject, switchMap} from "rxjs";
 import {IUser} from "../../../interfaces";
+import {AdminService} from "../../admin.service";
 
 // const databaseMockData: IUser[] = [
 //     {
@@ -132,19 +133,17 @@ class User implements IUser {
 }
 
 const databaseMockData: readonly User[] = [
-    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd","dsj",'http://marsibarsi.me/images/1x1small.jpg' ),
-    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd","dsj",'http://marsibarsi.me/images/1x1small.jpg' ),
-    new User(500, 'mat', 5, false, 'dfhjkhk', "sdk", "sd","dsj",'http://marsibarsi.me/images/1x1small.jpg' ),
-    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd","dsj",'http://marsibarsi.me/images/1x1small.jpg' ),
-    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd","dsj",'http://marsibarsi.me/images/1x1small.jpg' ),
-
-    new User(500, 'mat', 5, false, 'dfhjkhk', "sdk", "sd","dsj",'http://marsibarsi.me/images/1x1small.jpg' ),
-    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd","dsj",'http://marsibarsi.me/images/1x1small.jpg' ),
-    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd","dsj",'http://marsibarsi.me/images/1x1small.jpg' ),
-
-    new User(500, 'mat', 5, false, 'dfhjkhk', "sdk", "sd","dsj",'http://marsibarsi.me/images/1x1small.jpg' ),
-    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd","dsj",'http://marsibarsi.me/images/1x1small.jpg' ),
-    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd","dsj",'http://marsibarsi.me/images/1x1small.jpg' ),
+    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd", "dsj", 'http://marsibarsi.me/images/1x1small.jpg'),
+    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd", "dsj", 'http://marsibarsi.me/images/1x1small.jpg'),
+    new User(500, 'mat', 5, false, 'dfhjkhk', "sdk", "sd", "dsj", 'http://marsibarsi.me/images/1x1small.jpg'),
+    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd", "dsj", 'http://marsibarsi.me/images/1x1small.jpg'),
+    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd", "dsj", 'http://marsibarsi.me/images/1x1small.jpg'),
+    new User(500, 'mat', 5, false, 'dfhjkhk', "sdk", "sd", "dsj", 'http://marsibarsi.me/images/1x1small.jpg'),
+    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd", "dsj", 'http://marsibarsi.me/images/1x1small.jpg'),
+    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd", "dsj", 'http://marsibarsi.me/images/1x1small.jpg'),
+    new User(500, 'mat', 5, false, 'dfhjkhk', "sdk", "sd", "dsj", 'http://marsibarsi.me/images/1x1small.jpg'),
+    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd", "dsj", 'http://marsibarsi.me/images/1x1small.jpg'),
+    new User(500, 'Sedov', 5, false, 'dfhjkhk', "sdk", "sd", "dsj", 'http://marsibarsi.me/images/1x1small.jpg'),
 ];
 
 @Component({
@@ -157,7 +156,8 @@ export class AdminAccrualComponent implements OnInit {
     readonly search$ = new Subject<string>();
     readonly testValue = new FormControl();
 
-    constructor() {
+    constructor(private _adminService: AdminService) {
+        _adminService.getProfiles();
     }
 
     ngOnInit(): void {
@@ -201,8 +201,5 @@ export class AdminAccrualComponent implements OnInit {
 
         return of(result).pipe(delay(Math.random() * 1000 + 500));
     }
-
 }
 
-
-// [formControl]="testValue"
