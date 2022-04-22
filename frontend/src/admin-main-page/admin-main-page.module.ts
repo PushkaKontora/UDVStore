@@ -8,8 +8,8 @@ import {AdminOrdersComponent} from "./components/admin-orders/admin-orders.compo
 import {AdminAccrualComponent} from "./components/admin-accrual/admin-accrual.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AdminRulesComponent} from "./components/admin-rules/admin-rules.component";
-import {TuiDataListWrapperModule, TuiMultiSelectModule} from "@taiga-ui/kit";
-import {TuiDataListModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
+import {TuiAvatarModule, TuiDataListWrapperModule, TuiMultiSelectModule} from "@taiga-ui/kit";
+import {TuiDataListModule, TuiDropdownControllerModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
 import {TuiLetModule} from "@taiga-ui/cdk";
 
 
@@ -32,6 +32,8 @@ import {TuiLetModule} from "@taiga-ui/cdk";
         TuiDataListWrapperModule,
         TuiTextfieldControllerModule,
         TuiLetModule,
+        TuiAvatarModule,
+        TuiDropdownControllerModule,
     ]
 })
 export class AdminMainPageModule {

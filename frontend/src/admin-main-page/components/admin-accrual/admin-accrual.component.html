@@ -8,14 +8,13 @@
                     *tuiLet="items$ | async as items"
                     #component
                     tuiTextfieldExampleText="Фамилия Имя Отчество"
-                    formControlName="employee"
                     class="control inputField inputField__name"
-                    [formControl]="testValue"
                     [tuiTextfieldLabelOutside]="true"
-                    [expandable]="false"
-                    (searchChange)="onSearchChange($event)"
+                    [expandable]="true"
+                    [formControl]="testValue"
+                    [tuiDropdownMaxHeight]="180"
                     tuiTextfieldSize="s"
-                >
+                >Фамилия Имя Отчество
                     <tui-data-list-wrapper
                         *tuiDataList
                         [items]="items | tuiHideSelected : component"
@@ -28,12 +27,12 @@
                     let-data
                 >
                     <div class="template">
-                        <!--                <tui-avatar-->
-                        <!--                    size="xs"-->
-                        <!--                    class="avatar"-->
-                        <!--&lt;!&ndash;                    [avatarUrl]="data.avatarUrl"&ndash;&gt;-->
-                        <!--                    [text]="data.toString()"-->
-                        <!--                ></tui-avatar>-->
+                        <tui-avatar
+                            size="xs"
+                            class="avatar"
+                            [avatarUrl]="data.avatarUrl"
+                            [text]="data.toString()"
+                        ></tui-avatar>
                         {{data}}
                     </div>
                 </ng-template>
