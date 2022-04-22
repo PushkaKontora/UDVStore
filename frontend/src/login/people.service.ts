@@ -66,20 +66,16 @@ export class PeopleService {
     public getUser(): Subscription {
         let headers = new HttpHeaders({
             'Content-Type': 'application/json',
-            'Authorization': "Token " + this.token });
-        let options = { headers: headers };
-        return this._http.get<IUser>(this._urlLoginUser, options )
+            'Authorization': "Token " + this.token
+        });
+        let options = {headers: headers};
+        return this._http.get<IUser>(this._urlLoginUser, options)
             .subscribe((user: IUser) => {
-                // if (user) {
-                //     this._router.navigate(['/main-page/' + user.id]);
-                //     this.findUser = user;
-                // }
-
                 if (user) {
                     if (!user.is_staff) {
                         this._router.navigate(['/main-page/' + user.id]);
                         this.findUser = user;
-                       console.log('!user.is_staff')
+                        console.log('!user.is_staff')
                         console.log(this.findUser)
                     } else if (user.is_staff) {
                         this._router.navigate(['/admin/']);
