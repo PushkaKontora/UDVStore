@@ -14,9 +14,15 @@ export class PeopleService {
     private _urlLoginTokenUser: string = 'http://127.0.0.1:8000/auth/token/login';
     private _urlApiProducts: string = 'http://127.0.0.1:8000/api/products/';
     public token?: string;
-    public options: any;
     public findUser?: IUser;
     public storeProducts!: products[];
+    public optionsForHttp = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': "Token " + this.token
+        })
+    }
+
 
     constructor(private _http: HttpClient, private _router: Router) {
     }
@@ -36,12 +42,7 @@ export class PeopleService {
     }
 
     public getProducts(): Subscription {
-        let headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': "Token " + this.token
-        });
-        let options = {headers: headers};
-        return this._http.get<products[]>(this._urlApiProducts, options)
+        return this._http.get<products[]>(this._urlApiProducts, this.optionsForHttp)
             .subscribe((res: products[]) => {
                 this.storeProducts = res;
             }, () => {
@@ -64,12 +65,7 @@ export class PeopleService {
     }
 
     public getUser(): Subscription {
-        let headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': "Token " + this.token
-        });
-        let options = {headers: headers};
-        return this._http.get<IUser>(this._urlLoginUser, options)
+        return this._http.get<IUser>(this._urlLoginUser, this.optionsForHttp)
             .subscribe((user: IUser) => {
                 if (user) {
                     if (!user.is_staff) {
