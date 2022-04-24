@@ -16,12 +16,7 @@ export class PeopleService {
     public token?: string;
     public findUser?: IUser;
     public storeProducts!: products[];
-    public optionsForHttp = {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': "Token " + this.token
-        })
-    }
+    public optionsForHttp?: { headers: HttpHeaders; }
 
 
     constructor(private _http: HttpClient, private _router: Router) {
@@ -59,6 +54,12 @@ export class PeopleService {
                 (res: any) => {
                     login.reset();
                     this.token = res?.auth_token;
+                    this.optionsForHttp =  {
+                        headers: new HttpHeaders({
+                            'Content-Type': 'application/json',
+                            'Authorization': "Token " + this.token
+                        })
+                    }
                     this.getUser();
                     this.getProducts();
                 });
