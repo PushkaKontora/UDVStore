@@ -1,6 +1,6 @@
 
 .wrapper {
-    background-color: #380159;
+    background-color: #302E2E;
     position: relative;
     height: calc(100vh - 4.7rem);
 
@@ -24,7 +24,7 @@
         margin: 0 auto;
         display: grid;
         gap: 1.5rem;
-        grid-template-columns: 31% auto;
+        grid-template-columns: 29% auto;
         height: 100%;
 
         .value_grid {
@@ -49,7 +49,7 @@
                 .figure img {
                     margin: 0 auto;
                     display: block;
-                    height: 5.1em;
+                    height: 5.5em;
                 }
 
                 .nav {
@@ -61,13 +61,15 @@
                     .button_value {
                         z-index: 2;
                         width: 90%;
-                        background-color: #EBEBEB;
+                        background-color: #F7F7F7;
                         color: #797979;
                         margin: 0.1em auto;
-                        font-size: 1em;
+                        font-size: 1.1em;
                         line-height: 1.2em;
-                        padding: 0.185em 0;
+                        padding: 0.4em 0;
+                        font-weight: 500;
                     }
+
 
                     .button_value:first-child {
                         margin-top: 0;

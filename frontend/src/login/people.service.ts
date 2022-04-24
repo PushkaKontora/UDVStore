@@ -14,9 +14,10 @@ export class PeopleService {
     private _urlLoginTokenUser: string = 'http://127.0.0.1:8000/auth/token/login';
     private _urlApiProducts: string = 'http://127.0.0.1:8000/api/products/';
     public token?: string;
-    public options: any;
     public findUser?: IUser;
     public storeProducts!: products[];
+    public optionsForHttp?: { headers: HttpHeaders; }
+
 
     constructor(private _http: HttpClient, private _router: Router) {
     }
@@ -36,12 +37,7 @@ export class PeopleService {
     }
 
     public getProducts(): Subscription {
-        let headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': "Token " + this.token
-        });
-        let options = {headers: headers};
-        return this._http.get<products[]>(this._urlApiProducts, options)
+        return this._http.get<products[]>(this._urlApiProducts, this.optionsForHttp)
             .subscribe((res: products[]) => {
                 this.storeProducts = res;
             }, () => {
@@ -58,33 +54,27 @@ export class PeopleService {
                 (res: any) => {
                     login.reset();
                     this.token = res?.auth_token;
+                    this.optionsForHttp =  {
+                        headers: new HttpHeaders({
+                            'Content-Type': 'application/json',
+                            'Authorization': "Token " + this.token
+                        })
+                    }
                     this.getUser();
                     this.getProducts();
                 });
     }
 
     public getUser(): Subscription {
-        let headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': "Token " + this.token });
-        let options = { headers: headers };
-        return this._http.get<IUser>(this._urlLoginUser, options )
+        return this._http.get<IUser>(this._urlLoginUser, this.optionsForHttp)
             .subscribe((user: IUser) => {
-                // if (user) {
-                //     this._router.navigate(['/main-page/' + user.id]);
-                //     this.findUser = user;
-                // }
-
                 if (user) {
                     if (!user.is_staff) {
                         this._router.navigate(['/main-page/' + user.id]);
                         this.findUser = user;
-                       console.log('!user.is_staff')
-                        console.log(this.findUser)
                     } else if (user.is_staff) {
                         this._router.navigate(['/admin/']);
                         this.findUser = user;
-                        console.log('user.is_staff')
                     }
                 } else {
                     alert('user not found');

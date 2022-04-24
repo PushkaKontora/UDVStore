@@ -4,17 +4,45 @@
         <div class="value">
             <div class="title">СОТРУДНИК</div>
             <div class="content">
-                <input type="text"
-                       placeholder="Фамилия Имя Отчество"
-                       class="inputField inputField__name"
-                       formControlName="employee"
+                <tui-multi-select
+                    *tuiLet="items$ | async as items"
+                    #component
+                    tuiTextfieldExampleText="Фамилия Имя Отчество"
+                    class="control inputField inputField__name"
+                    [tuiTextfieldLabelOutside]="true"
+                    [expandable]="true"
+                    [formControl]="testValue"
+                    [tuiDropdownMaxHeight]="180"
+                    (searchChange)="onSearchChange($event)"
+                    tuiTextfieldSize="s"
+                >Фамилия Имя Отчество
+                    <tui-data-list-wrapper
+                        *tuiDataList
+                        [items]="items | tuiHideSelected : component "
+                        [itemContent]="itemContent"
+                    ></tui-data-list-wrapper>
+                </tui-multi-select>
+
+                <ng-template
+                    #itemContent
+                    let-data
                 >
+                    <div class="template">
+                        <tui-avatar
+                            size="xs"
+                            class="avatar"
+                            [avatarUrl]="data.photo"
+                            [text]="data.toString()"
+                        ></tui-avatar>
+                        {{data}}
+                    </div>
+                </ng-template>
             </div>
         </div>
         <div class="value">
             <div class="title title__coins">UCoins <img src="../../../assets/images-main-page/greenBlockCoins.svg"
                                                         alt="greenBlockCoins"></div>
-            <div class="content"><input type="text"
+            <div class="content"><input type="number"
                                         placeholder="Количество койнов "
                                         class="inputField"
                                         formControlName="coins"

@@ -1,28 +1,32 @@
 .wrapper {
+    font-family: "Roboto Light", Arial, sans-serif;
+
     .text {
         margin-bottom: 1.4rem;
 
         .title {
-            font-size: 1.55em;
+            font-size: 1.2em;
             line-height: 1.25em;
+            font-weight: 600;
         }
 
         .field {
             color: #727272;
             font-size: 0.85em;
+            font-weight: 500;
         }
 
         &__content {
             input {
                 border: 1.5px solid #C5C5C5;
                 width: 100%;
-                font-size: 1.35em;
+                font-size: 1.0em;
 
                 &[type="text"] {
                     padding: 0.2em;
                     color: black;
                     font-weight: 300;
-                    letter-spacing: 0.05em;
+                    letter-spacing: 0.02em;
                 }
             }
 
@@ -37,6 +41,8 @@
                     border-radius: 0 0 2px 2px;
                     color: #1C1B1B;
                     background-color: #2CF2B3;
+                    font-weight: 500;
+                    font-family: KarpaNuenPro, Arial, sans-serif ;
 
                     &[disabled] {
                         color: #888888;
@@ -55,15 +61,15 @@
                         height: 1.18em;
                     }
 
-                   input[type=file]{
-                        outline:0;
-                        opacity:0;
-                        pointer-events:none;
-                        user-select:none
-                   }
+                    input[type=file] {
+                        outline: 0;
+                        opacity: 0;
+                        pointer-events: none;
+                        user-select: none
+                    }
 
-                    label{
-                        .material-icons{
+                    label {
+                        .material-icons {
                             display: block;
                             line-height: 1em;
                             padding: 0.5em 0.8em;
@@ -76,6 +82,7 @@
         }
     }
 }
+
 //.attachFile {
 //    margin-left: 0.2em;
 //    background-color: #EFEFEF;

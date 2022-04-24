@@ -39,18 +39,22 @@ img {
                     padding-left: 0.2em;
                 }
 
+                hr{
+                    visibility: hidden;
+                }
+
                 .active-link {
                     hr {
                         visibility: visible;
-                        border: #2CF2B3 solid 0.055em;
-                        border-radius: 1em;
+                        border: #2CF2B3 solid 0.035em;
+                        border-radius: 0.7em;
                         background: #2CF2B3;
                         width: 115%;
 
                     }
 
                     .merch {
-                        margin-left: -0.12em;
+                        margin-left: -0.15em;
                     }
 
                     .rules {
@@ -126,8 +130,8 @@ img {
 
                 li.li_gift {
                     img {
-                        margin-top: -0.4em;
-                        width: 2.6em;
+                        margin-top: -0.25em;
+                        width: 2.15em;
                     }
                 }
 

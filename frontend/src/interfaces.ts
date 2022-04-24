@@ -6,7 +6,19 @@ export interface IUser {
     last_name: string;
     patronymic: string;
     balance: number;
-    image?: string; // фото - пока нет.
+    avatarUrl: string | null;
+    is_staff: boolean
+}
+
+export interface UsersSearch{
+    id: number,
+    username: string,
+    first_name: string,
+    last_name: string,
+    email: string,
+    patronymic: string,
+    balance: number,
+    photo: string | null,
     is_staff: boolean
 }
 
@@ -24,6 +36,6 @@ export interface cell {
     name: string,
     size: number,
     amount: number
-}
+}// клека
 
 

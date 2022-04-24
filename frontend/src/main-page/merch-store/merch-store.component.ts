@@ -10,12 +10,17 @@ import {PeopleService} from "../../login/people.service";
 })
 export class MerchStoreComponent implements OnInit {
     public storeProducts!: products[];
+    public choseItem: any;
 
-    constructor(private _peopleService: PeopleService) {
+    constructor(private _peopleService: PeopleService, private _storeService: StoreService) {
         this.storeProducts = _peopleService.storeProducts;
-        console.log(this.storeProducts)
     }
 
     ngOnInit(): void {
+    }
+
+    chooseProduct(event: any, product: products) {
+        this._storeService.postSelectedProduct(1, product.cells[0].id)
+            .subscribe(() => this._storeService.postBuyProduct());
     }
 }

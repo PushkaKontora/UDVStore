@@ -8,6 +8,10 @@ import {AdminOrdersComponent} from "./components/admin-orders/admin-orders.compo
 import {AdminAccrualComponent} from "./components/admin-accrual/admin-accrual.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AdminRulesComponent} from "./components/admin-rules/admin-rules.component";
+import {TuiAvatarModule, TuiDataListWrapperModule, TuiMultiSelectModule} from "@taiga-ui/kit";
+import {TuiDataListModule, TuiDropdownControllerModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
+import {TuiLetModule} from "@taiga-ui/cdk";
+import {AdminService} from "./admin.service";
 
 
 @NgModule({
@@ -24,7 +28,15 @@ import {AdminRulesComponent} from "./components/admin-rules/admin-rules.componen
         AdminMainPageRoutingModule,
         FormsModule,
         ReactiveFormsModule,
-    ]
+        TuiMultiSelectModule,
+        TuiDataListModule,
+        TuiDataListWrapperModule,
+        TuiTextfieldControllerModule,
+        TuiLetModule,
+        TuiAvatarModule,
+        TuiDropdownControllerModule,
+    ],
+     providers: [AdminService]
 })
 export class AdminMainPageModule {
 }

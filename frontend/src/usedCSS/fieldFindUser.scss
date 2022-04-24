@@ -28,7 +28,8 @@
                 border-color: #2CF2B3;
             }
 
-            &[type="text"] {
+            &[type="text"],
+            &[type="number"]{
                 color: #B5B5B5;
                 padding: 0.2em 0.4em;
                 font-weight: 300;
