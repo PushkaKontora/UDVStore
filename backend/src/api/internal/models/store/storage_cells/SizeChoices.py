@@ -2,6 +2,7 @@ from django.db import models
 
 
 class SizeChoices(models.IntegerChoices):
+    NONE = 0
     XS = 1
     S = 2
     M = 3
