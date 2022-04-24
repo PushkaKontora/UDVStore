@@ -10,6 +10,18 @@ export interface IUser {
     is_staff: boolean
 }
 
+export interface UsersSearch{
+    id: number,
+    username: string,
+    first_name: string,
+    last_name: string,
+    email: string,
+    patronymic: string,
+    balance: number,
+    photo: string | null,
+    is_staff: boolean
+}
+
 export interface products {
     id: number,
     name: string,
@@ -24,6 +36,6 @@ export interface cell {
     name: string,
     size: number,
     amount: number
-}
+}// клека
 
 

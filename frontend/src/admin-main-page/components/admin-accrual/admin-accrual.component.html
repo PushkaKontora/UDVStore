@@ -13,11 +13,12 @@
                     [expandable]="true"
                     [formControl]="testValue"
                     [tuiDropdownMaxHeight]="180"
+                    (searchChange)="onSearchChange($event)"
                     tuiTextfieldSize="s"
                 >Фамилия Имя Отчество
                     <tui-data-list-wrapper
                         *tuiDataList
-                        [items]="items | tuiHideSelected : component"
+                        [items]="items | tuiHideSelected : component "
                         [itemContent]="itemContent"
                     ></tui-data-list-wrapper>
                 </tui-multi-select>
@@ -30,7 +31,7 @@
                         <tui-avatar
                             size="xs"
                             class="avatar"
-                            [avatarUrl]="data.avatarUrl"
+                            [avatarUrl]="data.photo"
                             [text]="data.toString()"
                         ></tui-avatar>
                         {{data}}
