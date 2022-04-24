@@ -7,7 +7,7 @@ from api.internal.models.store.storage_cells.SizeChoices import SizeChoices
 
 class StorageCell(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="cells_in_storage")
-    size = models.IntegerField(choices=SizeChoices.choices, default=SizeChoices.M)
+    size = models.IntegerField(choices=SizeChoices.choices, default=SizeChoices.NONE)
     amount = models.BigIntegerField(validators=[MinValueValidator(0)])
 
     class Meta:
