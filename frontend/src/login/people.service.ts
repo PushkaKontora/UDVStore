@@ -72,12 +72,9 @@ export class PeopleService {
                     if (!user.is_staff) {
                         this._router.navigate(['/main-page/' + user.id]);
                         this.findUser = user;
-                        console.log('!user.is_staff')
-                        console.log(this.findUser)
                     } else if (user.is_staff) {
                         this._router.navigate(['/admin/']);
                         this.findUser = user;
-                        console.log('user.is_staff')
                     }
                 } else {
                     alert('user not found');

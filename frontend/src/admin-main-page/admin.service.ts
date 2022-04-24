@@ -10,7 +10,8 @@ import {Router} from "@angular/router";
 })
 export class AdminService {
     private _urlProfiles: string = "http://127.0.0.1:8000/api/profile/";
-    private _urlPostAdminAccrual: string = "http://127.0.0.1:8000/api/admin/accrual/";
+    //todo: НЕ ЗАБЫТЬ ИСПРАВИТЬ accural НА accrual
+    private _urlPostAdminAccrual: string = "http://127.0.0.1:8000/api/admin/accural/";
     public foundUsers?: UsersSearch[];
 
     constructor(private _router: Router,private _peopleService: PeopleService, private _http: HttpClient) {
@@ -26,15 +27,11 @@ export class AdminService {
             });
     }
 
-    public postSelectedProduct(to_profile_id: number | number[], price: number, comment: string) {
-        this._http.post<any>(this._urlPostAdminAccrual, {
-            "to_profile_id": to_profile_id,
+    public postAdminAccrual(to_profile_id: number | number[], price: number, comment: string) {
+        return this._http.post<any>(this._urlPostAdminAccrual, {
+            "to_profile_ids": to_profile_id,
             "price": price,
             "comment": comment
-        })
-            .subscribe(
-                (res: any) => {
-                    console.log('postSelectedProduct!!!!!!!!! ' + to_profile_id + '  ' + price);
-                });
+        }, this._peopleService.optionsForHttp)
     }
 }

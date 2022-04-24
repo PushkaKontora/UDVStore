@@ -68,9 +68,15 @@ export class AdminAccrualComponent implements OnInit {
 
     public onSubmit() {
         this.writePers.patchValue({employee: this.testValue.value});
-        console.log(this.writePers)
-        console.log(this.writePers.value[0])
-        console.log(this.writePers)
+        let arrayId = [];
+        for(let user of this.writePers.value.employee){
+            arrayId.push(user.id);
+        }
+        this._adminService.postAdminAccrual(arrayId, this.writePers.value.coins, this.writePers.value.activity)
+            .subscribe(
+                (res: any) => {
+
+                });;
     }
 
     private createForm(): void {
