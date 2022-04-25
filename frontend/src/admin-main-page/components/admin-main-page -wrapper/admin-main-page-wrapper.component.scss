@@ -85,12 +85,13 @@
                     .button_value {
                         z-index: 2;
                         width: 90%;
-                        background-color: #EBEBEB;
+                        background-color: #F7F7F7;
                         color: #797979;
-                        margin: 0.1em auto;
                         font-size: 0.9em;
-
-                        padding: 0.4em 0;
+                        font-weight: 500;
+                        margin: 0 auto;
+                        letter-spacing: 0.06em;
+                        padding: 0.52em 0;
                     }
 
                     .button_value:first-child {

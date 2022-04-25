@@ -6,6 +6,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LoginModule} from "../login/login.module";
+import {SkeletoneLoadingModule} from "../skeletone-loading/skeletone-loading.module";
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import {LoginModule} from "../login/login.module";
         AppRoutingModule,
         LoginModule,
         TuiRootModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        SkeletoneLoadingModule
     ],
     providers: [],
     bootstrap: [AppComponent]

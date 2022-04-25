@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {IUser, UsersSearch} from "../interfaces";
 import {PeopleService} from "../login/people.service";
 import {Router} from "@angular/router";
+import {FormGroup} from "@angular/forms";
 
 @Injectable({
     providedIn: 'root'
@@ -14,16 +15,16 @@ export class AdminService {
     private _urlPostAdminAccrual: string = "http://127.0.0.1:8000/api/admin/accural/";
     public foundUsers?: UsersSearch[];
 
-    constructor(private _router: Router,private _peopleService: PeopleService, private _http: HttpClient) {
+    constructor(private _router: Router, private _peopleService: PeopleService, private _http: HttpClient) {
     }
 
     public getProfiles(): Subscription {
         return this._http.get<UsersSearch[]>(this._urlProfiles, this._peopleService.optionsForHttp)
             .subscribe((users: UsersSearch[]) => {
-             this.foundUsers = users;
+                this.foundUsers = users;
                 this._router.navigate(["/admin/accrual"]);
             }, () => {
-                alert('Something went wrong - getProfiles');
+               console.log('Something went wrong - getProfiles');
             });
     }
 

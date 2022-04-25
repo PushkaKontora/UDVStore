@@ -1,11 +1,15 @@
-<div class="wrapper">
+
+<div class="wrapper" >
     <div class="banner">
         <img src="../../../assets/images-main-page/banner.svg" alt="banner">
     </div>
-    <div class="content">
+    <div class="wrapper_load">
+        <skeletone class="loading" *ngIf="!loaded"></skeletone>
+    </div>
+    <div class="content" *ngIf="loaded">
         <div class="wrapperGrid">
-            <div class="contentGrid" *ngFor="let item of storeProducts">
-                <div class="content_image"><img src="{{item?.photo}}" alt="product image"></div>
+            <div class="contentGrid" *ngFor="let item  of storeProducts">
+                <div class="content_image"><img src="{{item?.photo }}" alt="product image"></div>
                 <div class="cardFilling">
                     <div class="text">{{item?.name | uppercase}}</div>
                     <div class="price">

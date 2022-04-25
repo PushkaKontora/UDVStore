@@ -6,6 +6,7 @@ import {MainPageWrapperComponent} from "./main-page-wrapper/main-page-wrapper.co
 import {MainRegulationsComponent} from "./main-regulations/main-regulations.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StoreService} from "./store.service";
+import {SkeletoneLoadingModule} from "../skeletone-loading/skeletone-loading.module";
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import {StoreService} from "./store.service";
         MainPageRoutingModule,
         FormsModule,
         ReactiveFormsModule,
+        SkeletoneLoadingModule
     ],
     providers: [StoreService]
 })

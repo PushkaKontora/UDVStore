@@ -2,9 +2,14 @@ img {
     width: 100%;
 }
 
+.loading {
+    background-color: #1F1F1F;
+    height: 100vh;
+}
+
 .wrapper {
     background-color: #3A3A3A;
-    //height: 100vh;
+    min-height: 100vh;
     .banner {
         width: 100%;
         color: white;

@@ -7,6 +7,7 @@ import {SpaBodyComponent} from "./components/spa-body/spa-body.component";
 import {AppRoutingModule} from "../app/app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
 import {LoginRoutingModule} from "./login-routing.module";
+import {SkeletoneLoadingModule} from "../skeletone-loading/skeletone-loading.module";
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import {LoginRoutingModule} from "./login-routing.module";
         ReactiveFormsModule,
         CommonModule,
         HttpClientModule,
-        LoginRoutingModule
+        LoginRoutingModule,
     ],
     exports: [
         SpaBodyComponent

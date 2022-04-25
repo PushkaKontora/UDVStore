@@ -11,9 +11,11 @@ import {PeopleService} from "../../login/people.service";
 export class MerchStoreComponent implements OnInit {
     public storeProducts!: products[];
     public choseItem: any;
+    public loaded: boolean = false;
 
     constructor(private _peopleService: PeopleService, private _storeService: StoreService) {
         this.storeProducts = _peopleService.storeProducts;
+        this.loaded = _peopleService.isLoaded;
     }
 
     ngOnInit(): void {

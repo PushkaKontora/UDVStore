@@ -17,6 +17,7 @@ export class PeopleService {
     public findUser?: IUser;
     public storeProducts!: products[];
     public optionsForHttp?: { headers: HttpHeaders; }
+    public isLoaded: boolean = false;
 
 
     constructor(private _http: HttpClient, private _router: Router) {
@@ -40,6 +41,7 @@ export class PeopleService {
         return this._http.get<products[]>(this._urlApiProducts, this.optionsForHttp)
             .subscribe((res: products[]) => {
                 this.storeProducts = res;
+                this.isLoaded = true;
             }, () => {
                 alert('Something went wrong - getProducts');
             });
@@ -52,37 +54,38 @@ export class PeopleService {
         })
             .subscribe(
                 (res: any) => {
-                    login.reset();
                     this.token = res?.auth_token;
-                    this.optionsForHttp =  {
+                    this.optionsForHttp = {
                         headers: new HttpHeaders({
                             'Content-Type': 'application/json',
                             'Authorization': "Token " + this.token
                         })
                     }
-                    this.getUser();
                     this.getProducts();
+                    this.getUser();
+                    login.reset();
                 });
     }
 
     public getUser(): Subscription {
         return this._http.get<IUser>(this._urlLoginUser, this.optionsForHttp)
-            .subscribe((user: IUser) => {
-                if (user) {
-                    if (!user.is_staff) {
-                        this._router.navigate(['/main-page/' + user.id]);
-                        this.findUser = user;
-                    } else if (user.is_staff) {
-                        this._router.navigate(['/admin/']);
-                        this.findUser = user;
+            .subscribe(
+                (user: IUser) => {
+                    if (user) {
+                        if (!user.is_staff) {
+                            this._router.navigate(['/main-page/' + user.id]);
+                            this.findUser = user;
+                        } else if (user.is_staff) {
+                            this.findUser = user;
+                            this._router.navigate(["/admin"]);
+                        }
+                    } else {
+                        alert('user not found');
                     }
-                } else {
-                    alert('user not found');
-                }
 
-            }, () => {
-                alert('Something went wrong');
-            });
+                }, () => {
+                    alert('Something went wrong');
+                });
     }
 }
 

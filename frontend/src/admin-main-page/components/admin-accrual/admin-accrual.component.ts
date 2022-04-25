@@ -69,14 +69,15 @@ export class AdminAccrualComponent implements OnInit {
     public onSubmit() {
         this.writePers.patchValue({employee: this.testValue.value});
         let arrayId = [];
-        for(let user of this.writePers.value.employee){
+        for (let user of this.writePers.value.employee) {
             arrayId.push(user.id);
         }
         this._adminService.postAdminAccrual(arrayId, this.writePers.value.coins, this.writePers.value.activity)
             .subscribe(
                 (res: any) => {
-
-                });;
+                    this.writePers.reset();
+                });
+        ;
     }
 
     private createForm(): void {
@@ -89,7 +90,7 @@ export class AdminAccrualComponent implements OnInit {
 
     private makeUserArray(): void {
         for (let user of this.foundUsers) {
-            databaseMockData.push(new User(user.id,user.username,user.first_name, user.last_name, user.email,
+            databaseMockData.push(new User(user.id, user.username, user.first_name, user.last_name, user.email,
                 user.patronymic, user.balance, user.photo, user.is_staff));
         }
     }

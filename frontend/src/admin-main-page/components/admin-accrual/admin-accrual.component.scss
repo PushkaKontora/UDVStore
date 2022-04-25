@@ -13,4 +13,14 @@
     opacity: 0.7;
 }
 
+.button{
+    padding: 0.2em 0;
+    letter-spacing: 0.05em;
+
+    &[disabled]{
+        background-color: #B5FCE5;
+        color: #888888;
+    }
+}
+
 
