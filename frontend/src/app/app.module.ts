@@ -7,6 +7,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LoginModule} from "../login/login.module";
 import {SkeletoneLoadingModule} from "../skeletone-loading/skeletone-loading.module";
+import {TuiSheetModule} from "@taiga-ui/addon-mobile";
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import {SkeletoneLoadingModule} from "../skeletone-loading/skeletone-loading.mod
         LoginModule,
         TuiRootModule,
         BrowserAnimationsModule,
-        SkeletoneLoadingModule
+        SkeletoneLoadingModule,
+        TuiSheetModule
     ],
     providers: [],
     bootstrap: [AppComponent]

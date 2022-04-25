@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {delay, filter, Observable, of, startWith, Subject, switchMap} from "rxjs";
+import {delay, EMPTY, filter, first, Observable, of, retry, startWith, Subject, switchMap, takeUntil} from "rxjs";
 import {IUser, UsersSearch} from "../../../interfaces";
 import {AdminService} from "../../admin.service";
+
 
 class User implements UsersSearch {
     constructor(
@@ -47,7 +48,7 @@ const databaseMockData: UsersSearch[] = [];
 @Component({
     selector: 'personal-activity',
     templateUrl: './admin-accrual.component.html',
-    styleUrls: ['./admin-accrual.component.scss']
+    styleUrls: ['./admin-accrual.component.scss'],
 })
 export class AdminAccrualComponent implements OnInit {
     public writePers: FormGroup = new FormGroup({});
@@ -55,7 +56,10 @@ export class AdminAccrualComponent implements OnInit {
     readonly testValue = new FormControl();
     public foundUsers!: UsersSearch[];
 
-    constructor(private _adminService: AdminService) {
+    constructor(
+        private _adminService: AdminService,
+        ) {
+
     }
 
     ngOnInit(): void {
@@ -64,6 +68,17 @@ export class AdminAccrualComponent implements OnInit {
         }
         this.makeUserArray();
         this.createForm();
+    }
+    public openModel() {
+        document.getElementById('modal-1')!.style.display = 'block';
+        document.body.style.overflow = "hidden";
+        document.body.classList.add('modalOpen');
+    }
+
+    public closeModel(){
+        document.getElementById('modal-1')!.style.display = 'none';
+        document.body.style.overflow = "visible";
+        document.body.classList.remove('modalOpen');
     }
 
     public onSubmit() {
@@ -77,7 +92,8 @@ export class AdminAccrualComponent implements OnInit {
                 (res: any) => {
                     this.writePers.reset();
                 });
-        ;
+        this.search$.next('');
+        this.makeUserArray();
     }
 
     private createForm(): void {

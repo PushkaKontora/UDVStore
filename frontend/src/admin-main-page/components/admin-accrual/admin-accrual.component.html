@@ -56,10 +56,23 @@
                        class="inputField"
                        formControlName="activity"
                 >
-                <button type="submit" class="button" [disabled]="writePers.invalid">НАЧИСЛИТЬ</button>
+                <button type="submit"
+                        class="button"
+                        [disabled]="writePers.invalid"
+                        (click)="openModel()"
+                >НАЧИСЛИТЬ</button>
             </div>
         </div>
     </form>
+    <div class="modal-wrapper" id="modal-1">
+        <div class="model">
+            <div class="modelBody">
+                <button><img src="../../../assets/images-admin/crossPopUp.svg" alt="cross" (click)="closeModel()"></button>
+                <div class="text">UCoins НАЧИСЛЕНЫ!</div>
+            </div>
+        </div>
+        <div class="modelBackground"></div>
+    </div>
     <div class="value">
         <div class="title">ИСТОРИЯ</div>
         <div class="content">Разверните карточку, чтобы увидеть историю сотрудника</div>

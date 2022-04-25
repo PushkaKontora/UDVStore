@@ -1,25 +1,57 @@
 @import "../../../usedCSS/fieldFindUser.scss";
 @import '~@taiga-ui/core/styles/taiga-ui-local';
+@import "../../../usedCSS/model-popUp.scss";
 
 .template {
     display: flex;
     align-items: center;
 }
+
 .avatar {
     margin: 0 0.2em;
 }
 
-.control{
+.control {
     opacity: 0.7;
 }
 
-.button{
+.button {
     padding: 0.2em 0;
     letter-spacing: 0.05em;
 
-    &[disabled]{
+    &[disabled] {
         background-color: #B5FCE5;
         color: #888888;
+    }
+}
+
+.modelBody {
+    background-color: #E8E8E8;
+    color: #282829;
+    border-radius: 1.7rem;
+    margin-left: 50%;
+    margin-top: 4.8rem;
+    width: 18rem;
+    height: 3.6rem;
+
+    .text {
+        font-family: "Roboto Thin", Arial, sans-serif;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-align: center;
+    }
+
+    button{
+        align-items: end;
+        background-color: #E8E8E8;
+        padding-top: 0.75em;
+        margin-right: 1.4rem;
+        margin-left: auto;
+        display: block;
+        height: 1.4em;
+        img{
+            height: 0.6em;
+        }
     }
 }
 
