@@ -1,6 +1,7 @@
 from rest_framework import filters, mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.request import Request
 from rest_framework.response import Response
 
 from api.internal.models.profile import Profile
@@ -8,10 +9,10 @@ from api.internal.models.store import Transaction, TransactionFile, TransactionT
 from api.internal.modules.profile.serializers.ProfileSerializer import ProfileSerializer
 from api.internal.modules.profile.serializers.TransactionSerializer import TransactionSerializer
 from api.internal.services.profile import get_profile_history
-from api.internal.services.user import get_profile_by_user, get_profiles
+from api.internal.services.user import get_profile_by_user, get_profiles, get_profiles_without
 
 
-class ProfileViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class ProfileViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     queryset = get_profiles()
     serializer_class = ProfileSerializer
     permission_classes = (IsAuthenticated,)
@@ -19,6 +20,13 @@ class ProfileViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.
 
     filter_backends = [filters.SearchFilter]
     search_fields = ["^user__first_name", "^user__last_name", "^patronymic"]
+
+    def list(self, request: Request) -> Response:
+        profiles = get_profiles_without(request.user)
+
+        serializer = ProfileSerializer(profiles, many=True)
+
+        return Response(data=serializer.data)
 
     @action(detail=False, methods=["get"])
     def current(self, request):

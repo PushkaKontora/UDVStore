@@ -10,6 +10,7 @@ class Profile(models.Model):
     photo = models.ImageField(upload_to="profile", null=True)
 
     class Meta:
+        ordering = ("pk",)
         db_table = "profiles"
         verbose_name = "Profile"
         verbose_name_plural = "Profiles"
