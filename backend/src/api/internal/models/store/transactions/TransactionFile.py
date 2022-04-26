@@ -4,10 +4,7 @@ from api.internal.models.store.transactions.Transaction import Transaction
 
 
 class TransactionFile(models.Model):
-    transaction = models.ForeignKey(
-        Transaction, on_delete=models.PROTECT,
-        related_name='files'
-    )
+    transaction = models.ForeignKey(Transaction, on_delete=models.PROTECT, related_name="files")
     filename = models.FileField(upload_to="transaction_files")
 
     class Meta:

@@ -1,11 +1,11 @@
-from django.urls import path, include
+from django.urls import include, path
 
-from api.internal.admin import adminRouter
-from api.internal.cart import cart_router
-from api.internal.orders import orders_router, order_router
-from api.internal.profile import profileRouter
-from api.internal.product import product_router
-from api.internal.gift import gift_router
+from api.internal.modules.admin import adminRouter
+from api.internal.modules.cart import cart_router
+from api.internal.modules.gift import gift_router
+from api.internal.modules.orders import order_router, orders_router
+from api.internal.modules.product import product_router
+from api.internal.modules.profile import profileRouter
 
 urlpatterns = [
     path("", include(product_router.urls)),
@@ -14,5 +14,5 @@ urlpatterns = [
     path("", include(profileRouter.urls)),
     path("", include(orders_router.urls)),
     path("", include(order_router.urls)),
-    path("", include(adminRouter.urls))
+    path("", include(adminRouter.urls)),
 ]

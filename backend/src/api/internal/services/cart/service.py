@@ -1,11 +1,11 @@
-from typing import Union, Optional, List, Iterable
+from typing import Iterable, List, Optional, Union
 
 from django.contrib.auth.models import User
 from django.db import IntegrityError, transaction
 from django.db.models import QuerySet
 
 from api.internal.models.profile import Profile
-from api.internal.models.store import StorageCell, Order, Transaction, StatusChoices, TransactionTypes
+from api.internal.models.store import Order, StatusChoices, StorageCell, Transaction, TransactionTypes
 from api.internal.services.user import get_profile_by_user
 
 
@@ -84,9 +84,9 @@ def _mark_order_as_ready(orders: Iterable[Order]) -> None:
 
 
 def _get_transactions(orders: Iterable[Order]) -> List[Transaction]:
-    return [Transaction.objects.create(
-        type=TransactionTypes.BUYING,
-        source=order.profile,
-        accrual=get_total(order),
-        order=order
-    ) for order in orders]
+    return [
+        Transaction.objects.create(
+            type=TransactionTypes.BUYING, source=order.profile, accrual=get_total(order), order=order
+        )
+        for order in orders
+    ]

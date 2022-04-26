@@ -12,9 +12,7 @@ class Transaction(models.Model):
     type = models.IntegerField(choices=TransactionTypes.choices, default=TransactionTypes.BUYING)
     source = models.ForeignKey(Profile, on_delete=models.PROTECT, null=True)
     destination = models.ForeignKey(
-        Profile, on_delete=models.PROTECT,
-        default=None, null=True,
-        related_name='transactions_to_me'
+        Profile, on_delete=models.PROTECT, default=None, null=True, related_name="transactions_to_me"
     )
     accrual = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     order = models.OneToOneField(Order, null=True, on_delete=models.PROTECT)
@@ -22,7 +20,7 @@ class Transaction(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ("pk", )
+        ordering = ("pk",)
         db_table = "transactions"
         verbose_name = "Transaction"
         verbose_name_plural = "Transactions"
