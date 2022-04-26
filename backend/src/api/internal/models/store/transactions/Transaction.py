@@ -7,6 +7,8 @@ from api.internal.models.store.transactions.TransactionTypes import TransactionT
 
 
 class Transaction(models.Model):
+    DESCRIPTION_LENGTH = 2048
+
     type = models.IntegerField(choices=TransactionTypes.choices, default=TransactionTypes.BUYING)
     source = models.ForeignKey(Profile, on_delete=models.PROTECT, null=True)
     destination = models.ForeignKey(
@@ -16,7 +18,7 @@ class Transaction(models.Model):
     )
     accrual = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     order = models.OneToOneField(Order, null=True, on_delete=models.PROTECT)
-    description = models.CharField(max_length=2048, default=None, blank=True, null=True)
+    description = models.CharField(max_length=DESCRIPTION_LENGTH, default=None, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 
     class Meta:
