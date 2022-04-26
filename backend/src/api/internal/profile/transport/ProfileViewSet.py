@@ -2,20 +2,18 @@ from rest_framework import mixins, viewsets, filters
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
 
-from api.internal.models.profile import Profile
 from api.internal.models.store import Transaction, TransactionFile, TransactionTypes
 from api.internal.profile.serializers.ProfileSerializer import ProfileSerializer
 from api.internal.profile.serializers.TransactionSerializer import TransactionSerializer
 from api.internal.services.profile import get_profile_history
-from api.internal.services.user import get_profile_by_user
+from api.internal.services.user import get_profile_by_user, get_profiles
 
 
 class ProfileViewSet(mixins.ListModelMixin,
                      mixins.RetrieveModelMixin,
                      viewsets.GenericViewSet):
-    queryset = Profile.objects.all()
+    queryset = get_profiles()
     serializer_class = ProfileSerializer
     permission_classes = (IsAuthenticated,)
     http_method_names = ("get", "post", "patch", "delete")
@@ -25,16 +23,22 @@ class ProfileViewSet(mixins.ListModelMixin,
 
     @action(detail=False, methods=['get'])
     def current(self, request):
-        cur_user = request.user
-        cur_profile = Profile.objects.filter(user=cur_user)[0]
-        ser = ProfileSerializer(cur_profile)
+        profile = get_profile_by_user(request.user)
+
+        if not profile:
+            return Response(status=404)
+
+        ser = ProfileSerializer(profile)
         return Response(ser.data)
 
     @action(detail=False, methods=['get'])
     def history(self, request):
-        cur_user = request.user
-        cur_profile = Profile.objects.filter(user=cur_user)[0]
-        transactions = get_profile_history(cur_profile)
+        profile = get_profile_by_user(request.user)
+
+        if not profile:
+            return Response(status=404)
+
+        transactions = get_profile_history(profile)
         ser = TransactionSerializer(transactions, many=True)
         return Response(ser.data)
 

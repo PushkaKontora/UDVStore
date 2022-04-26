@@ -7,11 +7,11 @@ from api.internal.models.profile import Profile
 
 
 def get_profile_by_user(user: User) -> Profile:
-    return Profile.objects.filter(user=user).first()
+    return get_profiles().filter(user=user).first()
 
 
 def get_profiles() -> QuerySet[Profile]:
-    return Profile.objects.all()
+    return Profile.objects.filter(user__is_staff=False)
 
 
 def get_profile(id_: Union[int, str]) -> Optional[Profile]:
