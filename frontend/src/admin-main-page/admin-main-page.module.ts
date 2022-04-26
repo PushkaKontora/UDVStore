@@ -51,7 +51,7 @@ export class AdminMainPageModule {
         private _peopleService: PeopleService,
         private _adminService: AdminService,
     ) {
-        this._peopleService.getUserProfilesForAdminPage();
+        this._peopleService.getProfilesForAdminPage();
         this._adminService.getProfiles();
     }
 }

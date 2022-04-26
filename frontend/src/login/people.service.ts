@@ -44,15 +44,13 @@ export class PeopleService {
         })
     }
 
-    public getUserProfilesForAdminPage(){
+    public getProfilesForAdminPage(){
         this.optionsForHttp= {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
                 'Authorization': "Token " + localStorage.getItem('token'),
             })
         }
-
-        this.getUser();
     }
 
     public getUserProduct(){

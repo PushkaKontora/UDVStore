@@ -51,7 +51,6 @@ export class LoginReactFormComponent implements OnInit {
                             'Authorization': "Token " + localStorage.getItem('token'),
                         })
                     }
-                    console.log('localstorage - ' + localStorage.getItem('token'))
                     this._peopleService.getProducts();
                     this._peopleService.getUser();
                     this.login.reset();
