@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LoginReactFormComponent} from "../login/components/login-react-form/login-react-form.component";
+import {LoginReactFormComponent} from "./login/components/login-react-form/login-react-form.component";
 
 const routes: Routes = [
 ];

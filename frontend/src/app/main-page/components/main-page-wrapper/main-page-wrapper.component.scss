@@ -1,0 +1,219 @@
+@import "../../../../usedCSS/fieldFindUser";
+@import "../../../../usedCSS/model-popUp";
+@import "../../../../usedCSS/fieldFindUser";
+@import '../../../../../node_modules/@taiga-ui/core/styles/taiga-ui-local';
+
+.template {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    margin: 0 0.2em;
+}
+
+.control {
+    opacity: 0.7;
+}
+
+
+img {
+    width: 100%;
+}
+
+.wrapper {
+    background-color: #1C1B1B;
+    height: 4.7rem;
+
+    .header {
+        margin: 0 auto;
+        padding-top: 1em;
+        padding-bottom: 1em;
+        height: 5rem;
+        max-width: 63%;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+
+
+        .logo {
+            width: 16rem;
+            //padding-right: 13px;
+        }
+
+        .menu_top_page {
+
+            li {
+                padding-top: 1rem;
+                display: inline-block;
+                margin-left: 2rem;
+
+                a {
+                    color: #F7F7F7;
+                    font-size: 1.5em;
+                    display: block;
+                    padding-right: 0.2em;
+                    padding-left: 0.2em;
+                }
+
+                hr {
+                    visibility: hidden;
+                }
+
+                .active-link {
+                    hr {
+                        visibility: visible;
+                        border: #2CF2B3 solid 0.035em;
+                        border-radius: 0.7em;
+                        background: #2CF2B3;
+                        width: 115%;
+
+                    }
+
+                    .merch {
+                        margin-left: -0.15em;
+                    }
+
+                    .rules {
+                        margin-left: -0.2em;
+                    }
+                }
+
+            }
+
+        }
+
+        .header_nav {
+            display: inline-flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+        }
+
+        .header_nav-icons {
+            justify-content: flex-end;
+
+
+            ul.menu_top_icons {
+                display: flex;
+
+                li {
+                    padding-top: 0.6em;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    display: inline-block;
+
+                    margin-left: 1.5em;
+
+                    a, .a-button {
+                        display: block;
+                    }
+
+                    .a-button {
+                        background-color: #1C1B1B;
+                    }
+
+                    img {
+                        width: 1.8em;
+                    }
+
+                    ul {
+                        align-items: center;
+                        background-color: #2CF2B3;
+                        color: #1C1B1B;
+                        padding: 0.1em 0.3em 0.1em 0.55em;
+                        border-radius: 0.8em;
+                        max-height: 2.1rem;
+                        display: flex;
+
+                        li {
+                            display: inline-block;
+                            margin: 0;
+                            padding: 0;
+                            vertical-align: middle;
+
+                            a {
+                                display: block;
+                            }
+                        }
+
+                        li.wrapper_num {
+                            font-size: 1.35em;
+                            line-height: 1.35em;
+                            padding-right: 0.1em;
+                        }
+                    }
+                }
+
+                li.li_gift {
+                    img {
+                        margin-top: -0.25em;
+                        width: 2.15em;
+                    }
+                }
+
+                li.li_cart {
+                    img {
+                        width: 2em;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.modelBody {
+    padding: 2rem;
+    background-color: #FFFFFF;
+    margin: calc(0.5rem + 4.7rem) auto;
+    max-width: 41%;
+
+    .crossImg{
+       width: 1.2em;
+    }
+
+    .mainTitle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.4em;
+        padding-bottom: 1.5rem;
+
+        button {
+            background-color: #FFFFFF;
+            width: 1.8em;
+        }
+    }
+
+    form {
+        padding: 0 2rem;
+
+        .value {
+            font-weight: 500;
+            color: #1C1B1B;
+            font-size: 1em;
+        }
+    }
+
+    .button {
+        width: 100%;
+        padding: 0.3em;
+        background-color: #2CF2B3;
+        margin-top: 0.5rem;
+        font-size: 1.2em;
+        line-height: 1.2em;
+        letter-spacing: 0.05em;
+        transition: 1s;
+        color: #1C1B1B;
+
+        &[disabled] {
+            color: #888888;
+            background-color: #B5FCE5;
+        }
+    }
+}
+
+
+
+

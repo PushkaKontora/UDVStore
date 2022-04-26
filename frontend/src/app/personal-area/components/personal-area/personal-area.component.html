@@ -1,0 +1,37 @@
+<div class="wrapper">
+    <div class="title">
+        ЛИЧНОЕ В UDV-store
+    </div>
+    <div class="value_content">
+        <div class="stroke">
+            <div class="field">ФАМИЛИЯ</div>
+            <div class="block_data">
+                <img src="../../../../assets/images-personal-area/littleGreenOctopus.svg" alt="littleGreenOctopus">
+                <div class="text-data">{{user?.last_name | titlecase}}</div>
+            </div>
+        </div>
+        <div class="stroke">
+            <div class="field">ИМЯ</div>
+            <div class="block_data">
+                <img src="../../../../assets/images-personal-area/littleGreenOctopus.svg" alt="littleGreenOctopus">
+                <div class="text-data">{{user?.first_name | titlecase}}</div>
+            </div>
+        </div>
+
+        <div class="stroke">
+            <div class="field">ОТЧЕСТВО</div>
+            <div class="block_data">
+                <img src="../../../../assets/images-personal-area/littleGreenOctopus.svg" alt="littleGreenOctopus">
+                <div class="text-data">{{user?.patronymic | titlecase}}</div>
+            </div>
+        </div>
+
+        <div class="stroke">
+            <div class="field">КОРПОРАТИВНАЯ ПОЧТА</div>
+            <div class="block_data">
+                <img src="../../../../assets/images-personal-area/mail.svg" alt="mail" class="mail">
+                <div class="text-data">{{user?.username | titlecase}}</div>
+            </div>
+        </div>
+    </div>
+</div>

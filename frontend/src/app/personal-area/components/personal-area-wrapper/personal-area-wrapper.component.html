@@ -1,0 +1,31 @@
+<div class="wrapper">
+    <img src="../../../../assets/images-personal-area/blackLeftLeg.svg" alt="left leg of an octopus"
+         class="decor left_leg">
+    <img src="../../../../assets/images-personal-area/blackRightLeg.svg" alt="right leg of an octopus"
+         class="decor right_leg">
+    <div class="grid">
+        <div class="value_grid__account value_grid">
+            <div class="content_item">
+                <div class="figure">
+                    <img src="../../../../assets/images-personal-area/human.svg" alt="avatar">
+                    <!--                <img class="imageCompanyItem" src="{{companyItem.logo}}" alt="rr"> будет так -->
+                </div>
+                <nav class="nav">
+                    <button class="button_value" routerLink="./data" routerLinkActive="active-link">ЛИЧНЫЕ ДАННЫЕ
+                    </button>
+                    <button class="button_value" routerLink="./orders" routerLinkActive="active-link">ЗАКАЗЫ</button>
+                    <button class="button_value" routerLink="./history" routerLinkActive="active-link">ИСТОРИЯ</button>
+                    <button class="button_value" routerLink="./write-activity" routerLinkActive="active-link">
+                        НАПИСАТЬ ОБ АКТИВНОСТИ
+                    </button>
+                </nav>
+            </div>
+        </div>
+        <div class="value_grid__content value_grid">
+            <div class="content_item">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>
+
