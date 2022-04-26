@@ -7,18 +7,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0003_alter_transaction_source'),
+        ("api", "0003_alter_transaction_source"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='photo',
-            field=models.ImageField(null=True, upload_to='profile'),
+            model_name="profile",
+            name="photo",
+            field=models.ImageField(null=True, upload_to="profile"),
         ),
         migrations.AlterField(
-            model_name='transaction',
-            name='accrual',
+            model_name="transaction",
+            name="accrual",
             field=models.IntegerField(default=0, validators=[django.core.validators.MinValueValidator(0)]),
         ),
     ]

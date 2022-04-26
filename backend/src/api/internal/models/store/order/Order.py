@@ -1,9 +1,9 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from api.internal.models.store.storage_cells.StorageCell import StorageCell
-from api.internal.models.store.order.StatusChoices import StatusChoices
 from api.internal.models.profile import Profile
+from api.internal.models.store.order.StatusChoices import StatusChoices
+from api.internal.models.store.storage_cells.StorageCell import StorageCell
 
 
 class Order(models.Model):

@@ -1,4 +1,4 @@
-from typing import Union, Optional
+from typing import Optional, Union
 
 from django.contrib.auth.models import User
 from django.db.models import QuerySet
