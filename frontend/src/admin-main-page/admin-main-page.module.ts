@@ -18,6 +18,8 @@ import {
 } from "@taiga-ui/core";
 import {TuiLetModule} from "@taiga-ui/cdk";
 import {AdminService} from "./admin.service";
+import {PeopleService} from "../login/people.service";
+import {StoreService} from "../main-page/store.service";
 
 
 @NgModule({
@@ -45,4 +47,11 @@ import {AdminService} from "./admin.service";
      providers: [AdminService]
 })
 export class AdminMainPageModule {
+    constructor(
+        private _peopleService: PeopleService,
+        private _adminService: AdminService,
+    ) {
+        this._peopleService.getUserProfilesForAdminPage();
+        this._adminService.getProfiles();
+    }
 }

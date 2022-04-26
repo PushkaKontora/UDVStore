@@ -31,7 +31,7 @@ export class StoreService {
         this._http.post<any>(this._urlApiBuyPost, {}, this._peopleService.optionsForHttp)
             .subscribe(
                 (res: any) => {
-                    this._peopleService.getUser()
+                    this._peopleService.getUser();
                 });
     }
 }

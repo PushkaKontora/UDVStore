@@ -38,13 +38,6 @@
                         "styles": [
                             "node_modules/@taiga-ui/core/styles/taiga-ui-global.less",
                             "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less",
-                            "fonts/TypoforgeStudio-KapraNeueProMediumRounded.otf",
-                            "fonts/TypoforgeStudio-KapraNeueProLightRounded.otf",
-                            "fonts/TypoforgeStudio-KapraNeueProRegularRounded.otf",
-                            "frontend/src/assets/images/legRightOct.svg",
-                            "frontend/src/assets/images/leftLegOctupus.svg",
-                            "frontend/src/assets/images/logoUDVstore.svg",
-                            "frontend/src/assets/images-main-page/banner.svg",
                             "src/styles.scss"
                         ],
                         "scripts": []
