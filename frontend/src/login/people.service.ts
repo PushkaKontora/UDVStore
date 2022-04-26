@@ -51,6 +51,8 @@ export class PeopleService {
                 'Authorization': "Token " + localStorage.getItem('token'),
             })
         }
+
+        this.getUser();
     }
 
     public getUserProduct(){

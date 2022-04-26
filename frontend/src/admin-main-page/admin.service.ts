@@ -11,8 +11,7 @@ import {FormGroup} from "@angular/forms";
 })
 export class AdminService {
     private _urlProfiles: string = "http://127.0.0.1:8000/api/profile/";
-    //todo: НЕ ЗАБЫТЬ ИСПРАВИТЬ accural НА accrual
-    private _urlPostAdminAccrual: string = "http://127.0.0.1:8000/api/admin/accural/";
+    private _urlPostAdminAccrual: string = "http://127.0.0.1:8000/api/admin/accrual/";
     public foundUsers?: UsersSearch[];
 
     constructor(private _router: Router, private _peopleService: PeopleService, private _http: HttpClient) {
@@ -28,9 +27,9 @@ export class AdminService {
             });
     }
 
-    public postAdminAccrual(to_profile_id: number | number[], price: number, comment: string) {
+    public postAdminAccrual(to_profile_id: number[], price: number, comment: string) {
         return this._http.post<any>(this._urlPostAdminAccrual, {
-            "to_profile_ids": to_profile_id,
+            "profile_ids": to_profile_id,
             "price": price,
             "comment": comment
         }, this._peopleService.optionsForHttp)
