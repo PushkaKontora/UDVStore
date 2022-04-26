@@ -3,6 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from api.internal.models.profile import Profile
 from api.internal.models.store import Transaction, TransactionFile, TransactionTypes
 from api.internal.profile.serializers.ProfileSerializer import ProfileSerializer
 from api.internal.profile.serializers.TransactionSerializer import TransactionSerializer
@@ -23,7 +24,8 @@ class ProfileViewSet(mixins.ListModelMixin,
 
     @action(detail=False, methods=['get'])
     def current(self, request):
-        profile = get_profile_by_user(request.user)
+        # TODO: temp getting profile of admin
+        profile = Profile.objects.filter(user=request.user).first()
 
         if not profile:
             return Response(status=404)
