@@ -13,7 +13,7 @@ export class PeopleService {
     private _urlLoginUser: string = 'http://127.0.0.1:8000/api/profile/current/';
     private _urlLoginTokenUser: string = 'http://127.0.0.1:8000/auth/token/login';
     private _urlApiProducts: string = 'http://127.0.0.1:8000/api/products/';
-    public token?: string;
+    public token!: string;
     public findUser?: IUser;
     public storeProducts!: products[];
     public optionsForHttp?: { headers: HttpHeaders; }
@@ -37,37 +37,36 @@ export class PeopleService {
         }
     }
 
-    public getProducts(): Subscription {
-        return this._http.get<products[]>(this._urlApiProducts, this.optionsForHttp)
-            .subscribe((res: products[]) => {
-                this.storeProducts = res;
-                this.isLoaded = true;
-            }, () => {
-                alert('Something went wrong - getProducts');
-            });
-    }
-
-    public postToken(username: string, password: string, login: FormGroup) {
-        this._http.post<any>(this._urlLoginTokenUser, {
+    public postToken(username: string, password: string) {
+        return this._http.post<any>(this._urlLoginTokenUser, {
             "username": username,
             "password": password
         })
-            .subscribe(
-                (res: any) => {
-                    this.token = res?.auth_token;
-                    this.optionsForHttp = {
-                        headers: new HttpHeaders({
-                            'Content-Type': 'application/json',
-                            'Authorization': "Token " + this.token
-                        })
-                    }
-                    this.getProducts();
-                    this.getUser();
-                    login.reset();
-                });
     }
 
-    public getUser(): Subscription {
+    public getUserProfilesForAdminPage(){
+        this.optionsForHttp= {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': "Token " + localStorage.getItem('token'),
+            })
+        }
+
+        this.getUser();
+    }
+
+    public getUserProduct(){
+        this.optionsForHttp= {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': "Token " + localStorage.getItem('token'),
+            })
+        }
+        this.getProducts();
+        this.getUser();
+    }
+
+    public getUser(){
         return this._http.get<IUser>(this._urlLoginUser, this.optionsForHttp)
             .subscribe(
                 (user: IUser) => {
@@ -87,6 +86,17 @@ export class PeopleService {
                     alert('Something went wrong');
                 });
     }
+
+    public getProducts(): Subscription {
+        return this._http.get<products[]>(this._urlApiProducts, this.optionsForHttp)
+            .subscribe((res: products[]) => {
+                this.storeProducts = res;
+                this.isLoaded = true;
+            }, () => {
+                alert('Something went wrong - getProducts');
+            });
+    }
+
 }
 
 

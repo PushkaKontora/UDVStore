@@ -14,12 +14,17 @@ export class MainPageWrapperComponent implements OnInit {
     public writePers: FormGroup = new FormGroup({})
     public user?: IUser;
 
-    constructor(private _router: Router, private _route: ActivatedRoute, private _peopleService: PeopleService, private _storeService: StoreService) {
+    constructor(
+        private _router: Router,
+        private _route: ActivatedRoute,
+        private _peopleService: PeopleService,
+        private _storeService: StoreService
+    ) {
         _router.navigate(["/main-page/merch"]);
-        this.user = _peopleService.findUser;
     }
 
     ngOnInit(): void {
+        this.user = this._peopleService.findUser;
         this.createForm();
     }
 

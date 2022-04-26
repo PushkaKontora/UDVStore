@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {PeopleService} from "../../people.service";
 import {IUser} from "../../../interfaces";
@@ -40,7 +40,22 @@ export class LoginReactFormComponent implements OnInit {
 
     public onSubmit() {
         const loginEmail = this.login.value.email + "@ussc.ru";
-        this._peopleService.postToken(loginEmail, this.login.value.password, this.login);
+        this._peopleService.postToken(loginEmail, this.login.value.password)
+            .subscribe(
+                (res: any) => {
+                    this._peopleService.token = res?.auth_token;
+                    localStorage.setItem('token', this._peopleService.token);
+                    this._peopleService.optionsForHttp = {
+                        headers: new HttpHeaders({
+                            'Content-Type': 'application/json',
+                            'Authorization': "Token " + localStorage.getItem('token'),
+                        })
+                    }
+                    console.log('localstorage - ' + localStorage.getItem('token'))
+                    this._peopleService.getProducts();
+                    this._peopleService.getUser();
+                    this.login.reset();
+                });
         // this.activeUser = this._peopleService.getUser(loginEmail, this.login.value.password, this.login);
     }
 

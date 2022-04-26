@@ -23,6 +23,8 @@ export class MerchStoreComponent implements OnInit {
 
     chooseProduct(event: any, product: products) {
         this._storeService.postSelectedProduct(1, product.cells[0].id)
-            .subscribe(() => this._storeService.postBuyProduct());
+            .subscribe(() => {
+                this._storeService.postBuyProduct();
+            });
     }
 }

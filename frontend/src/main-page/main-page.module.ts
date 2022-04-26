@@ -7,6 +7,8 @@ import {MainRegulationsComponent} from "./main-regulations/main-regulations.comp
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StoreService} from "./store.service";
 import {SkeletoneLoadingModule} from "../skeletone-loading/skeletone-loading.module";
+import {ActivatedRoute, Router} from "@angular/router";
+import {PeopleService} from "../login/people.service";
 
 
 @NgModule({
@@ -25,4 +27,11 @@ import {SkeletoneLoadingModule} from "../skeletone-loading/skeletone-loading.mod
     providers: [StoreService]
 })
 export class MainPageModule {
+    constructor(
+        private _peopleService: PeopleService,
+        private _storeService: StoreService
+    ) {
+        this._peopleService.isLoaded = true;
+        this._peopleService.getUserProduct()
+    }
 }
