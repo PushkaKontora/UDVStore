@@ -4,6 +4,7 @@ import {delay, EMPTY, filter, first, Observable, of, retry, startWith, Subject, 
 import {IUser, UsersSearch} from "../../../../interfaces/interfaces";
 import {SearchStringService} from "../../../services/searchString.service";
 import {User} from "../../../../generalClasses/User";
+import {Router} from "@angular/router";
 
 
 
@@ -22,16 +23,17 @@ export class AdminAccrualComponent implements OnInit {
 
     constructor(
         private _searchStringService: SearchStringService,
+        private _router: Router,
         ) {
+        if (this._searchStringService.foundUsers) {
+            this.foundUsers = this._searchStringService.foundUsers;
+        }
+        this.createForm();
+        this.makeUserArray();
 
     }
 
     ngOnInit(): void {
-        if (this._searchStringService.foundUsers) {
-            this.foundUsers = this._searchStringService.foundUsers;
-        }
-        this.makeUserArray();
-        this.createForm();
     }
     public openModel() {
         document.getElementById('modal-1')!.style.display = 'block';

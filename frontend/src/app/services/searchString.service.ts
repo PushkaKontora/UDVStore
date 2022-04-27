@@ -38,12 +38,12 @@ export class SearchStringService {
             });
     }
 
-    private postAccrualCoins(to_profile_id: number[], price: number, comment: string, url: string, body: {}) {
+    private postAccrualCoins( url: string, body: {}) {
         return this._http.post<any>(url, body, this._peopleService.optionsForHttp)
-    }
+    };
 
     public postAdminAccrualCoins(to_profile_id: number[], price: number, comment: string) {
-        return this.postAccrualCoins(to_profile_id, price, comment, this._urlAdminPostAccrual,
+        return this.postAccrualCoins(this._urlAdminPostAccrual,
             {
             "profile_ids": to_profile_id,
             "price": price,
@@ -51,8 +51,8 @@ export class SearchStringService {
         });
     }
 
-    public postUserAccrualCoins(to_profile_id: number[], price: number, comment: string) {
-        return this.postAccrualCoins(to_profile_id, price, comment, this._urlUserPostAccrual,
+    public postUserAccrualCoins(to_profile_id: number, price: number, comment: string) {
+        return this.postAccrualCoins(this._urlUserPostAccrual,
             {
                 "destination": to_profile_id,
                 "description": comment,

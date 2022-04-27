@@ -9,9 +9,6 @@ import {SearchStringService} from "../../../services/searchString.service";
 import {User} from "../../../../generalClasses/User";
 
 
-
-const databaseMockData: UsersSearch[] = [];
-
 @Component({
     selector: 'main-page-wrapper',
     templateUrl: './main-page-wrapper.component.html',
@@ -23,6 +20,7 @@ export class MainPageWrapperComponent implements OnInit {
     search$ = new Subject<string>();
     readonly testValue = new FormControl();
     public foundUsers!: UsersSearch[];
+    private databaseMockData: UsersSearch[] = [];
 
     constructor(
         private _router: Router,
@@ -34,14 +32,15 @@ export class MainPageWrapperComponent implements OnInit {
         if (this._searchStringService.foundUsers) {
             this.foundUsers = this._searchStringService.foundUsers;
         }
+        this.createForm();
+        this.user = this._peopleService.findUser;
+        this.makeUserArray();
+
 
         this._router.navigate(["/main-page/merch"]);
     }
 
     ngOnInit(): void {
-        this.createForm();
-        this.makeUserArray();
-        this.user = this._peopleService.findUser;
     }
 
     public createGift(): void {
@@ -62,20 +61,16 @@ export class MainPageWrapperComponent implements OnInit {
 
     public onSubmit() {
         this.writePers.patchValue({employee: this.testValue.value});
-        let arrayId = [];
-        for (let user of this.writePers.value.employee) {
-            arrayId.push(user.id);
-        }
-        this._searchStringService.postUserAccrualCoins(arrayId, this.writePers.value.coins, this.writePers.value.activity)
+        this._searchStringService.postUserAccrualCoins(this.testValue.value[0].id, this.writePers.value.coins, this.writePers.value.activity)
             .subscribe(
                 (res: any) => {
                     this.writePers.reset();
                 });
         this.search$.next('');
-        this.makeUserArray();
         this.closeModel();
-        this.writePers.reset();
         console.log('click');
+        this._peopleService.getUser();
+        console.log( this.databaseMockData);
     }
 
     public onSearchChange(search: string | null) {
@@ -87,11 +82,11 @@ export class MainPageWrapperComponent implements OnInit {
         switchMap(search =>
             this.serverRequest(search).pipe(startWith<readonly UsersSearch[] | null>(null)),
         ),
-        startWith(databaseMockData),
+        startWith(this.databaseMockData),
     );
 
     private serverRequest(searchQuery: string): Observable<readonly UsersSearch[]> {
-        const result = databaseMockData.filter(user =>
+        const result = this.databaseMockData.filter(user =>
             user.toString().toLowerCase().includes(searchQuery.toLowerCase()),
         );
 
@@ -109,7 +104,7 @@ export class MainPageWrapperComponent implements OnInit {
 
     private makeUserArray(): void {
         for (let user of this.foundUsers) {
-            databaseMockData.push(new User(user.id, user.username, user.first_name, user.last_name, user.email,
+            this.databaseMockData.push(new User(user.id, user.username, user.first_name, user.last_name, user.email,
                 user.patronymic, user.balance, user.photo, user.is_staff));
         }
     }

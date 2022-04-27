@@ -11,6 +11,7 @@ export class AdminMainPageWrapperComponent implements OnInit {
 
     constructor(private _router: Router, private _adminService: SearchStringService) {
         _adminService.getProfiles();
+        this._router.navigate(["/admin/accrual"]);
     }
 
     ngOnInit(): void {

@@ -80,7 +80,7 @@ export class PeopleService {
                             this.findUser = user;
                         } else if (user.is_staff) {
                             this.findUser = user;
-                            this._router.navigate(["/admin/accrual"]);
+                            this._router.navigate(["/admin/"]);
                         }
                     } else {
                         alert('user not found');
