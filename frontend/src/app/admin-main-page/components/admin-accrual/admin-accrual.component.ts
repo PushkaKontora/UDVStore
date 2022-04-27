@@ -51,7 +51,7 @@ export class AdminAccrualComponent implements OnInit {
         for (let user of this.writePers.value.employee) {
             arrayId.push(user.id);
         }
-        this._searchStringService.postAccrualCoins(arrayId, this.writePers.value.coins, this.writePers.value.activity)
+        this._searchStringService.postAdminAccrualCoins(arrayId, this.writePers.value.coins, this.writePers.value.activity)
             .subscribe(
                 (res: any) => {
                     this.writePers.reset();

@@ -66,7 +66,7 @@ export class MainPageWrapperComponent implements OnInit {
         for (let user of this.writePers.value.employee) {
             arrayId.push(user.id);
         }
-        this._searchStringService.postAccrualCoins(arrayId, this.writePers.value.coins, this.writePers.value.activity)
+        this._searchStringService.postUserAccrualCoins(arrayId, this.writePers.value.coins, this.writePers.value.activity)
             .subscribe(
                 (res: any) => {
                     this.writePers.reset();
@@ -116,7 +116,6 @@ export class MainPageWrapperComponent implements OnInit {
 }
 
 /**
- * todo: сделать вычет у юзера денег - после отправки подарка
  * todo: сделать предупреждение о недостатке средств(при отправке подарка) - мб валидатор или посоветоваться с Юрой, мб он знает метод лучше
  * todo: поправить отправку на сервер - созвон с Юрой
  */

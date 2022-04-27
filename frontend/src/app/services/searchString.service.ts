@@ -11,7 +11,8 @@ import {FormGroup} from "@angular/forms";
 })
 export class SearchStringService {
     private _urlProfiles: string = "http://127.0.0.1:8000/api/profile/";
-    private _urlPostAccrual: string = "http://127.0.0.1:8000/api/admin/accrual/";
+    private _urlAdminPostAccrual: string = "http://127.0.0.1:8000/api/admin/accrual/";
+    private _urlUserPostAccrual: string = "http://127.0.0.1:8000/api/gifts/";
     public foundUsers?: UsersSearch[];
 
     constructor(
@@ -37,11 +38,25 @@ export class SearchStringService {
             });
     }
 
-    public postAccrualCoins(to_profile_id: number[], price: number, comment: string) {
-        return this._http.post<any>(this._urlPostAccrual, {
+    private postAccrualCoins(to_profile_id: number[], price: number, comment: string, url: string, body: {}) {
+        return this._http.post<any>(url, body, this._peopleService.optionsForHttp)
+    }
+
+    public postAdminAccrualCoins(to_profile_id: number[], price: number, comment: string) {
+        return this.postAccrualCoins(to_profile_id, price, comment, this._urlAdminPostAccrual,
+            {
             "profile_ids": to_profile_id,
             "price": price,
             "comment": comment
-        }, this._peopleService.optionsForHttp)
+        });
+    }
+
+    public postUserAccrualCoins(to_profile_id: number[], price: number, comment: string) {
+        return this.postAccrualCoins(to_profile_id, price, comment, this._urlUserPostAccrual,
+            {
+                "destination": to_profile_id,
+                "description": comment,
+                "accrual": price,
+            });
     }
 }
