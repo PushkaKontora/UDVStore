@@ -41,11 +41,11 @@ import {TuiDropdownControllerModule, TuiTextfieldControllerModule} from "@taiga-
 })
 export class MainPageModule {
     constructor(
+        private _router: Router,
         private _peopleService: PeopleService,
         private _storeService: StoreService,
         private _searchStringService: SearchStringService,
     ) {
-        this._peopleService.isLoaded = true;
         this._peopleService.getUserProduct();
         this._searchStringService.getProfiles();
     }

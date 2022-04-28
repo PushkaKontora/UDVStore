@@ -48,8 +48,8 @@ export class PeopleService {
         })
     }
 
-    public getProfilesForAdminPage(){
-        this.optionsForHttp= {
+    public getProfilesForAdminPage() {
+        this.optionsForHttp = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
                 'Authorization': "Token " + localStorage.getItem('token'),
@@ -58,19 +58,26 @@ export class PeopleService {
         this.getUser();
     }
 
-    public getUserProduct(){
-        this.optionsForHttp= {
+    public getUserProduct() {
+        this.optionsForHttp = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
                 'Authorization': "Token " + localStorage.getItem('token'),
             })
         }
 
-        this.getProducts();
-        this.getUser();
+        this.getProducts()
+            .subscribe((res: products[]) => {
+                this.storeProducts = res;
+            }, () => {
+                alert('Something went wrong - getProducts');
+            }, () => {
+                this.getUser();
+                this.isLoaded = true;
+            });
     }
 
-    public getUser(){
+    public getUser() {
         return this._http.get<IUser>(this._urlLoginUser, this.optionsForHttp)
             .subscribe(
                 (user: IUser) => {
@@ -91,14 +98,8 @@ export class PeopleService {
                 });
     }
 
-    public getProducts(): Subscription {
-        return this._http.get<products[]>(this._urlApiProducts, this.optionsForHttp)
-            .subscribe((res: products[]) => {
-                this.storeProducts = res;
-                this.isLoaded = true;
-            }, () => {
-                alert('Something went wrong - getProducts');
-            });
+    public getProducts() {
+        return this._http.get<products[]>(this._urlApiProducts, this.optionsForHttp);
     }
 
 }

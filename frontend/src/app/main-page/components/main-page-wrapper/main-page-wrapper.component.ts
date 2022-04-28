@@ -35,12 +35,10 @@ export class MainPageWrapperComponent implements OnInit {
         this.createForm();
         this.user = this._peopleService.findUser;
         this.makeUserArray();
-
-
-        this._router.navigate(["/main-page/merch"]);
     }
 
     ngOnInit(): void {
+        this._router.navigate(["/main-page/merch"]);
     }
 
     public createGift(): void {
@@ -65,11 +63,11 @@ export class MainPageWrapperComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this.writePers.reset();
+                    this._peopleService.getUser();
                 });
         this.search$.next('');
         this.closeModel();
         console.log('click');
-        this._peopleService.getUser();
         console.log( this.databaseMockData);
     }
 

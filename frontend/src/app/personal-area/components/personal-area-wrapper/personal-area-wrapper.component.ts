@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
 export class PersonalAreaWrapperComponent implements OnInit {
 
   constructor(private _router: Router) {
-      _router.navigate(["/main-page/personal-area/write-activity"]);
+      _router.navigate(["/main-page/personal-area/data"]);
   }
 
   ngOnInit(): void {
