@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {PeopleService} from "../../services/people.service";
 import {IUser} from "../../../../interfaces/interfaces";
 import {Subscription} from "rxjs";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
     selector: 'app-login-react-form',
@@ -22,8 +23,13 @@ export class LoginReactFormComponent implements OnInit {
     password!: ElementRef;
 
 
-    constructor(private _http: HttpClient, private _router: Router, private _peopleService: PeopleService,
-                private _renderer: Renderer2) {
+    constructor(
+        private _http: HttpClient,
+        private _router: Router,
+        private _peopleService: PeopleService,
+        private _renderer: Renderer2,
+        private _cookieService: CookieService,
+    ) {
         this._createForm();
     }
 
@@ -44,15 +50,33 @@ export class LoginReactFormComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this._peopleService.token = res?.auth_token;
-                    localStorage.setItem('token', this._peopleService.token);
+                    this._cookieService.set('token', this._peopleService.token);
                     this._peopleService.optionsForHttp = {
                         headers: new HttpHeaders({
                             'Content-Type': 'application/json',
-                            'Authorization': "Token " + localStorage.getItem('token'),
+                            'Authorization': "Token " + this._cookieService.get('token'),
                         })
                     }
                     this._peopleService.getProducts();
-                    this._peopleService.getUser();
+                    this._peopleService.getUserHttp()
+                        .subscribe(
+                            (user: IUser) => {
+                                if (user) {
+                                    if (!user.is_staff) {
+                                        this._router.navigate(['main-page', 'merch']);
+                                        this._peopleService.findUser = user;
+                                    } else if (user.is_staff) {
+                                        this._peopleService.findUser = user;
+                                        this._router.navigate(["/admin/"]);
+                                    }
+                                } else {
+                                    alert('user not found');
+                                }
+
+                            }, () => {
+                                alert('Something went wrong');
+                            });
+                    ;
                     this.login.reset();
                 });
         // this.activeUser = this._peopleService.getUser(loginEmail, this.login.value.password, this.login);
