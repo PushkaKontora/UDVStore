@@ -15,6 +15,7 @@ import {SkeletoneLoadingModule} from "./skeletone-loading/skeletone-loading.modu
 import {TuiSheetModule} from "@taiga-ui/addon-mobile";
 import {TuiAvatarModule, TuiDataListWrapperModule, TuiMultiSelectModule} from "@taiga-ui/kit";
 import {TuiLetModule} from "@taiga-ui/cdk";
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,7 @@ import {TuiLetModule} from "@taiga-ui/cdk";
         TuiAvatarModule,
         TuiDropdownControllerModule,
     ],
-    providers: [],
+    providers: [CookieService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

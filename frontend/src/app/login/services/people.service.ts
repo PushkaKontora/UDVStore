@@ -5,6 +5,7 @@ import {FormGroup} from "@angular/forms";
 import {IUser, products} from "../../../interfaces/interfaces";
 import {Subscription} from "rxjs";
 import {SearchStringService} from "../../services/searchString.service";
+import {CookieService} from "ngx-cookie-service";
 
 
 @Injectable({
@@ -23,7 +24,8 @@ export class PeopleService {
 
     constructor(
         private _http: HttpClient,
-        private _router: Router
+        private _router: Router,
+        private _cookieService: CookieService,
     ) {
     }
 
@@ -52,7 +54,7 @@ export class PeopleService {
         this.optionsForHttp = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': "Token " + localStorage.getItem('token'),
+                'Authorization': "Token " + this._cookieService.get('token'),
             })
         }
         this.getUser();
@@ -62,7 +64,7 @@ export class PeopleService {
         this.optionsForHttp = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': "Token " + localStorage.getItem('token'),
+                'Authorization': "Token " + this._cookieService.get('token'),
             })
         }
 
@@ -77,13 +79,17 @@ export class PeopleService {
             });
     }
 
-    public getUser() {
+    public getUserHttp() {
         return this._http.get<IUser>(this._urlLoginUser, this.optionsForHttp)
+    }
+
+    public getUser() {
+        this.getUserHttp()
             .subscribe(
                 (user: IUser) => {
                     if (user) {
                         if (!user.is_staff) {
-                            this._router.navigate(['/main-page/' + user.id]);
+                            this._router.navigate(['/main-page/merch']);
                             this.findUser = user;
                         } else if (user.is_staff) {
                             this.findUser = user;
@@ -101,6 +107,7 @@ export class PeopleService {
     public getProducts() {
         return this._http.get<products[]>(this._urlApiProducts, this.optionsForHttp);
     }
+
 
 }
 
