@@ -1,4 +1,4 @@
-<div class="wrapper-router">
+<div class="wrapper-router" xmlns="http://www.w3.org/1999/html">
     <div class="wrapper">
         <div class="header">
             <a href="#" class="logo"><img src="../../../../assets/images/logoUDVstore.svg" alt="logo UDVstor"></a>
@@ -58,39 +58,69 @@
                     <div class="value">
                         <div class="title">КОМУ</div>
                         <div class="content">
-                            <tui-multi-select
+                            <tui-select
                                 *tuiLet="items$ | async as items"
-                                #component
-                                tuiTextfieldExampleText="Фамилия Имя Отчество"
-                                class="control inputField inputField__name"
-                                [tuiTextfieldLabelOutside]="true"
-                                [expandable]="true"
-                                [formControl]="testValue"
-                                [tuiDropdownMaxHeight]="180"
+                                class="b-form"
+                                [(ngModel)]="value"
                                 (searchChange)="onSearchChange($event)"
-                                tuiTextfieldSize="s"
-                            >Фамилия Имя Отчество
+                            >
+                               Фамилия Имя Отчество
                                 <tui-data-list-wrapper
                                     *tuiDataList
-                                    [items]="items | tuiHideSelected : component "
-                                    [itemContent]="itemContent"
+                                    size="s"
+                                    [items]="items"
+                                    [itemContent]="content"
+                                    [disabledItemHandler]="disabledItemHandler"
                                 ></tui-data-list-wrapper>
-                            </tui-multi-select>
+                            </tui-select>
 
                             <ng-template
-                                #itemContent
+                                #content
                                 let-data
                             >
                                 <div class="template">
                                     <tui-avatar
                                         size="xs"
                                         class="avatar"
-                                        [avatarUrl]="data.photo"
+                                        [avatarUrl]="data.photo || null"
                                         [text]="data.toString()"
                                     ></tui-avatar>
-                                    {{data}}
+                                    <div class="name">{{data}}</div>
                                 </div>
                             </ng-template>
+<!--                            <tui-multi-select-->
+<!--                                *tuiLet="items$ | async as items"-->
+<!--                                #component-->
+<!--                                tuiTextfieldExampleText="Фамилия Имя Отчество"-->
+<!--                                class="control inputField inputField__name"-->
+<!--                                [tuiTextfieldLabelOutside]="true"-->
+<!--                                [expandable]="true"-->
+<!--                                [formControl]="testValue"-->
+<!--                                [tuiDropdownMaxHeight]="180"-->
+<!--                                (searchChange)="onSearchChange($event)"-->
+<!--                                tuiTextfieldSize="s"-->
+<!--                            >Фамилия Имя Отчество-->
+<!--                                <tui-data-list-wrapper-->
+<!--                                    *tuiDataList-->
+<!--                                    [items]="items | tuiHideSelected : component "-->
+<!--                                    [itemContent]="itemContent"-->
+<!--                                ></tui-data-list-wrapper>-->
+<!--                            </tui-multi-select>-->
+
+<!--                            <ng-template-->
+<!--                                #itemContent-->
+<!--                                let-data-->
+<!--                            >-->
+<!--                                <div class="template">-->
+<!--                                    <tui-avatar-->
+<!--                                        size="xs"-->
+<!--                                        class="avatar"-->
+<!--                                        [avatarUrl]="data.photo"-->
+<!--                                        [text]="data.toString()"-->
+<!--                                    ></tui-avatar>-->
+<!--                                    {{data}}-->
+<!--                                </div>-->
+<!--                            </ng-template>-->
                         </div>
                     </div>
                     <div class="value">

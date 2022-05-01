@@ -7,6 +7,7 @@ import {StoreService} from "../../services/store.service";
 import {delay, filter, Observable, of, startWith, Subject, switchMap} from "rxjs";
 import {SearchStringService} from "../../../services/searchString.service";
 import {User} from "../../../../generalClasses/User";
+import {TuiBooleanHandler} from "@taiga-ui/cdk";
 
 
 @Component({
@@ -17,12 +18,16 @@ import {User} from "../../../../generalClasses/User";
 export class MainPageWrapperComponent implements OnInit {
     public writePers: FormGroup = new FormGroup({})
     public user?: IUser;
-    search$ = new Subject<string>();
+    public value = null;
+    public search$ = new Subject<string>();
     readonly testValue = new FormControl();
     public foundUsers!: UsersSearch[];
     private databaseMockData: UsersSearch[] = [];
+    readonly disabledItemHandler: TuiBooleanHandler<User> = ({photo}) => !!photo;
 
-    constructor(
+
+
+constructor(
         private _router: Router,
         private _route: ActivatedRoute,
         private _peopleService: PeopleService,
@@ -75,7 +80,7 @@ export class MainPageWrapperComponent implements OnInit {
         this.openModel('modal-2');
     }
 
-    public onSearchChange(search: string | null) {
+    public onSearchChange(search: any) {
         this.search$.next(search || '');
     }
 
@@ -115,4 +120,5 @@ export class MainPageWrapperComponent implements OnInit {
 /**
  * todo: сделать предупреждение о недостатке средств(при отправке подарка) - мб валидатор или посоветоваться с Юрой, мб он знает метод лучше
  * todo: поправить отправку на сервер - созвон с Юрой
+ * todo: сделать свой поиск по одному человеку( можно списать с тестового артсофте) с пайпом
  */
