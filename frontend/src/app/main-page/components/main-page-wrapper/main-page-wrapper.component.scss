@@ -169,8 +169,38 @@ img {
     margin: calc(0.5rem + 4.7rem) auto;
     max-width: 41%;
 
-    .crossImg{
-       width: 1.2em;
+    &__giftImg {
+        .elementModel {
+            margin: 0 auto;
+
+            &__crossImg {
+                margin-right: 0;
+                float: right;
+
+                .crossImg{
+                    width: 1.5em;
+                }
+            }
+
+            .bigGiftImg{
+                width: 17em;
+                display: block;
+                margin: 0 auto;
+            }
+
+            .explanatoryText{
+                font-family: "Roboto Thin", Arial, sans-serif ;
+                font-weight: 600;
+                margin-top: 1em;
+                font-size: 1.8em;
+                text-align: center;
+                color: #2F014B;
+            }
+        }
+    }
+
+    .crossImg {
+        width: 1.2em;
     }
 
     .mainTitle {

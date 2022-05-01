@@ -13,7 +13,7 @@ export class SearchStringService {
     private _urlProfiles: string = "http://127.0.0.1:8000/api/profile/";
     private _urlAdminPostAccrual: string = "http://127.0.0.1:8000/api/admin/accrual/";
     private _urlUserPostAccrual: string = "http://127.0.0.1:8000/api/gifts/";
-    public foundUsers?: UsersSearch[];
+    public foundUsers!: UsersSearch[];
 
     constructor(
         private _router: Router,
@@ -26,13 +26,13 @@ export class SearchStringService {
         return this._http.get<UsersSearch[]>(this._urlProfiles, this._peopleService.optionsForHttp)
             .subscribe((users: UsersSearch[]) => {
                 this.foundUsers = users;
-                if (this._peopleService.findUser) {
-                    if (!this._peopleService.findUser.is_staff) {
-                        this._router.navigate(['/main-page/' + this._peopleService.findUser.id]);
-                    } else if (this._peopleService.findUser.is_staff) {
-                        this._router.navigate(["/admin/accrual"]);
-                    }
-                }
+                // if (this._peopleService.findUser) {
+                //     if (!this._peopleService.findUser.is_staff) {
+                //         this._router.navigate(['/main-page/']);
+                //     } else if (this._peopleService.findUser.is_staff) {
+                //         this._router.navigate(["/admin/accrual"]);
+                //     }
+                // }
             }, () => {
                console.log('Something went wrong - getProfiles');
             });

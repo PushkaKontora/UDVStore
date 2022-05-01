@@ -54,7 +54,7 @@ export class PeopleService {
         this.optionsForHttp = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': "Token " + this._cookieService.get('token'),
+                'Authorization': "Token " + localStorage.getItem('token'),
             })
         }
         this.getUser();
@@ -64,7 +64,7 @@ export class PeopleService {
         this.optionsForHttp = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': "Token " + this._cookieService.get('token'),
+                'Authorization': "Token " + localStorage.getItem('token'),
             })
         }
 
@@ -84,7 +84,7 @@ export class PeopleService {
     }
 
     public getUser() {
-        this.getUserHttp()
+        return this._http.get<IUser>(this._urlLoginUser, this.optionsForHttp)
             .subscribe(
                 (user: IUser) => {
                     if (user) {
@@ -107,8 +107,6 @@ export class PeopleService {
     public getProducts() {
         return this._http.get<products[]>(this._urlApiProducts, this.optionsForHttp);
     }
-
-
 }
 
 
