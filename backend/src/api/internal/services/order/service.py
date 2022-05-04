@@ -1,18 +1,18 @@
 from typing import Optional
 
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
 
-from api.internal.models.store import Order, StatusChoices
-
-
-def get_formed_orders() -> QuerySet[Order]:
-    return Order.objects.filter(in_cart=False).order_by("status")
+from api.internal.models.store import Order, StatusChoices, Transaction
 
 
-def get_user_formed_orders(profile_id: int) -> QuerySet[Order]:
+def get_formed_orders() -> QuerySet[Transaction]:
+    return Transaction.objects.filter(~Q(order=None)).order_by("order__status")
+
+
+def get_formed_orders_by_user(profile_id: int) -> QuerySet[Transaction]:
     formed_orders = get_formed_orders()
 
-    return formed_orders.filter(profile=profile_id)
+    return formed_orders.filter(source=profile_id)
 
 
 def get_formed_order_by_transaction(transaction_id: int) -> Order:
