@@ -16,6 +16,8 @@ export class PeopleService {
     private _urlLoginTokenUser: string = 'http://127.0.0.1:8000/auth/token/login';
     private _urlApiProducts: string = 'http://127.0.0.1:8000/api/products/';
     public token!: string;
+
+    //найденный юзер
     public findUser?: IUser;
     public storeProducts!: products[];
     public optionsForHttp?: { headers: HttpHeaders; }
