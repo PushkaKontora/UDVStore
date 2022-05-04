@@ -1,4 +1,15 @@
-<p>personal-orders works!</p>
-<div *ngFor="let order of orders">
-    {{order?.product?.name}}
+<div class="wrapper" >
+    <div class="titleText">ЗАКАЗЫ</div>
+    <div *ngFor="let order of orders" class="ordr">
+        <div class="img"><img src="{{order.product.photo}}" alt="product photo"></div>
+        <div class="content">
+            <div class="topLine">
+                <div class="valueTopLine">{{order.product.name}}</div>
+                <div class="valueTopLine">
+                    <div class="status"></div>
+                    <div class="data"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
