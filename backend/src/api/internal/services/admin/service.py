@@ -4,11 +4,11 @@ from django.db import IntegrityError
 from django.db.models import QuerySet, F
 from django.db.transaction import atomic
 
-from api.internal.models.store import Transaction
+from api.internal.models.store import Transaction, TransactionTypes
 
 
-def get_deposits() -> QuerySet[Transaction]:
-    return Transaction.objects.filter()
+def get_requests_from_users() -> QuerySet[Transaction]:
+    return Transaction.objects.filter(type=TransactionTypes.REQUEST)
 
 
 def try_accrue(transactions: List[Transaction]) -> bool:

@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from api.internal.models.store import Transaction
 from api.internal.modules.admin.serializers import AccrualRequestSerializer
 from api.internal.modules.profile.serializers import TransactionSerializer
-from api.internal.services.admin import try_accrue
+from api.internal.services.admin import try_accrue, get_requests_from_users
 from api.internal.services.profile import get_profile_history
 from api.internal.services.user import get_profile
 
@@ -43,5 +43,11 @@ class AdminViewSet(viewsets.ViewSet):
 
         if not is_success:
             return Response(status=500)
+
+        return Response(data=TransactionSerializer(transactions, many=True).data)
+
+    @action(detail=False, methods=["get"], url_path="deposits", url_name="deposits")
+    def deposits(self, request: Request) -> Response:
+        transactions = get_requests_from_users()
 
         return Response(data=TransactionSerializer(transactions, many=True).data)
