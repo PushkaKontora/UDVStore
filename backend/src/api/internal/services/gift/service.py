@@ -1,6 +1,7 @@
 from typing import List, Optional
 
 from django.db import IntegrityError, transaction
+from django.db.models import F
 
 from api.internal.models.profile import Profile
 from api.internal.models.store import Transaction, TransactionTypes
@@ -20,22 +21,18 @@ def try_transfer(source: Profile, destination: Profile, description: str, accrua
 
     try:
         with transaction.atomic():
-            _extract_from_source(source, accrual)
-            _add_to_destination(destination, accrual)
+            source.balance = F("balance") - accrual
+            destination.balance = F("balance") + accrual
+
+            source.save(update_fields=("balance",))
+            destination.save(update_fields=("balance",))
+
+            source.refresh_from_db(fields=("balance",))
+            destination.refresh_from_db(fields=("balance",))
 
         return _get_transaction(source, destination, description, accrual)
     except IntegrityError:
         return None
-
-
-def _extract_from_source(user: Profile, accrual: int) -> None:
-    user.balance -= accrual
-    user.save()
-
-
-def _add_to_destination(user: Profile, accrual: int) -> None:
-    user.balance += accrual
-    user.save()
 
 
 def _get_transaction(source: Profile, destination: Profile, description: str, accrual: int) -> Transaction:

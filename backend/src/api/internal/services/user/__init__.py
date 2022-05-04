@@ -1,1 +1,1 @@
-from .service import get_profile, get_profile_by_user, get_profiles, get_profiles_without
+from .service import get_default_user_profile, get_profile, get_profiles, get_profiles_without

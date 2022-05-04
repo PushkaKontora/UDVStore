@@ -6,14 +6,14 @@ from rest_framework.viewsets import ViewSet
 from api.internal.modules.gift.serializers import GiftSerializer
 from api.internal.modules.profile.serializers import TransactionSerializer
 from api.internal.services.gift import try_transfer
-from api.internal.services.user import get_profile, get_profile_by_user
+from api.internal.services.user import get_default_user_profile, get_profile
 
 
 class GiftViewSet(ViewSet):
     permission_classes = (IsAuthenticated,)
 
     def create(self, request: Request) -> Response:
-        source = get_profile_by_user(request.user)
+        source = get_default_user_profile(request.user)
         data = {
             "source": source.id,
             "destination": request.data.get("destination"),
