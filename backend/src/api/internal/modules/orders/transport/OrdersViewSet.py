@@ -21,6 +21,6 @@ class OrdersViewSet(GenericViewSet):
     def _get_orders_details(self, request: Request, get_transaction_orders: Callable) -> Response:
         transactions = get_transaction_orders()
 
-        serializer = FormedOrderSerializer(transactions, many=True)
+        serializer = FormedOrderSerializer(transactions, many=True, context={"request": request})
 
         return Response(serializer.data)

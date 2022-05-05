@@ -6,7 +6,7 @@ from api.internal.models.store import Order, StatusChoices, Transaction
 
 
 def get_formed_orders() -> QuerySet[Transaction]:
-    return Transaction.objects.filter(~Q(order=None)).order_by("order__status")
+    return Transaction.objects.filter(~Q(order=None)).order_by("order__status", "created_at")
 
 
 def get_formed_orders_by_user(profile_id: int) -> QuerySet[Transaction]:
