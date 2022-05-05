@@ -16,7 +16,7 @@ from api.internal.services.cart import (
     validate_amount,
     validate_new_order,
 )
-from api.internal.services.user import get_profile_by_user
+from api.internal.services.user import get_default_user_profile
 
 
 class CartViewSet(ViewSet):
@@ -24,6 +24,10 @@ class CartViewSet(ViewSet):
     http_method_names = ("get", "post", "patch", "delete")
 
     def list(self, request: Request) -> Response:
+        profile = get_default_user_profile(request.user)
+        if not profile:
+            return Response(status=403)
+
         orders = get_orders_by_user(request.user)
 
         serializer = OrderSerializer(orders, many=True, context={"request": request})
@@ -31,16 +35,21 @@ class CartViewSet(ViewSet):
         return Response(data=serializer.data)
 
     def retrieve(self, request: Request, pk=None) -> Response:
-        profile = get_profile_by_user(request.user)
-        order = get_order(pk, profile)
+        profile = get_default_user_profile(request.user)
+        if not profile:
+            return Response(status=403)
 
+        order = get_order(pk, profile)
         if not order:
             return Response(status=404)
 
         return Response(data=OrderSerializer(order, context={"request": request}).data)
 
     def create(self, request: Request) -> Response:
-        profile = get_profile_by_user(request.user)
+        profile = get_default_user_profile(request.user)
+        if not profile:
+            return Response(status=403)
+
         data = self._get_data(request, profile)
 
         cart_serializer = CartSerializer(data=data)
@@ -55,7 +64,10 @@ class CartViewSet(ViewSet):
         return Response(status=400)
 
     def partial_update(self, request: Request, pk=None) -> Response:
-        profile = get_profile_by_user(request.user)
+        profile = get_default_user_profile(request.user)
+        if not profile:
+            return Response(status=403)
+
         data = self._get_data(request, profile)
 
         order = get_order(pk, profile)
@@ -75,7 +87,10 @@ class CartViewSet(ViewSet):
         return Response(OrderSerializer(updated_order, context={"request": request}).data)
 
     def destroy(self, request: Request, pk=None) -> Response:
-        profile = get_profile_by_user(request.user)
+        profile = get_default_user_profile(request.user)
+        if not profile:
+            return Response(status=403)
+
         order = get_order(pk, profile)
 
         if not order:
@@ -86,7 +101,10 @@ class CartViewSet(ViewSet):
 
     @action(methods=["post"], detail=False, url_path="pay", url_name="pay", permission_classes=[IsAuthenticated])
     def pay(self, request: Request) -> Response:
-        profile = get_profile_by_user(request.user)
+        profile = get_default_user_profile(request.user)
+        if not profile:
+            return Response(status=403)
+
         orders = get_orders_by_profile(profile)
 
         if not orders:
@@ -96,7 +114,7 @@ class CartViewSet(ViewSet):
         if not transactions:
             return Response(status=406)
 
-        return Response(data=TransactionSerializer(transactions, many=True).data)
+        return Response(data=TransactionSerializer(transactions, many=True, context={"request": request}).data)
 
     def _get_data(self, request: Request, profile: Profile) -> dict:
         data = {

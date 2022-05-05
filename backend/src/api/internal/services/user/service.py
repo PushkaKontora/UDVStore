@@ -10,7 +10,7 @@ def get_profile(id_: Union[int, str]) -> Optional[Profile]:
     return get_profiles().filter(id=id_).first()
 
 
-def get_profile_by_user(user: User) -> Profile:
+def get_default_user_profile(user: User) -> Profile:
     return get_profiles().filter(user=user).first()
 
 

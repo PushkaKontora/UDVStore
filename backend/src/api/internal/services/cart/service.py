@@ -2,11 +2,11 @@ from typing import Iterable, List, Optional, Union
 
 from django.contrib.auth.models import User
 from django.db import IntegrityError, transaction
-from django.db.models import QuerySet
+from django.db.models import F, QuerySet
 
 from api.internal.models.profile import Profile
 from api.internal.models.store import Order, StatusChoices, StorageCell, Transaction, TransactionTypes
-from api.internal.services.user import get_profile_by_user
+from api.internal.services.user import get_default_user_profile
 
 
 def get_order(pk: Union[int, str], profile: Profile) -> Order:
@@ -18,7 +18,7 @@ def get_storage_cell_by_id(storage_id: Union[int, str]) -> Optional[StorageCell]
 
 
 def get_orders_by_user(user: User) -> QuerySet[Order]:
-    profile = get_profile_by_user(user)
+    profile = get_default_user_profile(user)
     return get_orders_by_profile(profile)
 
 
@@ -51,42 +51,30 @@ def pay(orders: Iterable[Order]) -> List[Transaction]:
     if not validate_amount(orders) or not validate_balance(orders):
         return []
 
+    transactions = []
     try:
         with transaction.atomic():
-            _extract_amount_in_storage(orders)
-            _extract_total_from_balance(orders)
-            _mark_order_as_ready(orders)
+            for order in orders:
+                storage, profile, total = order.storage_cell, order.profile, get_total(order)
 
-        return _get_transactions(orders)
+                storage.amount = F("amount") - order.amount
+                profile.balance = F("balance") - total
+                order.in_cart = False
+                order.status = StatusChoices.IN_PROCESS
+
+                order.save(update_fields=("in_cart", "status"))
+                storage.save(update_fields=("amount",))
+                profile.save(update_fields=("balance",))
+
+                transactions.append(
+                    Transaction.objects.create(
+                        type=TransactionTypes.BUYING, source=order.profile, accrual=total, order=order
+                    )
+                )
+
+                storage.refresh_from_db(fields=("amount",))
+                profile.refresh_from_db(fields=("balance",))
+
+        return transactions
     except IntegrityError:
         return []
-
-
-def _extract_amount_in_storage(orders: Iterable[Order]) -> None:
-    for order in orders:
-        storage = order.storage_cell
-        storage.amount -= order.amount
-        storage.save()
-
-
-def _extract_total_from_balance(orders: Iterable[Order]) -> None:
-    for order in orders:
-        profile = order.profile
-        profile.balance -= get_total(order)
-        profile.save()
-
-
-def _mark_order_as_ready(orders: Iterable[Order]) -> None:
-    for order in orders:
-        order.in_cart = False
-        order.status = StatusChoices.IN_PROCESS
-        order.save()
-
-
-def _get_transactions(orders: Iterable[Order]) -> List[Transaction]:
-    return [
-        Transaction.objects.create(
-            type=TransactionTypes.BUYING, source=order.profile, accrual=get_total(order), order=order
-        )
-        for order in orders
-    ]

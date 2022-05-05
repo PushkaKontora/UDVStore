@@ -9,7 +9,7 @@ from api.internal.models.store import Transaction, TransactionFile, TransactionT
 from api.internal.modules.profile.serializers.ProfileSerializer import ProfileSerializer
 from api.internal.modules.profile.serializers.TransactionSerializer import TransactionSerializer
 from api.internal.services.profile import get_profile_history
-from api.internal.services.user import get_profile_by_user, get_profiles, get_profiles_without
+from api.internal.services.user import get_default_user_profile, get_profiles, get_profiles_without
 
 
 class ProfileViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
@@ -30,7 +30,6 @@ class ProfileViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     @action(detail=False, methods=["get"])
     def current(self, request):
-        # TODO: temp getting profile of admin
         profile = Profile.objects.filter(user=request.user).first()
 
         if not profile:
@@ -41,7 +40,7 @@ class ProfileViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     @action(detail=False, methods=["get"])
     def history(self, request):
-        profile = get_profile_by_user(request.user)
+        profile = get_default_user_profile(request.user)
 
         if not profile:
             return Response(status=404)
@@ -58,7 +57,7 @@ class ProfileViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
         del td["files"]
         nt = Transaction(**td)
         nt.type = TransactionTypes.ACCEPT
-        nt.source = get_profile_by_user(request.user)
+        nt.source = get_default_user_profile(request.user)
         nt.save()
 
         for k, v in request.FILES.items():

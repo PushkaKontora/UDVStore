@@ -5,8 +5,8 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-from api.internal.modules.orders.serializers import OrderSerializer
-from api.internal.services.order import get_formed_orders, get_user_formed_orders
+from api.internal.modules.orders.serializers import FormedOrderSerializer
+from api.internal.services.order import get_formed_orders, get_formed_orders_by_user
 
 
 class OrdersViewSet(GenericViewSet):
@@ -16,11 +16,11 @@ class OrdersViewSet(GenericViewSet):
         return self._get_orders_details(request, get_formed_orders)
 
     def retrieve(self, request: Request, pk=None) -> Response:
-        return self._get_orders_details(request, lambda: get_user_formed_orders(pk))
+        return self._get_orders_details(request, lambda: get_formed_orders_by_user(pk))
 
-    def _get_orders_details(self, request: Request, get_orders: Callable) -> Response:
-        orders = get_orders()
+    def _get_orders_details(self, request: Request, get_transaction_orders: Callable) -> Response:
+        transactions = get_transaction_orders()
 
-        serializer = OrderSerializer(orders, many=True, context={"request": request})
+        serializer = FormedOrderSerializer(transactions, many=True)
 
         return Response(serializer.data)
