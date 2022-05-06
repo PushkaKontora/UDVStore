@@ -7,7 +7,6 @@ from api.internal.services.cart import get_total
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    profile = ProfileSerializer()
     product = ProductDetailsSerializer(source="storage_cell")
     total = serializers.SerializerMethodField(method_name="get_total")
 

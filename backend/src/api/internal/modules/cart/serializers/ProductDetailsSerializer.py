@@ -11,4 +11,4 @@ class ProductDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StorageCell
-        fields = ("name", "photo", "description", "price", "size", "amount")
+        fields = ("id", "name", "photo", "description", "price", "size", "amount")
