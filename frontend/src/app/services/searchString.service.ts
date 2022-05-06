@@ -35,6 +35,14 @@ export class SearchStringService {
                 // }
             }, () => {
                console.log('Something went wrong - getProfiles');
+            }, () => {
+                if (this._peopleService.findUser) {
+                    if (!this._peopleService.findUser.is_staff) {
+                        this._router.navigate(['/main-page/']);
+                    } else if (this._peopleService.findUser.is_staff) {
+                        this._router.navigate(["/admin/orders"]);
+                    }
+                }
             });
     }
 

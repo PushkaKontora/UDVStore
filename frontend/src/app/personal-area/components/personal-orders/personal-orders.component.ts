@@ -20,10 +20,9 @@ export class PersonalOrdersComponent implements OnInit {
     }
 
     private getOrders(): void {
-        this._PersonalTransactionsService.getOrders()
+        this._PersonalTransactionsService.getOrdersUser()
             .subscribe(
                 (orders: IOrder[]) => {
-                    console.log('orders');
                     this.orders = orders;
                 }
             )

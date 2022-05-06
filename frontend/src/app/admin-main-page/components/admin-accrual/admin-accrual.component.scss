@@ -2,6 +2,10 @@
 @import '../../../../../node_modules/@taiga-ui/core/styles/taiga-ui-local';
 @import "../../../../usedCSS/model-popUp";
 
+.wrapper{
+    margin: 2rem;
+}
+
 .template {
     display: flex;
     align-items: center;

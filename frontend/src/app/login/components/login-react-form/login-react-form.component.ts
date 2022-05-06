@@ -67,7 +67,7 @@ export class LoginReactFormComponent implements OnInit {
                                         this._peopleService.findUser = user;
                                     } else if (user.is_staff) {
                                         this._peopleService.findUser = user;
-                                        this._router.navigate(["/admin/"]);
+                                        this._router.navigate(["admin", "orders"]);
                                     }
                                 } else {
                                     alert('user not found');

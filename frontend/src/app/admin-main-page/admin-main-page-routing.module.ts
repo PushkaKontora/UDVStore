@@ -8,17 +8,29 @@ import {AdminScoreComponent} from "./components/admin-score/admin-score.componen
 import {AdminOrdersComponent} from "./components/admin-orders/admin-orders.component";
 import {AdminAccrualComponent} from "./components/admin-accrual/admin-accrual.component";
 import {AdminRulesComponent} from "./components/admin-rules/admin-rules.component";
+import {AdminOrdersAllOrdersComponent} from "./components/admin-orders/childrens/admin-orders-all-orders/admin-orders-all-orders.component";
+import {AdminOrdersNewOrdersComponent} from "./components/admin-orders/childrens/admin-orders-new-orders/admin-orders-new-orders.component";
+import {AdminOrdersProcessingOrdersComponent} from "./components/admin-orders/childrens/admin-orders-processing-orders/admin-orders-processing-orders.component";
 
 
-
-const childrenRoutes:Routes =[
-    {path: 'accrual', component: AdminAccrualComponent},
+const childrenRoutes: Routes = [
+    {
+        path: 'accrual',
+        component: AdminAccrualComponent,
+    },
     {path: 'requests', component: AdminRequestComponent},
-    {path: 'orders', component: AdminOrdersComponent},
+    {
+        path: 'orders',
+        component: AdminOrdersComponent,
+        children: [
+            {path: 'all-orders', component: AdminOrdersAllOrdersComponent,},
+            {path: 'new-orders', component: AdminOrdersNewOrdersComponent,},
+            {path: 'processing-orders', component: AdminOrdersProcessingOrdersComponent,}
+        ]
+    },
     {path: 'score', component: AdminScoreComponent},
     {path: 'rules', component: AdminRulesComponent},
 ]
-
 
 
 const routes: Routes = [
@@ -30,4 +42,5 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class AdminMainPageRoutingModule {}
+export class AdminMainPageRoutingModule {
+}

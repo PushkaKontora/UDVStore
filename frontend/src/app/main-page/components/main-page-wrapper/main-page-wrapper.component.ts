@@ -41,7 +41,7 @@ constructor(
     }
 
     ngOnInit(): void {
-        this._router.navigate(["/main-page/personal-area/orders"]);
+        this._router.navigate(["/main-page/merch"]);
         console.log(this._peopleService.findUser?.balance)
     }
 

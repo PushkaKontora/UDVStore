@@ -1,1 +1,14 @@
-<p>personal-history works!</p>
+<div class="wrapper">
+    <button class="button_value" routerLink="./all-orders" routerLinkActive="active-link">
+        ВСЕ ЗАКАЗЫ
+    </button>
+    <button class="button_value" routerLink="./new-orders" routerLinkActive="active-link">
+        НОВЫЕ
+    </button>
+    <button class="button_value" routerLink="./processing-orders" routerLinkActive="active-link">
+        В ОБРАБОТКЕ
+    </button>
+</div>
+<div>
+    <router-outlet></router-outlet>
+</div>

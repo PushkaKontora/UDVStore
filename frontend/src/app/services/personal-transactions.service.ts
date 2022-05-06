@@ -16,8 +16,13 @@ export class PersonalTransactionsService {
     ) {
     }
 
-    public getOrders() {
+    public getOrdersUser() {
         const urlOrdersUser: string = this._urlOrdersUser + this._peopleService.findUser?.id + '/';
         return this._http.get<IOrder[]>(urlOrdersUser, this._peopleService.optionsForHttp);
+
+    }
+
+    public getAllOrders() {
+        return this._http.get<IOrder[]>(this._urlOrdersUser, this._peopleService.optionsForHttp);
     }
 }
