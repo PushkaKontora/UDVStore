@@ -16,6 +16,8 @@ export class PeopleService {
     private _urlLoginTokenUser: string = 'http://127.0.0.1:8000/auth/token/login';
     private _urlApiProducts: string = 'http://127.0.0.1:8000/api/products/';
     public token!: string;
+
+    //найденный юзер
     public findUser?: IUser;
     public storeProducts!: products[];
     public optionsForHttp?: { headers: HttpHeaders; }
@@ -54,7 +56,7 @@ export class PeopleService {
         this.optionsForHttp = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': "Token " + this._cookieService.get('token'),
+                'Authorization': "Token " + localStorage.getItem('token'),
             })
         }
         this.getUser();
@@ -64,7 +66,7 @@ export class PeopleService {
         this.optionsForHttp = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': "Token " + this._cookieService.get('token'),
+                'Authorization': "Token " + localStorage.getItem('token'),
             })
         }
 
@@ -84,7 +86,7 @@ export class PeopleService {
     }
 
     public getUser() {
-        this.getUserHttp()
+        return this._http.get<IUser>(this._urlLoginUser, this.optionsForHttp)
             .subscribe(
                 (user: IUser) => {
                     if (user) {
@@ -107,8 +109,6 @@ export class PeopleService {
     public getProducts() {
         return this._http.get<products[]>(this._urlApiProducts, this.optionsForHttp);
     }
-
-
 }
 
 

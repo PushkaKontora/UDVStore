@@ -1,1 +1,63 @@
-<p>personal-orders works!</p>
+<div class="wrapper">
+    <div class="titleText">ЗАКАЗЫ</div>
+    <div class="contentWrapper">
+        <div *ngFor="let order of orders" class="ordr">
+            <div class="img"><img src="{{order.order.product.photo}}" alt="product photo"></div>
+            <div class="content">
+                <div class="topLine">
+                    <div class="valueTopLine valueTopLine__name">{{order.order.product.name}}</div>
+                    <div class="valueTopLine valueTopLine__rightValue">
+                        <div class="status status__green" *ngIf="order.order.status === 1">
+                            <div class="statusText">в обработке</div>
+                        </div>
+                        <div class="status status__black" *ngIf="order.order.status === 2">
+                            <div class="statusText">выдано</div>
+                        </div>
+                        <div class="data">{{order.created_at | date : 'dd.MM.yyyy'}}</div>
+                    </div>
+                </div>
+
+                <div class="additionalInformation">
+                    <div class="valueAdditional valueAdditional__size" *ngIf="order.order.product.size !== 0">
+                        <div *ngIf="order.order.product.size === 1">
+                            Размер: <span class="borderElement">XS</span>
+                        </div>
+                        <div *ngIf="order.order.product.size === 2">
+                            Размер: <span class="borderElement">S</span>
+                        </div>
+                        <div *ngIf="order.order.product.size === 3">
+                            Размер: <span class="borderElement">M</span>
+                        </div>
+                        <div *ngIf="order.order.product.size === 4">
+                            Размер: <span class="borderElement">L</span>
+                        </div>
+                        <div *ngIf="order.order.product.size === 5">
+                            Размер: <span class="borderElement">XL</span>
+                        </div>
+                        <div *ngIf="order.order.product.size === 6">
+                            Размер: <span class="borderElement">XXL</span>
+                        </div>
+                        <div *ngIf="order.order.product.size === 7">
+                            Размер: <span class="borderElement">XXXL</span>
+                        </div>
+                    </div>
+                    <div class="valueAdditional valueAdditional__amount">
+                        Количество: <span class="borderElement">{{order.order.amount}}</span>
+                    </div>
+                </div>
+
+                <div class="coinsWrapper">
+                    <ul class="coins">
+                    <li class="wrapper_num">
+                        {{order.order.product.price}}
+                    </li>
+                    <li>
+                        <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
+                             alt="greenBlockCoins">
+                    </li>
+                </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -7,6 +7,7 @@ import {StoreService} from "../../services/store.service";
 import {delay, filter, Observable, of, startWith, Subject, switchMap} from "rxjs";
 import {SearchStringService} from "../../../services/searchString.service";
 import {User} from "../../../../generalClasses/User";
+import {TuiBooleanHandler} from "@taiga-ui/cdk";
 
 
 @Component({
@@ -17,61 +18,69 @@ import {User} from "../../../../generalClasses/User";
 export class MainPageWrapperComponent implements OnInit {
     public writePers: FormGroup = new FormGroup({})
     public user?: IUser;
-    search$ = new Subject<string>();
+    public value = null;
+    public search$ = new Subject<string>();
     readonly testValue = new FormControl();
     public foundUsers!: UsersSearch[];
     private databaseMockData: UsersSearch[] = [];
+    readonly disabledItemHandler: TuiBooleanHandler<User> = ({photo}) => !!photo;
 
-    constructor(
+
+
+constructor(
         private _router: Router,
         private _route: ActivatedRoute,
         private _peopleService: PeopleService,
         private _storeService: StoreService,
         private _searchStringService: SearchStringService,
     ) {
-        if (this._searchStringService.foundUsers) {
-            this.foundUsers = this._searchStringService.foundUsers;
-        }
-        this.createForm();
         this.user = this._peopleService.findUser;
+        this.foundUsers = this._searchStringService.foundUsers;
+        this.createForm();
         this.makeUserArray();
     }
 
     ngOnInit(): void {
-        this._router.navigate(["/main-page/merch"]);
+        this._router.navigate(["/main-page/personal-area/orders"]);
+        console.log(this._peopleService.findUser?.balance)
     }
 
     public createGift(): void {
         this._router.navigate(['./merch/present'], {relativeTo: this._route})
     }
 
-    public openModel() {
-        document.getElementById('modal-1')!.style.display = 'block';
+    public openModel(nameModel: string) {
+        document.getElementById(nameModel)!.style.display = 'block';
         document.body.style.overflow = "hidden";
         document.body.classList.add('modalOpen');
     }
 
-    public closeModel() {
-        document.getElementById('modal-1')!.style.display = 'none';
+    public closeModel(nameModel: string) {
+        document.getElementById(nameModel)!.style.display = 'none';
         document.body.style.overflow = "visible";
         document.body.classList.remove('modalOpen');
+        this._peopleService.getUser();
+        this.user = this._peopleService.findUser;
     }
 
     public onSubmit() {
         this.writePers.patchValue({employee: this.testValue.value});
         this._searchStringService.postUserAccrualCoins(this.testValue.value[0].id, this.writePers.value.coins, this.writePers.value.activity)
             .subscribe(
-                (res: any) => {
+                () => {
                     this.writePers.reset();
-                    this._peopleService.getUser();
-                });
+                },
+                () => {
+                },
+                () => {
+                }
+            );
         this.search$.next('');
-        this.closeModel();
-        console.log('click');
-        console.log( this.databaseMockData);
+        this.closeModel('modal-1');
+        this.openModel('modal-2');
     }
 
-    public onSearchChange(search: string | null) {
+    public onSearchChange(search: any) {
         this.search$.next(search || '');
     }
 
@@ -111,4 +120,5 @@ export class MainPageWrapperComponent implements OnInit {
 /**
  * todo: сделать предупреждение о недостатке средств(при отправке подарка) - мб валидатор или посоветоваться с Юрой, мб он знает метод лучше
  * todo: поправить отправку на сервер - созвон с Юрой
+ * todo: сделать свой поиск по одному человеку( можно списать с тестового артсофте) с пайпом
  */

@@ -12,7 +12,17 @@ export class PersonalActivityComponent implements OnInit {
     constructor() {
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
+    }
+
+    public sendRequest(): void {
+        // const fileSelector = document.getElementById('file-selector');
+        // if (fileSelector) {
+        //     fileSelector.addEventListener('change', (event) => {
+        //         const fileList = event.target.files;
+        //         console.log(fileList);
+        //     });
+        // }
     }
 
 }

@@ -1,4 +1,4 @@
-<div class="wrapper-router">
+<div class="wrapper-router" xmlns="http://www.w3.org/1999/html">
     <div class="wrapper">
         <div class="header">
             <a href="#" class="logo"><img src="../../../../assets/images/logoUDVstore.svg" alt="logo UDVstor"></a>
@@ -21,7 +21,7 @@
                         <li class="li_cart"><a href="#"><img src="../../../../assets/images-main-page/cart.svg"
                                                              alt="cart"></a></li>
                         <li class="li_gift">
-                            <button (click)="openModel()" class="a-button"><img
+                            <button (click)="openModel('modal-1')" class="a-button"><img
                                 src="../../../../assets/images-main-page/gift.svg"
                                 alt="gift"></button>
                         </li>
@@ -49,7 +49,8 @@
             <div class="modelBody">
                 <div class="mainTitle">
                     <div class="text">СДЕЛАТЬ ПОДАРОК</div>
-                    <button><img src="../../../../assets/images-main-page/cross.svg" class="crossImg" alt="cross" (click)="closeModel()">
+                    <button><img src="../../../../assets/images-main-page/cross.svg" class="crossImg" alt="cross"
+                                 (click)="closeModel('modal-1')">
                     </button>
                 </div>
                 <form [formGroup]="writePers"
@@ -57,6 +58,36 @@
                     <div class="value">
                         <div class="title">КОМУ</div>
                         <div class="content">
+<!--                            <tui-select-->
+<!--                                *tuiLet="items$ | async as items"-->
+<!--                                class="b-form"-->
+<!--                                [(ngModel)]="value"-->
+<!--                                (searchChange)="onSearchChange($event)"-->
+<!--                            >-->
+<!--                               Фамилия Имя Отчество-->
+<!--                                <tui-data-list-wrapper-->
+<!--                                    *tuiDataList-->
+<!--                                    size="s"-->
+<!--                                    [items]="items"-->
+<!--                                    [itemContent]="content"-->
+<!--                                    [disabledItemHandler]="disabledItemHandler"-->
+<!--                                ></tui-data-list-wrapper>-->
+<!--                            </tui-select>-->
+
+<!--                            <ng-template-->
+<!--                                #content-->
+<!--                                let-data-->
+<!--                            >-->
+<!--                                <div class="template">-->
+<!--                                    <tui-avatar-->
+<!--                                        size="xs"-->
+<!--                                        class="avatar"-->
+<!--                                        [avatarUrl]="data.photo || null"-->
+<!--                                        [text]="data.toString()"-->
+<!--                                    ></tui-avatar>-->
+<!--                                    <div class="name">{{data}}</div>-->
+<!--                                </div>-->
+<!--                            </ng-template>-->
                             <tui-multi-select
                                 *tuiLet="items$ | async as items"
                                 #component
@@ -113,7 +144,26 @@
                         </div>
                     </div>
                 </form>
-                <button (click)="onSubmit()" class="button" [disabled]="writePers.invalid">ОТПРАВИТЬ ПОДАРОК </button>
+                <button (click)="onSubmit()" class="button" [disabled]="writePers.invalid">ОТПРАВИТЬ ПОДАРОК</button>
+            </div>
+        </div>
+        <div class="modelBackground"></div>
+    </div>
+    <div class="modal-wrapper" id="modal-2">
+        <div class="model">
+            <div class="modelBody modelBody__giftImg">
+                <div class="elementModel elementModel__crossImg">
+                    <button>
+                        <img src="../../../../assets/images-main-page/cross.svg" class="crossImg" alt="cross"
+                             (click)="closeModel('modal-2')">
+                    </button>
+                </div>
+                <div class="elementModel">
+                    <img src="../../../../assets/images-main-page/bigGift.svg" alt="bigGift" class="bigGiftImg">
+                </div>
+                <div class="elementModel">
+                    <div class="explanatoryText">ПОДАРОК ОТПРАВЛЕН!!!</div>
+                </div>
             </div>
         </div>
         <div class="modelBackground"></div>
