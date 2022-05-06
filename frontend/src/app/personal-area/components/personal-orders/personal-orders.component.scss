@@ -18,6 +18,7 @@
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
             border-radius: 2px;
             display: flex;
+            width: 100%;
 
             &:not(:last-child) {
                 margin-bottom: 0.55rem;
@@ -25,7 +26,111 @@
 
             .img {
                 img {
-                    width: 3rem;
+                    width: 5.5rem;
+                }
+            }
+
+            .content {
+                display: block;
+
+                .topLine {
+                    padding-left: 0.5em;
+                    display: flex;
+                    justify-content: space-between;
+                    width: 35em;
+
+                    .valueTopLine {
+                        display: block;
+
+                        &__name {
+                            padding: 0.5em 0;
+                            color: #1C1B1B;
+                            font-weight: 700;
+                        }
+
+                        &__rightValue {
+                            display: flex;
+
+                            .status {
+                                border: 1px solid #302E2E;
+                                border-radius: 1em;
+                                margin-right: 0.8em;
+                                font-family: 'Kapra Neue Pro', Arial, sans-serif;
+
+                                &__green {
+                                    color: #00D18F;
+                                    border-color: #00D18F;
+                                }
+
+                                &__black {
+                                    color: #302E2E;
+                                }
+
+                                .statusText {
+                                    padding: 0.45em 0.8em;
+                                }
+
+                            }
+
+                            .data {
+                                padding-top: 0.5em;
+                                color: #727272;
+                                font-weight: 600;
+                                font-family: 'Kapra Neue Pro', Arial, sans-serif;
+                            }
+                        }
+                    }
+                }
+
+                .additionalInformation {
+                    float: left;
+                    max-width: 20rem;
+                    color: #1C1B1B;
+                    font-size: 0.8em;
+                    margin-left: 0.5rem;
+
+                    .valueAdditional {
+                        margin-bottom: 0.5em;
+
+                        .borderElement {
+                            text-decoration-line: underline;
+                        }
+                    }
+                }
+
+                .coinsWrapper {
+                    margin-top: 1.55rem;
+                    float: right;
+                    font-family: 'Kapra Neue Pro', Arial, sans-serif;
+
+                    ul {
+                        align-items: center;
+                        background-color: #2CF2B3;
+                        color: #252424;
+                        padding: 0.85em 0.2em 0.85em 0.4em;
+                        border-radius: 0.9em;
+                        max-height: 1.4rem;
+                        display: flex;
+
+
+                        li {
+                            display: inline-block;
+                            margin: 0;
+                            padding: 0;
+                            vertical-align: middle;
+
+                            img {
+                                max-height: 1.2rem;
+                            }
+                        }
+
+                        li.wrapper_num {
+                            font-size: 0.9em;
+                            line-height: 0.9em;
+                            padding-right: 0.03em;
+                            font-weight: 600;
+                        }
+                    }
                 }
             }
         }
