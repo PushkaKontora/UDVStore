@@ -19,6 +19,8 @@ class Transaction(models.Model):
     description = models.CharField(max_length=DESCRIPTION_LENGTH, default=None, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 
+    related_transaction = models.OneToOneField("self", null=True, on_delete=models.PROTECT)
+
     class Meta:
         ordering = ("pk",)
         db_table = "transactions"

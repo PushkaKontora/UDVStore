@@ -1,11 +1,13 @@
+from django.db import IntegrityError
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from api.internal.models.store import Transaction
+from api.internal.models.store import Transaction, TransactionTypes
 from api.internal.modules.admin.serializers import AccrualRequestSerializer
+from api.internal.modules.admin.serializers.TransactionVerdictSerializer import TransactionVerdictSerializer
 from api.internal.modules.profile.serializers import TransactionSerializer
 from api.internal.services.admin import try_accrue, get_requests_from_users
 from api.internal.services.profile import get_profile_history
@@ -51,3 +53,43 @@ class AdminViewSet(viewsets.ViewSet):
         transactions = get_requests_from_users()
 
         return Response(data=TransactionSerializer(transactions, many=True).data)
+
+    @action(detail=False, methods=["post"])
+    def approve(self, request: Request):
+        data = {
+            "transaction_id": request.data.get("transaction_id"),
+            "amount": request.data.get("amount", 1),
+            "comment": request.data.get("comment", ""),
+            "status": TransactionTypes.APPROVED
+        }
+
+        ser = TransactionVerdictSerializer(data=data)
+        ser.is_valid(raise_exception=True)
+
+        approved_trans = ser.save()
+        is_success = try_accrue([approved_trans])
+
+        if not is_success:
+            return Response(status=500)
+
+        return Response(data="Successful", status=200)
+
+
+    @action(detail=False, methods=["post"])
+    def cancel(self, request: Request):
+        data = {
+            "transaction_id": request.data.get("transaction_id"),
+            "comment": request.data.get("comment", ""),
+            "status": TransactionTypes.CANCELED
+        }
+
+        ser = TransactionVerdictSerializer(data=data)
+        ser.is_valid(raise_exception=True)
+
+        cancelled_trans = ser.save()
+        try:
+            cancelled_trans.save()
+        except IntegrityError:
+            return Response(status=500)
+
+        return Response(data="Successful", status=200)

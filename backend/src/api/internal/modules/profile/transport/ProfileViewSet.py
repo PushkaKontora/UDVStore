@@ -56,7 +56,7 @@ class ProfileViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
         td = ser.validated_data
         del td["files"]
         nt = Transaction(**td)
-        nt.type = TransactionTypes.ACCEPT
+        nt.type = TransactionTypes.REQUEST
         nt.source = get_default_user_profile(request.user)
         nt.save()
 
