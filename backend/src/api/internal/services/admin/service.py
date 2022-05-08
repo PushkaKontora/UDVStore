@@ -26,3 +26,7 @@ def try_accrue(transactions: List[Transaction]) -> bool:
         return True
     except IntegrityError:
         return False
+
+
+def get_requested_transactions() -> QuerySet[Transaction]:
+    return Transaction.objects.filter(type=TransactionTypes.REQUEST)
