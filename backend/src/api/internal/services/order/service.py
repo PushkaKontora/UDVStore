@@ -1,6 +1,6 @@
 from typing import Optional
 
-from django.db.models import QuerySet, Q
+from django.db.models import Q, QuerySet
 
 from api.internal.models.store import Order, StatusChoices, Transaction
 

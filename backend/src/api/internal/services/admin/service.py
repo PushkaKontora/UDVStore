@@ -1,7 +1,7 @@
 from typing import List
 
 from django.db import IntegrityError
-from django.db.models import QuerySet, F
+from django.db.models import F, QuerySet
 from django.db.transaction import atomic
 
 from api.internal.models.store import Transaction, TransactionTypes
