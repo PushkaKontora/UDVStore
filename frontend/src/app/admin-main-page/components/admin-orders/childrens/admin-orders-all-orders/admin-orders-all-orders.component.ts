@@ -9,19 +9,36 @@ import {IOrder} from "../../../../../../interfaces/order";
 })
 export class AdminOrdersAllOrdersComponent implements OnInit {
     public orders?: IOrder[];
-    selectedOption: any = 'новый';
 
     constructor(private _personalTransactionsService: PersonalTransactionsService) {
-        _personalTransactionsService.getAllOrders()
-            .subscribe((orders: IOrder[]) => {
-                this.orders = orders;
-            })
+        this.getOrders();
     }
 
     ngOnInit(): void {
     }
 
-    onChange($event: any) {
-        console.log($event);
+    private getOrders(): void{
+        this._personalTransactionsService.getAllOrders()
+            .subscribe((orders: IOrder[]) => {
+                this.orders = orders;
+            });
+    }
+
+    public onChangeDone(orderID: number): void {
+        this._personalTransactionsService.patchStatusOrders(orderID, 2)
+            .subscribe({
+                complete: (() => {
+                    this.getOrders();
+                })
+            });
+    }
+
+   public onChangeNew(orderID: number): void {
+       this._personalTransactionsService.patchStatusOrders(orderID, 1)
+           .subscribe({
+               complete: (() => {
+                   this.getOrders();
+               })
+           });
     }
 }

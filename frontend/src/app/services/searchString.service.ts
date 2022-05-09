@@ -40,7 +40,7 @@ export class SearchStringService {
                     if (!this._peopleService.findUser.is_staff) {
                         this._router.navigate(['/main-page/']);
                     } else if (this._peopleService.findUser.is_staff) {
-                        this._router.navigate(["/admin/orders"]);
+                        this._router.navigate(["/admin/accrual"]);
                     }
                 }
             });
