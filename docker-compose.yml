@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  nginx:
+    build: nginx/
+    container_name: nginx
+    volumes:
+      - static:/static
+      - media:/media
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api
+
+  api:
+    build: backend/
+    container_name: api
+    command: make static migrate up
+    restart: always
+    env_file:
+      - backend/src/config/.env
+    volumes:
+      - static:/api/static
+      - media:/api/media
+    environment:
+      POSTGRES_HOST: postgres
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14-alpine
+    container_name: postgres
+    restart: always
+    env_file:
+      - backend/src/config/.env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+  static:
+  media:

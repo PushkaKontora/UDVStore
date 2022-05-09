@@ -1,0 +1,6 @@
+src/media/
+src/static/
+.gitignore
+.git/
+__pycache__
+Dockerfile

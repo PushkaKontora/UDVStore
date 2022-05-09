@@ -22,3 +22,9 @@ check_lint:
 	pipenv run isort --check --diff . & \
 	pipenv run flake8 --config setup.cfg & \
 	pipenv run black --check --config pyproject.toml .
+
+up:
+	pipenv run gunicorn --bind 0.0.0.0:8000 src.config.wsgi
+
+static:
+	pipenv run make command c="collectstatic"
