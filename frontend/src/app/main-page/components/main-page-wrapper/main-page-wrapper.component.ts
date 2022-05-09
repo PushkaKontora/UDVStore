@@ -18,10 +18,13 @@ import {TuiBooleanHandler} from "@taiga-ui/cdk";
 export class MainPageWrapperComponent implements OnInit {
     public writePers: FormGroup = new FormGroup({})
     public user?: IUser;
+    public selectedUser: string = 'abj';
+    public foundUsers!: UsersSearch[];
+    private _chooseUserId?: number;
+
     public value = null;
     public search$ = new Subject<string>();
     readonly testValue = new FormControl();
-    public foundUsers!: UsersSearch[];
     private databaseMockData: UsersSearch[] = [];
     readonly disabledItemHandler: TuiBooleanHandler<User> = ({photo}) => !!photo;
 
@@ -92,6 +95,7 @@ constructor(
         startWith(this.databaseMockData),
     );
 
+
     private serverRequest(searchQuery: string): Observable<readonly UsersSearch[]> {
         const result = this.databaseMockData.filter(user =>
             user.toString().toLowerCase().includes(searchQuery.toLowerCase()),
@@ -114,6 +118,10 @@ constructor(
             this.databaseMockData.push(new User(user.id, user.username, user.first_name, user.last_name, user.email,
                 user.patronymic, user.balance, user.photo, user.is_staff));
         }
+    }
+
+    onChange($event: any) {
+
     }
 }
 

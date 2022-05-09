@@ -57,37 +57,12 @@
                       (ngSubmit)="onSubmit()">
                     <div class="value">
                         <div class="title">КОМУ</div>
+<!--                        <div class="content">-->
+<!--                            <select [(ngModel)]="selectedUser" (ngModelChange)="onChange($event)" placeholder="Количество койнов ">-->
+<!--                                <option *ngFor="let user of foundUsers" [ngValue]="user"> {{user.first_name}} </option>-->
+<!--                            </select>-->
+<!--                        </div> в случае передлки можно использовать вместо туи-->
                         <div class="content">
-<!--                            <tui-select-->
-<!--                                *tuiLet="items$ | async as items"-->
-<!--                                class="b-form"-->
-<!--                                [(ngModel)]="value"-->
-<!--                                (searchChange)="onSearchChange($event)"-->
-<!--                            >-->
-<!--                               Фамилия Имя Отчество-->
-<!--                                <tui-data-list-wrapper-->
-<!--                                    *tuiDataList-->
-<!--                                    size="s"-->
-<!--                                    [items]="items"-->
-<!--                                    [itemContent]="content"-->
-<!--                                    [disabledItemHandler]="disabledItemHandler"-->
-<!--                                ></tui-data-list-wrapper>-->
-<!--                            </tui-select>-->
-
-<!--                            <ng-template-->
-<!--                                #content-->
-<!--                                let-data-->
-<!--                            >-->
-<!--                                <div class="template">-->
-<!--                                    <tui-avatar-->
-<!--                                        size="xs"-->
-<!--                                        class="avatar"-->
-<!--                                        [avatarUrl]="data.photo || null"-->
-<!--                                        [text]="data.toString()"-->
-<!--                                    ></tui-avatar>-->
-<!--                                    <div class="name">{{data}}</div>-->
-<!--                                </div>-->
-<!--                            </ng-template>-->
                             <tui-multi-select
                                 *tuiLet="items$ | async as items"
                                 #component
