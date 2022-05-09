@@ -1,1 +1,1 @@
-from .history import get_profile_history
+from .service import create_activity, get_profile_history

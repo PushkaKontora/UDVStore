@@ -9,7 +9,7 @@ from api.internal.models.store import Transaction, TransactionTypes
 from api.internal.modules.admin.serializers import AccrualRequestSerializer
 from api.internal.modules.admin.serializers.TransactionVerdictSerializer import TransactionVerdictSerializer
 from api.internal.modules.profile.serializers import TransactionSerializer
-from api.internal.services.admin import try_accrue, get_requests_from_users
+from api.internal.services.admin import get_requests_from_users, try_accrue
 from api.internal.services.profile import get_profile_history
 from api.internal.services.user import get_profile
 
@@ -60,7 +60,7 @@ class AdminViewSet(viewsets.ViewSet):
             "transaction_id": request.data.get("transaction_id"),
             "amount": request.data.get("amount", 1),
             "comment": request.data.get("comment", ""),
-            "status": TransactionTypes.APPROVED
+            "status": TransactionTypes.APPROVED,
         }
 
         ser = TransactionVerdictSerializer(data=data)
@@ -74,13 +74,12 @@ class AdminViewSet(viewsets.ViewSet):
 
         return Response(data="Successful", status=200)
 
-
     @action(detail=False, methods=["post"])
     def cancel(self, request: Request):
         data = {
             "transaction_id": request.data.get("transaction_id"),
             "comment": request.data.get("comment", ""),
-            "status": TransactionTypes.CANCELED
+            "status": TransactionTypes.CANCELED,
         }
 
         ser = TransactionVerdictSerializer(data=data)
