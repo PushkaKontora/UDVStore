@@ -6,7 +6,7 @@ export interface IOrder {
     "created_at": string,
     "order": {
         "id": number,
-        "profile": number,
+        "profile": IProfile,
         "status": number,
         "product": {
             "id": number,

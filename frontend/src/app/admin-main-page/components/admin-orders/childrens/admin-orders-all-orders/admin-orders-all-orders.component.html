@@ -1,1 +1,44 @@
-<p>admin-accrual-all-orders works!</p>
+<div class="wrapper" *ngFor="let order of orders">
+    <div class="card" *ngIf="order.order.status === 1">
+        <div class="valueGrid">
+            <select [(ngModel)]="selectedOption" (ngModelChange)="onChange($event)">
+                <option>новый</option>
+                <option>выдан</option>
+            </select>
+        </div>
+        <div class="valueGrid valueGrid__denominations">
+            <div class="img"><img src="{{order.order.product.photo}}" alt="product photo"></div>
+            <div class="additionalInformation">
+                <div class="valueAdditional valueAdditional__size" *ngIf="order.order.product.size !== 0">
+                    <div *ngIf="order.order.product.size === 1">
+                        Размер: <span class="borderElement">XS</span>
+                    </div>
+                    <div *ngIf="order.order.product.size === 2">
+                        Размер: <span class="borderElement">S</span>
+                    </div>
+                    <div *ngIf="order.order.product.size === 3">
+                        Размер: <span class="borderElement">M</span>
+                    </div>
+                    <div *ngIf="order.order.product.size === 4">
+                        Размер: <span class="borderElement">L</span>
+                    </div>
+                    <div *ngIf="order.order.product.size === 5">
+                        Размер: <span class="borderElement">XL</span>
+                    </div>
+                    <div *ngIf="order.order.product.size === 6">
+                        Размер: <span class="borderElement">XXL</span>
+                    </div>
+                    <div *ngIf="order.order.product.size === 7">
+                        Размер: <span class="borderElement">XXXL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="valueGrid">{{order.order.amount}}</div>
+        <div class="valueGrid">
+            <div class="stroke">{{order.order.amount}}</div>
+            <div class="stroke">{{order.order.amount}} {{order.order.amount}}</div>
+        </div>
+        <div class="valueGrid"></div>
+    </div>
+</div>
