@@ -21,8 +21,8 @@ services:
     env_file:
       - backend/src/config/.env
     volumes:
-      - static:/api/static
-      - media:/api/media
+      - static:/api/src/static
+      - media:/api/src/media
     environment:
       POSTGRES_HOST: postgres
     depends_on:

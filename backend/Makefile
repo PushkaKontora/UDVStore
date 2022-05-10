@@ -24,7 +24,7 @@ check_lint:
 	pipenv run black --check --config pyproject.toml .
 
 up:
-	pipenv run gunicorn --bind 0.0.0.0:8000 src.config.wsgi
+	cd src && pipenv run gunicorn --bind 0.0.0.0:8000 config.wsgi:application
 
 static:
-	pipenv run make command c="collectstatic"
+	make command c="collectstatic --no-input --clear"

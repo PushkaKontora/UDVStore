@@ -1,8 +1,5 @@
-static:
-	pipenv run python src/manage.py collectstatic
+up:
+	docker-compose up --build
 
-migrate:
-	pipenv run python src/manage.py migrate
-
-run:
-	pipenv run gunicorn --bind 0.0.0.0:8000 src.config.wsgi
+down:
+	docker-compose down

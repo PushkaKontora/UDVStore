@@ -6,3 +6,5 @@ local_settings.py
 /src/config/.env
 __pycache__
 *.pyc
+src/media
+src/static
