@@ -24,6 +24,7 @@ import {Router} from "@angular/router";
 import { AdminOrdersAllOrdersComponent } from './components/admin-orders/childrens/admin-orders-all-orders/admin-orders-all-orders.component';
 import { AdminOrdersNewOrdersComponent } from './components/admin-orders/childrens/admin-orders-new-orders/admin-orders-new-orders.component';
 import { AdminOrdersProcessingOrdersComponent } from './components/admin-orders/childrens/admin-orders-processing-orders/admin-orders-processing-orders.component';
+import {RequestService} from "./services/request.service";
 
 
 @NgModule({
@@ -51,7 +52,7 @@ import { AdminOrdersProcessingOrdersComponent } from './components/admin-orders/
         TuiAvatarModule,
         TuiDropdownControllerModule,
     ],
-     providers: [SearchStringService]
+     providers: [SearchStringService, RequestService]
 })
 export class AdminMainPageModule {
     constructor(
