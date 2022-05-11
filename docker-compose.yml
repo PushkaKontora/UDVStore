@@ -1,12 +1,12 @@
 version: "3.9"
 
 services:
-  nginx:
-    build: nginx/
-    container_name: nginx
+  web:
+    build: frontend/
+    container_name: web
     volumes:
-      - static:/static
-      - media:/media
+      - static:/udv-store/static
+      - media:/udv-store/media
     ports:
       - "80:80"
       - "443:443"
@@ -25,6 +25,8 @@ services:
       - media:/api/src/media
     environment:
       POSTGRES_HOST: postgres
+    ports:
+      - "8000:8000"
     depends_on:
       - postgres
 
@@ -38,6 +40,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
 volumes:
+  build:
   pgdata:
   static:
   media:
