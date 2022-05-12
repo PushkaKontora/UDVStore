@@ -21,6 +21,9 @@ import {SearchStringService} from "../services/searchString.service";
 import {PeopleService} from "../login/services/people.service";
 import {StoreService} from "../main-page/services/store.service";
 import {Router} from "@angular/router";
+import { AdminOrdersAllOrdersComponent } from './components/admin-orders/childrens/admin-orders-all-orders/admin-orders-all-orders.component';
+import { AdminOrdersNewOrdersComponent } from './components/admin-orders/childrens/admin-orders-new-orders/admin-orders-new-orders.component';
+import { AdminOrdersProcessingOrdersComponent } from './components/admin-orders/childrens/admin-orders-processing-orders/admin-orders-processing-orders.component';
 
 
 @NgModule({
@@ -30,7 +33,10 @@ import {Router} from "@angular/router";
         AdminScoreComponent,
         AdminOrdersComponent,
         AdminAccrualComponent,
-        AdminRulesComponent
+        AdminRulesComponent,
+        AdminOrdersAllOrdersComponent,
+        AdminOrdersNewOrdersComponent,
+        AdminOrdersProcessingOrdersComponent
     ],
     imports: [
         CommonModule,

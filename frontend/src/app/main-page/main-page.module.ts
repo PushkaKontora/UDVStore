@@ -10,9 +10,9 @@ import {SkeletoneLoadingModule} from "../skeletone-loading/skeletone-loading.mod
 import {ActivatedRoute, Router} from "@angular/router";
 import {PeopleService} from "../login/services/people.service";
 import {SearchStringService} from "../services/searchString.service";
-import {TuiAvatarModule, TuiDataListWrapperModule, TuiMultiSelectModule} from "@taiga-ui/kit";
+import {TuiAvatarModule, TuiDataListWrapperModule, TuiMultiSelectModule, TuiSelectModule} from "@taiga-ui/kit";
 import {TuiLetModule} from "@taiga-ui/cdk";
-import {TuiDropdownControllerModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
+import {TuiDataListModule, TuiDropdownControllerModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
 
 
 @NgModule({
@@ -32,7 +32,9 @@ import {TuiDropdownControllerModule, TuiTextfieldControllerModule} from "@taiga-
         TuiLetModule,
         TuiTextfieldControllerModule,
         TuiDropdownControllerModule,
-        TuiDataListWrapperModule
+        TuiDataListWrapperModule,
+        TuiSelectModule,
+        TuiDataListModule,
     ],
     providers: [
         StoreService,

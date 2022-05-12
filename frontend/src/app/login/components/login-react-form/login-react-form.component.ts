@@ -50,11 +50,11 @@ export class LoginReactFormComponent implements OnInit {
             .subscribe(
                 (res: any) => {
                     this._peopleService.token = res?.auth_token;
-                    this._cookieService.set('token', this._peopleService.token);
+                    localStorage.setItem('token', this._peopleService.token);
                     this._peopleService.optionsForHttp = {
                         headers: new HttpHeaders({
                             'Content-Type': 'application/json',
-                            'Authorization': "Token " + this._cookieService.get('token'),
+                            'Authorization': "Token " + localStorage.getItem('token'),
                         })
                     }
                     this._peopleService.getProducts();
@@ -67,7 +67,7 @@ export class LoginReactFormComponent implements OnInit {
                                         this._peopleService.findUser = user;
                                     } else if (user.is_staff) {
                                         this._peopleService.findUser = user;
-                                        this._router.navigate(["/admin/"]);
+                                        this._router.navigate(["admin", "orders"]);
                                     }
                                 } else {
                                     alert('user not found');
@@ -76,7 +76,6 @@ export class LoginReactFormComponent implements OnInit {
                             }, () => {
                                 alert('Something went wrong');
                             });
-                    ;
                     this.login.reset();
                 });
         // this.activeUser = this._peopleService.getUser(loginEmail, this.login.value.password, this.login);

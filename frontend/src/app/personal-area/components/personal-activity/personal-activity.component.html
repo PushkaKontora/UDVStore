@@ -12,12 +12,12 @@
             <input type="text"
                    [formControl]="inputControl">
             <div class="send">
-                <button class="button" [disabled]="inputControl.invalid">ОТПРАВИТЬ ЗАПРОС</button>
+                <button class="button" [disabled]="inputControl.invalid" (click)="onSubmit()">ОТПРАВИТЬ ЗАПРОС</button>
                 <div class="attachFile">
                     <label class="label">
                         <i class="material-icons"><img src="../../../../assets/images-personal-area/clip.svg"
                                                        alt="clip"></i>
-                        <input type="file" multiple>
+                        <input type="file" multiple id="file-selector" (change)="onFilesSelected($event)">
                     </label>
                 </div>
             </div>
