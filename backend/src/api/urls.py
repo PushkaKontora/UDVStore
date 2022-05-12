@@ -15,4 +15,6 @@ urlpatterns = [
     path("", include(orders_router.urls)),
     path("", include(order_router.urls)),
     path("", include(adminRouter.urls)),
+    path("auth/", include("djoser.urls")),
+    path("auth/", include("djoser.urls.authtoken")),
 ]

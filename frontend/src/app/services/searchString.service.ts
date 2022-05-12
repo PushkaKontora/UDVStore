@@ -5,14 +5,15 @@ import {IUser, UsersSearch} from "../../interfaces/interfaces";
 import {PeopleService} from "../login/services/people.service";
 import {Router} from "@angular/router";
 import {FormGroup} from "@angular/forms";
+import {environment} from "../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
 export class SearchStringService {
-    private _urlProfiles: string = "http://127.0.0.1:8000/api/profile/";
-    private _urlAdminPostAccrual: string = "http://127.0.0.1:8000/api/admin/accrual/";
-    private _urlUserPostAccrual: string = "http://127.0.0.1:8000/api/gifts/";
+    private _urlProfiles: string = environment.api_address + "/profile/";
+    private _urlAdminPostAccrual: string = environment.api_address + "/admin/accrual/";
+    private _urlUserPostAccrual: string = environment.api_address + "/gifts/";
     public foundUsers!: UsersSearch[];
 
     constructor(

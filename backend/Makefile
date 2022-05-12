@@ -22,3 +22,9 @@ check_lint:
 	pipenv run isort --check --diff . & \
 	pipenv run flake8 --config setup.cfg & \
 	pipenv run black --check --config pyproject.toml .
+
+up:
+	cd src && pipenv run gunicorn -c config/gunicorn.conf.py config.wsgi:application
+
+static:
+	make command c="collectstatic --no-input --clear"
