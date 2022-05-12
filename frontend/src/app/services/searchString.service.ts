@@ -14,7 +14,7 @@ export class SearchStringService {
     private _urlProfiles: string = environment.api_address + "/profile/";
     private _urlAdminPostAccrual: string = environment.api_address + "/admin/accrual/";
     private _urlUserPostAccrual: string = environment.api_address + "/gifts/";
-    public foundUsers?: UsersSearch[];
+    public foundUsers!: UsersSearch[];
 
     constructor(
         private _router: Router,

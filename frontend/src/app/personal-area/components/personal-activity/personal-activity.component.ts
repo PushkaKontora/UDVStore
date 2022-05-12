@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'personal-activity',
@@ -12,7 +13,7 @@ export class PersonalActivityComponent implements OnInit {
 
     private _chosenFiles: Map<string, File> = new Map<string, File>();
 
-    private readonly url: string = 'http://127.0.0.1:8000/api/profile/report_activity/'
+    private readonly url: string = environment.api_address + '/profile/report_activity/';
     private readonly options =
         {
             headers: new HttpHeaders({
