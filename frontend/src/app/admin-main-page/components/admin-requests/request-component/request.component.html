@@ -1,5 +1,9 @@
-<div>
-    <img class="req-avatar" src="{{ data.photoUrl }}"/>
+<div class="req-container">
+    <img *ngIf="data.photoUrl;else placeholder" class="req-avatar" src="{{ data.photoUrl }}"/>
+    <ng-template #placeholder>
+        <img class="req-avatar" src="/assets/images-main-page/account.svg"/>
+    </ng-template>
+
     <div class="req-name">{{ data.name }}</div>
     <div class="req-description">{{ data.description }}</div>
 

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {RequestData} from "./requestdata";
+import {IRequestData} from "./IRequestData";
 
 @Component({
   selector: 'app-request-component',
@@ -8,10 +8,10 @@ import {RequestData} from "./requestdata";
 })
 export class RequestComponent implements OnInit {
 
-    @Input() data: RequestData
+    @Input() data: IRequestData
 
-    constructor(data: RequestData) {
-        this.data = data;
+    constructor() {
+
     }
 
     ngOnInit(): void {
