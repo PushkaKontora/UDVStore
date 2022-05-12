@@ -19,7 +19,7 @@ class Transaction(models.Model):
     description = models.CharField(max_length=DESCRIPTION_LENGTH, default=None, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
 
-    related_transaction = models.OneToOneField("self", null=True, on_delete=models.PROTECT)
+    response = models.OneToOneField("self", null=True, on_delete=models.PROTECT, related_name="request")
 
     class Meta:
         ordering = ("pk",)

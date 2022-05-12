@@ -1,5 +1,5 @@
 from itertools import chain
-from typing import Optional, List
+from typing import List, Optional
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import IntegrityError, transaction
@@ -14,10 +14,15 @@ def get_profile_history(cur_profile: Profile):
     return transactions
 
 
-def create_activity(profile: Profile, description: str, files: MultiValueDict[str, List[InMemoryUploadedFile]]) -> Optional[Transaction]:
+# MultiValueDict[str, List[InMemoryUploadedFile]]
+def create_activity(
+    profile: Profile, description: str, files: MultiValueDict[str, List[InMemoryUploadedFile]]
+) -> Optional[Transaction]:
     try:
         with transaction.atomic():
-            activity = Transaction.objects.create(type=TransactionTypes.REQUEST, source=profile, description=description)
+            activity = Transaction.objects.create(
+                type=TransactionTypes.REQUEST, source=profile, description=description
+            )
 
             files = [TransactionFile(transaction=activity, filename=file) for file in chain(files.values())]
             TransactionFile.objects.bulk_create(files)
