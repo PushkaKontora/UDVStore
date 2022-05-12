@@ -1,0 +1,12 @@
+<div>
+    <img class="req-avatar" src="{{ data.photoUrl }}"/>
+    <div class="req-name">{{ data.name }}</div>
+    <div class="req-description">{{ data.description }}</div>
+
+    <div class="file-label-container" *ngIf="data.filenames.length > 0">
+        <div class="file-label" *ngFor="let file of data.filenames">
+            {{ file }}
+        </div>
+    </div>
+
+</div>

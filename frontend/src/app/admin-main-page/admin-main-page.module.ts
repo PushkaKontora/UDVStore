@@ -24,6 +24,7 @@ import {Router} from "@angular/router";
 import { AdminOrdersAllOrdersComponent } from './components/admin-orders/childrens/admin-orders-all-orders/admin-orders-all-orders.component';
 import { AdminOrdersNewOrdersComponent } from './components/admin-orders/childrens/admin-orders-new-orders/admin-orders-new-orders.component';
 import { AdminOrdersProcessingOrdersComponent } from './components/admin-orders/childrens/admin-orders-processing-orders/admin-orders-processing-orders.component';
+import { RequestComponent } from './components/admin-requests/request-component/request.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { AdminOrdersProcessingOrdersComponent } from './components/admin-orders/
         AdminRulesComponent,
         AdminOrdersAllOrdersComponent,
         AdminOrdersNewOrdersComponent,
-        AdminOrdersProcessingOrdersComponent
+        AdminOrdersProcessingOrdersComponent,
+        RequestComponent
     ],
     imports: [
         CommonModule,

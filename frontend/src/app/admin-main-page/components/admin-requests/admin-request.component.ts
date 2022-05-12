@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AdminMainPageWrapperComponent} from "../admin-main-page -wrapper/admin-main-page-wrapper.component";
+import {RequestData} from "./request-component/requestdata";
 
 @Component({
   selector: 'personal-area',
@@ -8,9 +9,16 @@ import {AdminMainPageWrapperComponent} from "../admin-main-page -wrapper/admin-m
 })
 export class AdminRequestComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit(): void {
+  }
+
+  getRequestData(): RequestData[] {
+    // http request
+    return [];
   }
 
 }
