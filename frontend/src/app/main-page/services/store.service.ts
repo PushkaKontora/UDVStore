@@ -3,13 +3,14 @@ import {Subscription} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {cell, IUser, products} from "../../../interfaces/interfaces";
 import {PeopleService} from "../../login/services/people.service";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
 export class StoreService {
-    private _urlApiCartPost: string = 'http://127.0.0.1:8000/api/cart/';
-    private _urlApiBuyPost: string = 'http://127.0.0.1:8000/api/cart/pay/';
+    private _urlApiCartPost: string = environment.api_address + '/cart/';
+    private _urlApiBuyPost: string = environment.api_address + '/cart/pay/';
     public storeProducts!: products[];
     public token?: string;
 

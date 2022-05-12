@@ -3,15 +3,16 @@ import {HttpClient} from "@angular/common/http";
 import {PeopleService} from "../../login/services/people.service";
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
 export class RequestService
 {
-    private readonly _depositsUrl: string = "http://127.0.0.1:8000/api/admin/deposits/"
-    private readonly _approveUrl: string = "http://127.0.0.1:8000/api/admin/approve/"
-    private readonly _cancelUrl: string = "http://127.0.0.1:8000/api/admin/cancel/"
+    private readonly _depositsUrl: string = environment.api_address + "/admin/deposits/"
+    private readonly _approveUrl: string = environment.api_address + "/admin/approve/"
+    private readonly _cancelUrl: string = environment.api_address + "/admin/cancel/"
 
     constructor(private _http: HttpClient, private _peopleService: PeopleService) {}
 
