@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {environment} from "../../../../environments/environment";
+import {FileManager} from "../../services/file-manager";
+import {PersonalActivityService} from "../../services/personal-activity.service";
 
 @Component({
     selector: 'personal-activity',
@@ -11,18 +11,7 @@ import {environment} from "../../../../environments/environment";
 export class PersonalActivityComponent implements OnInit {
     public inputControl: FormControl = new FormControl('', [Validators.required]);
 
-    private _chosenFiles: Map<string, File> = new Map<string, File>();
-
-    private readonly url: string = environment.api_address + '/profile/report_activity/';
-    private readonly options =
-        {
-            headers: new HttpHeaders({
-                'Authorization': "Token " + localStorage.getItem('token')
-            })
-        }
-
-
-    constructor(private _http: HttpClient) {}
+    constructor(private _fileManager: FileManager, private _service: PersonalActivityService) {}
 
     public ngOnInit()
     {
@@ -30,55 +19,28 @@ export class PersonalActivityComponent implements OnInit {
 
     public onSubmit()
     {
-        const formData = this.getFormDataWithFiles();
+        const formData = this._fileManager.getFormDataWithFiles(this.inputControl.value);
+        this._service.sendActivity(formData).subscribe();
+        this._fileManager.reset()
 
-        this._http.post(this.url, formData, this.options).subscribe();
-
-        this._chosenFiles.clear();
-        this.inputControl.reset();
         // TODO: removing blanks
+
+        this.inputControl.reset();
     }
 
     public onFilesSelected(event: any)
     {
-        const files: IterableIterator<File> = this.updateFiles(event.target.files);
+        this._fileManager.addFiles(event.target.files);
+
+        const files: IterableIterator<File> = this._fileManager.getFiles();
 
         // TODO: placing blanks from names of files
     }
 
-    public onFileRemoved(event: any)
+    public onFileRemoved(event: any, name: string)
     {
-        // this.tryRemoveFile(name)
+        const isRemoved: boolean = this._fileManager.tryRemoveFile(name);
 
         // TODO: removing blank
-    }
-
-    private updateFiles(files: FileList): IterableIterator<File>
-    {
-        for (let i = 0; i < files.length; i++)
-        {
-            const file: File = files[i];
-
-            this._chosenFiles.set(file.name, file);
-        }
-
-        return this._chosenFiles.values();
-    }
-
-    private tryRemoveFile(name: string): boolean
-    {
-        return this._chosenFiles.delete(name);
-    }
-
-    private getFormDataWithFiles(): FormData
-    {
-        const formData = new FormData();
-
-        formData.set('activity', this.inputControl.value);
-
-        for (const file of this._chosenFiles.values())
-            formData.set(file.name, file);
-
-        return formData;
     }
 }
