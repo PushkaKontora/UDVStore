@@ -1,0 +1,117 @@
+.wrapper {
+    height: 100%;
+    margin: 0 1.5rem 0rem 1.5rem;
+
+    .contentWrapper {
+        height: 74.8vh;
+        overflow: auto;
+
+        .ordr {
+            .card {
+                border: 1px solid #CDCDCD;
+                margin-top: 0.5rem;
+                padding: 0.5rem 0;
+                display: grid;
+                grid-template-columns: 1fr  1.9fr 0.8fr 1.1fr 1fr;
+                align-items: center;
+                text-align: center;
+
+                .valueGrid {
+
+                    &__select {
+                        margin: auto;
+
+                        select {
+                            appearance: none;
+                            border: solid 1px #00D18F;
+                            border-radius: 0.7em;
+                            color: #00D18F;
+                            padding: 0.2rem 1.4rem;
+
+                            &::-ms-expand {
+                                display: none;
+                            }
+                        }
+
+                        option {
+                            color: #737373;
+                            border: solid 1px #D6D6D6;
+                            border-radius: 0;
+
+                            &[selected] {
+                                display: none;
+                            }
+                        }
+                    }
+
+                    &__denominations {
+                        display: flex;
+
+                        img {
+                            margin-right: 0.2rem;
+                            width: 3rem;
+                        }
+
+
+                        .additionalInformation {
+                            margin-left: 0.5rem;
+
+                            .valueTopLine {
+                                font-family: "Roboto Thin", Arial, sans-serif;
+                                color: #373737;
+                                font-weight: 600;
+                                font-size: 1rem;
+                            }
+
+                            .valueAdditional {
+                                float: left;
+                                font-family: "Roboto Thin", Arial, sans-serif;
+                                color: #373737;
+                                font-weight: 400;
+                                font-size: 0.7em;
+                                padding-top: 0.5rem;
+                                margin-bottom: 0.5em;
+
+                                .borderElement {
+                                    text-decoration-line: underline;
+                                }
+                            }
+                        }
+                    }
+
+                    &__amount {
+                        font-weight: 500;
+                        text-align: center;
+                        text-decoration-line: underline;
+                        color: #1C1B1B;
+                        font-size: 1.1rem;
+
+                    }
+
+                    &__name {
+                        .stroke {
+                            color: #1C1B1B;
+                            font-size: 0.85rem;
+
+                            &__patronymic {
+                                text-decoration-line: underline;
+                                font-size: 1rem;
+                            }
+                        }
+                    }
+
+                    &__data {
+                        font-family: "Roboto Thin", Arial, sans-serif;
+                        text-decoration-line: underline;
+                        font-size: 1rem;
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+    }
+
+    .contentWrapper::-webkit-scrollbar {
+        width: 0;
+    }
+}
