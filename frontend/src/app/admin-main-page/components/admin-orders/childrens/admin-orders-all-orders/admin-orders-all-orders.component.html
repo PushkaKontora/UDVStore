@@ -48,7 +48,7 @@
             </div>
             <div class="card" *ngIf="order.order.status === 2">
                 <div class="valueGrid valueGrid__select">
-                    <select (change)="onChangeNew(order.id)">
+                    <select (change)="onChangeNew(order.id)" class="greyOption">
                         <option>новый</option>
                         <option selected>выдан</option>
                     </select>

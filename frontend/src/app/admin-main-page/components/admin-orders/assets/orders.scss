@@ -35,14 +35,20 @@
 
                         option {
                             color: #737373;
-                            border: solid 1px #D6D6D6;
+                            border: solid 1.2px #D6D6D6;
                             border-radius: 0;
 
                             &[selected] {
                                 display: none;
                             }
                         }
+
+                        .greyOption{
+                            color: #302E2E;
+                            border: 1.2px solid #302E2E;
+                        }
                     }
+
 
                     &__denominations {
                         display: flex;
