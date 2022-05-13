@@ -1,13 +1,54 @@
 .req-container {
-  margin: 0.8em;
+  margin: 0.5em;
+  padding: 1em;
+  background-color: #F5F5F5;
+
+  .req-header {
+    width: 100%;
+
+    .req-avatar {
+      width: 2em;
+      height: 2em;
+      background-color: #2CF2B3;
+      border-radius: 30px;
+    }
+
+    .req-name {
+      width: 50%;
+      height: 30px;
+      display: inline-block;
+      transform: translate(0%, 25%);
+
+      margin-left: 0.5em;
+    }
+  }
+
+  .req-description {
+    background-color: white;
+    border-radius: 17.5px;
+    margin: 0 0 0 2.5em;
+    padding: 0.5em 1em;
+    font-size: 0.9em;
+    font-weight: normal;
+  }
+
+  .file-label {
+    border: 1px solid black;
+    display: inline;
+  }
+
+  .reg-buttons {
+    .button-accept {
+      padding: 0.2em 0;
+      letter-spacing: 0.05em;
+      background-color: #2CF2B3;
+    }
+
+    .button-reject {
+      padding: 0.2em 0;
+      letter-spacing: 0.05em;
+      border: 2px solid #2CF2B3;
+    }
+  }
 }
 
-.file-label {
-  border: 1px solid black;
-  display: inline;
-}
-
-.req-avatar {
-  width: 30px;
-  height: 30px;
-}

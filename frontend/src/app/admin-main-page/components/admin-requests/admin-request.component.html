@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div *ngIf="requests">
+    <div class="req-holder" *ngIf="requests">
         <app-request-component
                 *ngFor="let dataItem of requests"
                 [data]="dataItem">
