@@ -9,12 +9,10 @@ from api.internal.models.profile import Profile
 from api.internal.models.store import Transaction, TransactionFile, TransactionTypes
 
 
-def get_profile_history(cur_profile: Profile):
-    transactions = Transaction.objects.filter(source=cur_profile)
-    return transactions
+def get_profile_history(profile: Profile):
+    return Transaction.objects.filter(source=profile).order_by("-created_at")
 
 
-# MultiValueDict[str, List[InMemoryUploadedFile]]
 def create_activity(
     profile: Profile, description: str, files: MultiValueDict[str, List[InMemoryUploadedFile]]
 ) -> Optional[Transaction]:

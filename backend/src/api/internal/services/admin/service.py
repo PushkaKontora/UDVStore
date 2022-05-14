@@ -38,4 +38,3 @@ def try_connect_transactions(old_transaction: Transaction, response: Transaction
         return True
     except IntegrityError:
         return False
-

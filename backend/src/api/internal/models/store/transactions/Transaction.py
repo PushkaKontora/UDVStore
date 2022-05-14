@@ -22,7 +22,6 @@ class Transaction(models.Model):
     response = models.OneToOneField("self", null=True, on_delete=models.PROTECT, related_name="request")
 
     class Meta:
-        ordering = ("pk",)
         db_table = "transactions"
         verbose_name = "Transaction"
         verbose_name_plural = "Transactions"
