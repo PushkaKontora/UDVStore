@@ -86,15 +86,14 @@ export class PeopleService {
     }
 
     public getUser() {
-        return this._http.get<IUser>(this._urlLoginUser, this.optionsForHttp)
+        return this.getUserHttp()
             .subscribe(
                 (user: IUser) => {
                     if (user) {
+                        this.findUser = user;
                         if (!user.is_staff) {
                             this._router.navigate(['/main-page/merch']);
-                            this.findUser = user;
                         } else if (user.is_staff) {
-                            this.findUser = user;
                             this._router.navigate(["/admin/"]);
                         }
                     } else {
