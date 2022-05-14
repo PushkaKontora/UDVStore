@@ -1,2 +1,1 @@
 from .ProfileSerializer import ProfileSerializer
-from .TransactionSerializer import TransactionSerializer

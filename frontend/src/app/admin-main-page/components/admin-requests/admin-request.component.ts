@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AdminMainPageWrapperComponent} from "../admin-main-page -wrapper/admin-main-page-wrapper.component";
+import {RequestService} from "../../services/request.service";
+import {FormControl, Validator, Validators} from "@angular/forms";
 import {IRequestData} from "./request-component/IRequestData";
 import {RequestService} from "../../services/request.service";
 import {HttpClient} from "@angular/common/http";
@@ -13,8 +15,14 @@ import {ITransaction} from "../../../../interfaces/transaction";
 })
 export class AdminRequestComponent implements OnInit {
 
+  
   requests: IRequestData[]
+    public accrualInputControl = new FormControl(0, [
+        Validators.required, Validators.min(0)
+    ]);
 
+ 
+    public commentInputControl = new FormControl('')
   constructor(private _service: RequestService) {
 
   }

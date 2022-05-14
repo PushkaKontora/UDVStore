@@ -1,3 +1,5 @@
+@import "../../../../usedCSS/model-popUp";
+
 img {
     width: 100%;
 }
@@ -10,6 +12,8 @@ img {
 .wrapper {
     background-color: #3A3A3A;
     min-height: 100vh;
+    padding-bottom: 0.7rem;
+
     .banner {
         width: 100%;
         color: white;
@@ -76,6 +80,185 @@ img {
                             font-size: 1em;
                             line-height: 1em;
                             padding-right: 0.03em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    .modelBody {
+        padding: 2rem;
+        background-color: #FFFFFF;
+        margin: calc(0.5rem + 4.7rem) auto;
+        max-width: 41%;
+
+        .crossImg {
+            width: 1.2em;
+        }
+
+        .mainTitle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4em;
+            padding-bottom: 1.5rem;
+
+            button {
+                background-color: #FFFFFF;
+                width: 1.8em;
+            }
+        }
+
+        .button {
+            width: 100%;
+            padding: 0.3em;
+            background-color: #2CF2B3;
+            margin-top: 0.5rem;
+            font-size: 1.2em;
+            line-height: 1.2em;
+            letter-spacing: 0.05em;
+            transition: 1s;
+            color: #1C1B1B;
+
+            &[disabled] {
+                color: #888888;
+                background-color: #B5FCE5;
+            }
+        }
+
+        .contentModel {
+            display: flex;
+            width: 90%;
+            margin: 0 auto;
+
+            .value {
+                &__img {
+                    width: 8.5em;
+                }
+
+                &__text {
+                    width: 100%;
+                    padding-left: 0.5rem;
+                    display: flex;
+                    justify-content: space-between;
+
+                    .description {
+                        display: flex;
+                        flex-direction: column;
+
+                        &__product {
+                            .stroke {
+                                &__name {
+                                    color: #1C1B1B;
+                                    font-size: 1.3em;
+                                    font-weight: 600;
+                                    font-family: "Roboto Thin", Arial, sans-serif;
+                                }
+
+                                &__coins {
+                                    .coinsWrapper {
+                                        padding-right: 0.5em;
+                                        margin-top: 0.5rem;
+                                        float: left;
+                                        font-family: 'Kapra Neue Pro', Arial, sans-serif;
+
+                                        ul {
+                                            align-items: center;
+                                            background-color: #2CF2B3;
+                                            color: #252424;
+                                            padding: 0.85em 0.2em 0.85em 0.3em;
+                                            border-radius: 0.9em;
+                                            max-height: 1.4rem;
+                                            display: flex;
+
+
+                                            li {
+                                                display: inline-block;
+                                                margin: 0;
+                                                padding: 0;
+                                                vertical-align: middle;
+
+                                                img {
+                                                    max-height: 1.2rem;
+                                                }
+                                            }
+
+                                            li.wrapper_num {
+                                                font-size: 0.9em;
+                                                line-height: 0.9em;
+                                                padding-right: 0.03em;
+                                                font-weight: 600;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                &__size {
+                                    display: flex;
+                                    float: left;
+                                    margin-top: 0.5rem;
+
+                                    .elementSize {
+                                        padding-right: 0.3em;
+                                        color: #1C1B1B;
+
+                                        button {
+                                            border: 0.8px solid #C4C4C4;
+                                            padding: 0.5em;
+                                            text-align: center;
+                                            width: 2.2em;
+                                        }
+
+                                        .selectedSize {
+                                            background: #E3E3E3;
+                                            border: 0.8px solid #E3E3E3;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        &__amountProduct {
+                            height: 1.5em;
+                            display: flex;
+                            flex-direction: row;
+                            text-align: center;
+
+                            .valueAmountProduct {
+
+                                &__number {
+                                    vertical-align: center;
+                                    background-color: #F4F4F4;
+                                    padding: 0 0.7em;
+                                    height: 2.1em;
+                                    line-height: 2.1em;
+                                }
+
+                                button {
+                                    height: 2.1rem;
+
+                                    .mark {
+                                        align-items: center;
+                                        vertical-align: center;
+                                        padding: 0 0.5em;
+
+                                        &__minus {
+                                            padding-top: 25%;
+                                        }
+
+                                        &__plus {
+                                            padding-top: 10%;
+
+                                        }
+                                    }
+
+                                    align-items: center;
+                                    vertical-align: center;
+                                    background-color: #F4F4F4;
+                                }
+                            }
                         }
                     }
                 }

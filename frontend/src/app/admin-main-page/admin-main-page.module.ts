@@ -25,6 +25,7 @@ import { AdminOrdersAllOrdersComponent } from './components/admin-orders/childre
 import { AdminOrdersNewOrdersComponent } from './components/admin-orders/childrens/admin-orders-new-orders/admin-orders-new-orders.component';
 import { AdminOrdersProcessingOrdersComponent } from './components/admin-orders/childrens/admin-orders-processing-orders/admin-orders-processing-orders.component';
 import { RequestComponent } from './components/admin-requests/request-component/request.component';
+import {RequestService} from "./services/request.service";
 
 
 @NgModule({
@@ -53,7 +54,7 @@ import { RequestComponent } from './components/admin-requests/request-component/
         TuiAvatarModule,
         TuiDropdownControllerModule,
     ],
-     providers: [SearchStringService]
+     providers: [SearchStringService, RequestService]
 })
 export class AdminMainPageModule {
     constructor(

@@ -29,8 +29,7 @@ export class MainPageWrapperComponent implements OnInit {
     readonly disabledItemHandler: TuiBooleanHandler<User> = ({photo}) => !!photo;
 
 
-
-constructor(
+    constructor(
         private _router: Router,
         private _route: ActivatedRoute,
         private _peopleService: PeopleService,
@@ -38,7 +37,9 @@ constructor(
         private _searchStringService: SearchStringService,
     ) {
         this.user = this._peopleService.findUser;
-        this.foundUsers = this._searchStringService.foundUsers;
+        if (this._searchStringService.foundUsers) {
+            this.foundUsers = this._searchStringService.foundUsers;
+        }
         this.createForm();
         this.makeUserArray();
     }

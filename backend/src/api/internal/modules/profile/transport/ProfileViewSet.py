@@ -5,9 +5,8 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from api.internal.models.profile import Profile
-from api.internal.models.store import Transaction, TransactionFile, TransactionTypes
 from api.internal.modules.profile.serializers.ProfileSerializer import ProfileSerializer
-from api.internal.modules.profile.serializers.TransactionSerializer import TransactionSerializer
+from api.internal.serializers import TransactionSerializer
 from api.internal.services.profile import create_activity, get_profile_history
 from api.internal.services.user import get_default_user_profile, get_profiles, get_profiles_without
 
