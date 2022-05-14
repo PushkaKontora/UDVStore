@@ -3,7 +3,6 @@ import {AdminMainPageWrapperComponent} from "../admin-main-page -wrapper/admin-m
 import {RequestService} from "../../services/request.service";
 import {FormControl, Validator, Validators} from "@angular/forms";
 import {IRequestData} from "./request-component/IRequestData";
-import {RequestService} from "../../services/request.service";
 import {HttpClient} from "@angular/common/http";
 import {PeopleService} from "../../../login/services/people.service";
 import {ITransaction} from "../../../../interfaces/transaction";
