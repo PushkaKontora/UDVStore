@@ -1,12 +1,25 @@
 from typing import Optional
 
-from django.db.models import Q, QuerySet
+from django.db import models
+from django.db.models import F, Q, QuerySet
+from django.utils import timezone
 
 from api.internal.models.store import Order, StatusChoices, Transaction
 
 
 def get_formed_orders() -> QuerySet[Transaction]:
-    return Transaction.objects.filter(~Q(order=None)).order_by("order__status", "created_at")
+    now = timezone.now()
+    return (
+        Transaction.objects.filter(~Q(order=None))
+        .annotate(
+            timediff=models.Case(
+                models.When(order__status=StatusChoices.IN_PROCESS, then=F("created_at") - now),
+                models.When(order__status=StatusChoices.DONE, then=now - F("created_at")),
+                output_field=models.DurationField(),
+            )
+        )
+        .order_by("order__status", "timediff")
+    )
 
 
 def get_formed_orders_by_user(profile_id: int) -> QuerySet[Transaction]:

@@ -1,4 +1,3 @@
-from django.db import IntegrityError
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser
@@ -10,6 +9,7 @@ from api.internal.modules.admin.serializers import AccrualRequestSerializer
 from api.internal.modules.admin.serializers.TransactionVerdictSerializer import TransactionVerdictSerializer
 from api.internal.serializers import TransactionSerializer
 from api.internal.services.admin import get_requests_from_users, try_accrue
+from api.internal.services.admin.service import try_connect_transactions
 from api.internal.services.profile import get_profile_history
 from api.internal.services.user import get_profile
 
@@ -56,8 +56,9 @@ class AdminViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=["post"])
     def approve(self, request: Request):
+        trans_id = request.data.get("transaction_id")
         data = {
-            "transaction_id": request.data.get("transaction_id"),
+            "transaction_id": trans_id,
             "amount": request.data.get("amount", 1),
             "comment": request.data.get("comment", ""),
             "status": TransactionTypes.APPROVED,
@@ -67,15 +68,22 @@ class AdminViewSet(viewsets.ViewSet):
         ser.is_valid(raise_exception=True)
 
         approved_trans = ser.save()
-        is_success = try_accrue([approved_trans])
+        is_successful = try_accrue([approved_trans])
 
-        if not is_success:
+        if not is_successful:
+            return Response(status=500)
+
+        old_transaction = Transaction.objects.filter(id=trans_id).first()
+        is_successful = try_connect_transactions(old_transaction, approved_trans)
+
+        if not is_successful:
             return Response(status=500)
 
         return Response(data="Successful", status=200)
 
     @action(detail=False, methods=["post"])
     def cancel(self, request: Request):
+        trans_id = request.data.get("transaction_id")
         data = {
             "transaction_id": request.data.get("transaction_id"),
             "comment": request.data.get("comment", ""),
@@ -86,9 +94,10 @@ class AdminViewSet(viewsets.ViewSet):
         ser.is_valid(raise_exception=True)
 
         cancelled_trans = ser.save()
-        try:
-            cancelled_trans.save()
-        except IntegrityError:
+        old_transaction = Transaction.objects.filter(id=trans_id).first()
+        is_successful = try_connect_transactions(old_transaction, cancelled_trans)
+
+        if not is_successful:
             return Response(status=500)
 
         return Response(data="Successful", status=200)

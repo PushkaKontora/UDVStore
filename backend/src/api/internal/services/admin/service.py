@@ -8,7 +8,7 @@ from api.internal.models.store import Transaction, TransactionTypes
 
 
 def get_requests_from_users() -> QuerySet[Transaction]:
-    return Transaction.objects.filter(type=TransactionTypes.REQUEST)
+    return Transaction.objects.filter(type=TransactionTypes.REQUEST).filter(response=None)
 
 
 def try_accrue(transactions: List[Transaction]) -> bool:
@@ -28,5 +28,13 @@ def try_accrue(transactions: List[Transaction]) -> bool:
         return False
 
 
-def get_requested_transactions() -> QuerySet[Transaction]:
-    return Transaction.objects.filter(type=TransactionTypes.REQUEST)
+def try_connect_transactions(old_transaction: Transaction, response: Transaction) -> bool:
+    try:
+        with atomic():
+            old_transaction.response = response
+            response.save()
+            old_transaction.save()
+
+        return True
+    except IntegrityError:
+        return False
