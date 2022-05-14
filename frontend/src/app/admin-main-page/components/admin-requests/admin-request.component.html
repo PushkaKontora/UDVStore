@@ -1,7 +1,9 @@
 <div class="wrapper">
-    <app-request-component
-            *ngFor="let dataItem of getRequestData()"
-            [data]="dataItem">
+    <div class="req-holder" *ngIf="requests">
+        <app-request-component
+                *ngFor="let dataItem of requests"
+                [data]="dataItem">
 
-    </app-request-component>
+        </app-request-component>
+    </div>
 </div>
