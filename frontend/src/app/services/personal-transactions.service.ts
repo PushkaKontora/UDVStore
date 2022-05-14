@@ -3,13 +3,14 @@ import {HttpClient} from "@angular/common/http";
 import {IUser} from "../../interfaces/interfaces";
 import {PeopleService} from "../login/services/people.service";
 import {IOrder} from "../../interfaces/order";
+import {environment} from "../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
 export class PersonalTransactionsService {
-    private _urlOrdersUser: string = 'http://127.0.0.1:8000/api/orders/';
-    private _patchStatusOrders: string = 'http://127.0.0.1:8000/api/order/';
+    private _urlOrdersUser: string = environment.api_address + '/orders/';
+    private _patchStatusOrders: string = environment.api_address + '/order/';
 
     constructor(
         private _http: HttpClient,

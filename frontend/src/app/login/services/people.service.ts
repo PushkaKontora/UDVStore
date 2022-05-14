@@ -6,15 +6,16 @@ import {IUser, products} from "../../../interfaces/interfaces";
 import {Subscription} from "rxjs";
 import {SearchStringService} from "../../services/searchString.service";
 import {CookieService} from "ngx-cookie-service";
+import {environment} from "../../../environments/environment";
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class PeopleService {
-    private _urlLoginUser: string = 'http://127.0.0.1:8000/api/profile/current/';
-    private _urlLoginTokenUser: string = 'http://127.0.0.1:8000/auth/token/login';
-    private _urlApiProducts: string = 'http://127.0.0.1:8000/api/products/';
+    private _urlLoginUser: string = environment.api_address + '/profile/current/';
+    private _urlLoginTokenUser: string = environment.api_address + '/auth/token/login';
+    private _urlApiProducts: string = environment.api_address + '/products/';
     public token!: string;
 
     //найденный юзер
@@ -86,15 +87,14 @@ export class PeopleService {
     }
 
     public getUser() {
-        return this._http.get<IUser>(this._urlLoginUser, this.optionsForHttp)
+        return this.getUserHttp()
             .subscribe(
                 (user: IUser) => {
                     if (user) {
+                        this.findUser = user;
                         if (!user.is_staff) {
                             this._router.navigate(['/main-page/merch']);
-                            this.findUser = user;
                         } else if (user.is_staff) {
-                            this.findUser = user;
                             this._router.navigate(["/admin/"]);
                         }
                     } else {

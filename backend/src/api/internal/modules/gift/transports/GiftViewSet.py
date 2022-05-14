@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
 from api.internal.modules.gift.serializers import GiftSerializer
-from api.internal.modules.profile.serializers import TransactionSerializer
+from api.internal.serializers import TransactionSerializer
 from api.internal.services.gift import try_transfer
 from api.internal.services.user import get_default_user_profile, get_profile
 
@@ -30,4 +30,4 @@ class GiftViewSet(ViewSet):
 
         transaction = try_transfer(source, destination, description, accrual)
 
-        return Response(data=TransactionSerializer(transaction).data) if transaction else Response(status=400)
+        return Response(data=TransactionSerializer(transaction, context={"request": request}).data) if transaction else Response(status=400)
