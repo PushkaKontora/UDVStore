@@ -31,18 +31,17 @@ export class AdminRequestComponent implements OnInit {
         })
   }
 
-  splitPath(path: string): string {
-    const fileDesc = path.split('/')
-    return fileDesc[fileDesc.length - 1]
-  }
-
   processTransaction(t: ITransaction): IRequestData {
     return {
       photoUrl: t.from_profile.photo,
       name: t.from_profile.first_name + ' ' + t.from_profile.last_name,
-      description: this.splitPath(t.description),
+      description: t.description,
       filenames: t.files.map((file) => file.filename)
     }
+  }
+
+  splitPath(): string {
+    return "aaa"
   }
 
 }
