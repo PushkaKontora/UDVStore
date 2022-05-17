@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {SearchStringService} from "../../../services/searchString.service";
+import {UsersSearch} from "../../../../interfaces/interfaces";
+import {PeopleService} from "../../../login/services/people.service";
 
 @Component({
     selector: 'app-personal-area-wrapper',
@@ -9,9 +11,16 @@ import {SearchStringService} from "../../../services/searchString.service";
 })
 export class AdminMainPageWrapperComponent implements OnInit {
 
-    constructor(private _router: Router, private _adminService: SearchStringService) {
-        _adminService.getProfiles();
-        this._router.navigate(["admin", "accrual"]);
+    constructor(
+        private _router: Router,
+        private _searchStringService: SearchStringService,
+        private _peopleService: PeopleService,
+    ) {
+       this._peopleService.getUserProduct();
+        // _searchStringService.getProfiles()
+        //     .subscribe((users: UsersSearch[]) => {
+        //         this._searchStringService.foundUsers = users;
+        //     });
     }
 
     ngOnInit(): void {

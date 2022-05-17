@@ -28,9 +28,17 @@ export class AdminAccrualComponent implements OnInit {
         if (this._searchStringService.foundUsers) {
             this.foundUsers = this._searchStringService.foundUsers;
         }
-        this.createForm();
-        this.makeUserArray();
+        this._searchStringService.getProfiles()
+            .subscribe((users: UsersSearch[]) => {
+                this._searchStringService.foundUsers = users;
+                this.foundUsers = users;
+            }, () => {
+                console.log('Something went wrong - getProfiles');
+            }, () => {
+                this.makeUserArray();
+            });
 
+        this.createForm();
     }
 
     ngOnInit(): void {

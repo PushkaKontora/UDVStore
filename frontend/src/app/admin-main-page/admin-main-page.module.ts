@@ -61,7 +61,5 @@ export class AdminMainPageModule {
         private _peopleService: PeopleService,
         private _searchStringService: SearchStringService,
     ) {
-        this._peopleService.getProfilesForAdminPage();
-        this._searchStringService.getProfiles();
     }
 }

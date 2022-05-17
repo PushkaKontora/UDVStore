@@ -3,6 +3,7 @@ import {StoreService} from "../../services/store.service";
 import {IUser, products} from "../../../../interfaces/interfaces";
 import {PeopleService} from "../../../login/services/people.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Observable, Subscription} from "rxjs";
 
 
 @Component({
@@ -15,7 +16,7 @@ export class MerchStoreComponent implements OnInit {
     public loaded: boolean = false;
     public amountMerch: number = 1;
     public priceMerchValue: number = 0;
-    public user!: IUser;
+    public user: IUser;
     public selectedProduct!: products;
 
     private _cellsId: number = 0;
@@ -27,22 +28,34 @@ export class MerchStoreComponent implements OnInit {
         private _fb: FormBuilder,
         private _renderer: Renderer2,
     ) {
-        this.storeProducts = _peopleService.storeProducts;
-        this.loaded = _peopleService.isLoaded;
-        if (_peopleService.findUser) {
-            this.user = _peopleService.findUser;
-        }
     }
 
     ngOnInit(): void {
+        this._peopleService.getProducts()
+            .subscribe({
+                next: (res: products[]) => this.storeProducts = res,
+                complete: () => {
+                    this.loaded = true;
+                    this._peopleService.findUser.subscribe((res) => {
+                        this.user = res
+                    });
+                }
+            });
     }
 
 
-    public chooseProduct(product: products) {
-        this._storeService.postSelectedProduct(1, product.cells[this._cellsId].id)
-            .subscribe(() => {
-                this._storeService.postBuyProduct();
+    public chooseProduct(product: products, amountProduct: number) {
+        this._storeService.postSelectedProduct(amountProduct, product.cells[this._cellsId].id)
+            .subscribe({
+                next:() => {
+                    this._storeService.postBuyProduct();
+                },
+                complete: () =>  this._peopleService.getUserProduct()
             });
+        this._peopleService.getUserProduct();
+        this._peopleService.findUser.subscribe((res) => {
+            this.user = res
+        });
     }
 
     public openModel(nameModel: string, itemMerch: products) {
@@ -54,12 +67,11 @@ export class MerchStoreComponent implements OnInit {
     }
 
     public closeModel(nameModel: string) {
-        this.amountMerch = 0;
+        this.amountMerch = 1;
         this._cellsId = 0;
         document.getElementById(nameModel)!.style.display = 'none';
         document.body.style.overflow = "visible";
         document.body.classList.remove('modalOpen');
-        this._peopleService.getUser();
     }
 
     public changeSize(node: any, sizeNumber: number) {
@@ -74,7 +86,9 @@ export class MerchStoreComponent implements OnInit {
     }
 
     public onSubmit() {
-
+        this.closeModel('modal1');
+        this.openModel('modal2', this.selectedProduct);
+        this.chooseProduct(this.selectedProduct, this.amountMerch);
     }
 
     public reduceAmount() {
