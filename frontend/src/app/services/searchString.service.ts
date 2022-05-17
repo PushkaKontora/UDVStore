@@ -23,28 +23,9 @@ export class SearchStringService {
     ) {
     }
 
-    public getProfiles(): Subscription {
+    public getProfiles(): any {
         return this._http.get<UsersSearch[]>(this._urlProfiles, this._peopleService.optionsForHttp)
-            .subscribe((users: UsersSearch[]) => {
-                this.foundUsers = users;
-                // if (this._peopleService.findUser) {
-                //     if (!this._peopleService.findUser.is_staff) {
-                //         this._router.navigate(['/main-page/']);
-                //     } else if (this._peopleService.findUser.is_staff) {
-                //         this._router.navigate(["/admin/accrual"]);
-                //     }
-                // }
-            }, () => {
-               console.log('Something went wrong - getProfiles');
-            }, () => {
-                if (this._peopleService.findUser) {
-                    if (!this._peopleService.findUser.is_staff) {
-                        this._router.navigate(['/main-page/']);
-                    } else if (this._peopleService.findUser.is_staff) {
-                        this._router.navigate(["/admin/accrual"]);
-                    }
-                }
-            });
+
     }
 
     private postAccrualCoins( url: string, body: {}) {

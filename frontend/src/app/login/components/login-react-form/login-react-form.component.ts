@@ -57,17 +57,16 @@ export class LoginReactFormComponent implements OnInit {
                             'Authorization': "Token " + localStorage.getItem('token'),
                         })
                     }
-                    this._peopleService.getProducts();
                     this._peopleService.getUserHttp()
                         .subscribe(
                             (user: IUser) => {
                                 if (user) {
                                     if (!user.is_staff) {
+                                        this._peopleService.findUser.next(user);
                                         this._router.navigate(['main-page', 'merch']);
-                                        this._peopleService.findUser = user;
                                     } else if (user.is_staff) {
-                                        this._peopleService.findUser = user;
-                                        this._router.navigate(["admin", "orders"]);
+                                        this._peopleService.findUser.next(user);
+                                        this._router.navigate(["admin", "accrual"]);
                                     }
                                 } else {
                                     alert('user not found');

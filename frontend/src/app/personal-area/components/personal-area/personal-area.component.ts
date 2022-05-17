@@ -11,7 +11,9 @@ export class PersonalAreaComponent implements OnInit {
     public user?: IUser;
 
     constructor(private _peopleService: PeopleService) {
-        this.user = _peopleService.findUser;
+        this._peopleService.findUser.subscribe((res) => {
+            this.user = res
+        });
     }
 
     ngOnInit(): void {

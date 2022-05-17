@@ -19,7 +19,11 @@ export class PersonalTransactionsService {
     }
 
     public getOrdersUser() {
-        const urlOrdersUser: string = this._urlOrdersUser + this._peopleService.findUser?.id + '/';
+        let user: any;
+        this._peopleService.findUser.subscribe((res) => {
+            user = res
+        });
+        const urlOrdersUser: string = this._urlOrdersUser + user!.id + '/';
         return this._http.get<IOrder[]>(urlOrdersUser, this._peopleService.optionsForHttp);
     }
 
