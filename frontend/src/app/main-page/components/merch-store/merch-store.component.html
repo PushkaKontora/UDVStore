@@ -59,11 +59,21 @@
                                 </div>
                             </div>
                             <div class="stroke stroke__size" *ngIf="selectedProduct?.name === 'Толстовка'">
-                                <div class="elementSize"><button (click)="changeSize($event,1)">XS</button></div>
-                                <div class="elementSize"><button (click)="changeSize($event,2)">S</button></div>
-                                <div class="elementSize"><button (click)="changeSize($event,3)">M</button></div>
-                                <div class="elementSize"><button (click)="changeSize($event,4)">L</button></div>
-                                <div class="elementSize"><button (click)="changeSize($event,5)">XL</button></div>
+                                <div class="elementSize">
+                                    <button (click)="changeSize($event,1)">XS</button>
+                                </div>
+                                <div class="elementSize">
+                                    <button (click)="changeSize($event,2)">S</button>
+                                </div>
+                                <div class="elementSize">
+                                    <button (click)="changeSize($event,3)">M</button>
+                                </div>
+                                <div class="elementSize">
+                                    <button (click)="changeSize($event,4)">L</button>
+                                </div>
+                                <div class="elementSize">
+                                    <button (click)="changeSize($event,5)">XL</button>
+                                </div>
                             </div>
                         </div>
                         <div class="description description__amountProduct">
@@ -82,14 +92,66 @@
                     </div>
                 </div>
 
-                <div class="btn">
-                    <button (click)="onSubmit()" class="button"
-                            [disabled]="amountMerch*priceMerchValue > user.balance">
-                        ОПЛАТИТЬ
-                    </button>
-                    <div class="helper-text">
+                <div class="bottomBlock">
+                    <div class="finalCapWrapper">
+                        <div class="finalCap">
+                            <div class="text">Итого:</div>
+                            <div class="finalCoins">
+                                <div class="value value__number">{{amountMerch * priceMerchValue}}</div>
+                                <div class="value value__img">
+                                    <img class="imgCoins" src="../../../../assets/images-main-page/greenBlockCoins.svg"
+                                         alt="greenBlockCoins">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btn">
+                        <button (click)="onSubmit()" class="button"
+                                [disabled]="amountMerch*priceMerchValue > user.balance">
+                            ОПЛАТИТЬ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="helper-text">
                         <span
                             *ngIf="amountMerch*priceMerchValue > user.balance">*На вашем счёте недостаточно средств</span>
+                </div>
+            </div>
+        </div>
+        <div class="modelBackground"></div>
+    </div>
+
+    <div class="modal-wrapper" id="modal2">
+        <div class="model">
+            <div class="modelBody">
+                <div class="mainTitle">
+                    <div class="text">ОПЛАТА ПРОШЛА УСПЕШНО</div>
+                    <button><img src="../../../../assets/images-main-page/cross.svg" class="crossImg" alt="cross"
+                                 (click)="closeModel('modal1')">
+                    </button>
+                </div>
+                <div class="contentModel contentModel__checking">
+                    <div class="imageText">
+                        <img src="../../../../assets/images-main-page/moneyCoins.svg" alt="moneyCoins">
+                        <div class="text">
+                            Информацию о заказе можно посмотреть в личном кабинете
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav">
+                    <div class="btn">
+                        <button routerLink="/main-page/personal-area/orders" class="button">
+                            ПРОВЕРИТЬ МОЙ ЗАКАЗ
+                        </button>
+                    </div>
+
+                    <div class="btn">
+                        <button routerLink="./personal-area" class="button button__grey">
+                            ВЕРНУТЬСЯ НА ГЛАВНУЮ
+                        </button>
                     </div>
                 </div>
             </div>
