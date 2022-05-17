@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {IUser, UsersSearch} from "../../../../interfaces/interfaces";
+import {IUser, products, UsersSearch} from "../../../../interfaces/interfaces";
 import {PeopleService} from "../../../login/services/people.service";
 import {StoreService} from "../../services/store.service";
-import {delay, filter, Observable, of, startWith, Subject, switchMap} from "rxjs";
+import {delay, filter, Observable, of, startWith, Subject, Subscription, switchMap} from "rxjs";
 import {SearchStringService} from "../../../services/searchString.service";
 import {User} from "../../../../generalClasses/User";
 import {TuiBooleanHandler} from "@taiga-ui/cdk";
+import {MerchStoreComponent} from "../merch-store/merch-store.component";
 
 
 @Component({
@@ -20,7 +21,6 @@ export class MainPageWrapperComponent implements OnInit {
     public user?: IUser;
     public selectedUser: string = 'abj';
     public foundUsers!: UsersSearch[];
-    private _chooseUserId?: number;
 
     public value = null;
     public search$ = new Subject<string>();
@@ -36,17 +36,24 @@ export class MainPageWrapperComponent implements OnInit {
         private _storeService: StoreService,
         private _searchStringService: SearchStringService,
     ) {
-        this.user = this._peopleService.findUser;
-        if (this._searchStringService.foundUsers) {
-            this.foundUsers = this._searchStringService.foundUsers;
-        }
+        this._peopleService.getUserProduct();
+        this._searchStringService.getProfiles()
+            .subscribe((users: UsersSearch[]) => {
+                this._searchStringService.foundUsers = users;
+                this.foundUsers = users;
+            }, () => {
+                console.log('Something went wrong - getProfiles');
+            }, () => {
+                this._peopleService.findUser.subscribe((res) => {
+                    this.user = res
+                });
+                this.makeUserArray();
+            });
+
         this.createForm();
-        this.makeUserArray();
     }
 
     ngOnInit(): void {
-        this._router.navigate(["/main-page/merch"]);
-        console.log(this._peopleService.findUser?.balance)
     }
 
     public createGift(): void {
@@ -63,8 +70,8 @@ export class MainPageWrapperComponent implements OnInit {
         document.getElementById(nameModel)!.style.display = 'none';
         document.body.style.overflow = "visible";
         document.body.classList.remove('modalOpen');
-        this._peopleService.getUser();
-        this.user = this._peopleService.findUser;
+        this._peopleService.getUserProduct();
+        // this.user = this._peopleService.findUser;
     }
 
     public onSubmit() {

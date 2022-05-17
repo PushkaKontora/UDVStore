@@ -42,13 +42,4 @@ import {TuiDataListModule, TuiDropdownControllerModule, TuiTextfieldControllerMo
     ]
 })
 export class MainPageModule {
-    constructor(
-        private _router: Router,
-        private _peopleService: PeopleService,
-        private _storeService: StoreService,
-        private _searchStringService: SearchStringService,
-    ) {
-        this._peopleService.getUserProduct();
-        this._searchStringService.getProfiles();
-    }
 }

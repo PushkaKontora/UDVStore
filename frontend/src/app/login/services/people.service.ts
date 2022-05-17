@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {FormGroup} from "@angular/forms";
 import {IUser, products} from "../../../interfaces/interfaces";
-import {Subscription} from "rxjs";
+import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {SearchStringService} from "../../services/searchString.service";
 import {CookieService} from "ngx-cookie-service";
 import {environment} from "../../../environments/environment";
@@ -19,8 +19,7 @@ export class PeopleService {
     public token!: string;
 
     //найденный юзер
-    public findUser?: IUser;
-    public storeProducts!: products[];
+    public findUser = new BehaviorSubject<any>(null);
     public optionsForHttp?: { headers: HttpHeaders; }
     public isLoaded: boolean = false;
 
@@ -60,7 +59,7 @@ export class PeopleService {
                 'Authorization': "Token " + localStorage.getItem('token'),
             })
         }
-        this.getUser();
+        this.getUserWithoutRedirect();
     }
 
     public getUserProduct() {
@@ -71,31 +70,38 @@ export class PeopleService {
             })
         }
 
-        this.getProducts()
-            .subscribe((res: products[]) => {
-                this.storeProducts = res;
-            }, () => {
-                alert('Something went wrong - getProducts');
-            }, () => {
-                this.getUser();
-                this.isLoaded = true;
-            });
+        this.getUserWithoutRedirect();
+    }
+
+    public getUserWithoutRedirect(): Subscription{
+        return this.getUserHttp()
+            .subscribe(
+                (user: IUser) => {
+                    if (user) {
+                        this.findUser.next(user);
+                    } else {
+                        alert('user not found');
+                    }
+
+                }, () => {
+                    alert('Something went wrong');
+                },);
     }
 
     public getUserHttp() {
         return this._http.get<IUser>(this._urlLoginUser, this.optionsForHttp)
     }
-
+//unused
     public getUser() {
         return this.getUserHttp()
             .subscribe(
                 (user: IUser) => {
                     if (user) {
-                        this.findUser = user;
+                        this.findUser.next(user);
                         if (!user.is_staff) {
                             this._router.navigate(['/main-page/merch']);
                         } else if (user.is_staff) {
-                            this._router.navigate(["/admin/"]);
+                            this._router.navigate(["/admin"]);
                         }
                     } else {
                         alert('user not found');
