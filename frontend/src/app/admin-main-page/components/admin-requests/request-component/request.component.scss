@@ -7,29 +7,32 @@
     width: 100%;
 
     .req-avatar {
-      width: 2em;
-      height: 2em;
+      width: 2rem;
+      height: 2rem;
       background-color: #2CF2B3;
       border-radius: 30px;
     }
 
     .req-name {
+      font-family: "Roboto Black", sans-serif;
+
       width: 50%;
       height: 30px;
       display: inline-block;
       transform: translate(0%, 25%);
 
-      margin-left: 0.5em;
+      margin-left: 1.2rem;
     }
   }
 
   .req-description {
+    font-family: "Roboto Light", sans-serif;
+
     background-color: white;
     border-radius: 17.5px;
-    margin: 0 0 0 2.5em;
+    margin: 0 0 0 2.5rem;
     padding: 0.5em 1em;
-    font-size: 0.9em;
-    font-weight: normal;
+    font-size: 0.8em;
   }
 
   .file-label {
@@ -38,13 +41,18 @@
   }
 
   .reg-buttons {
+    margin: 0.5rem 0 0 2.5rem;
+    width: 100%;
+
     .button-accept {
+      width: 50%;
       padding: 0.2em 0;
       letter-spacing: 0.05em;
       background-color: #2CF2B3;
     }
 
     .button-reject {
+      width: 50%;
       padding: 0.2em 0;
       letter-spacing: 0.05em;
       border: 2px solid #2CF2B3;
