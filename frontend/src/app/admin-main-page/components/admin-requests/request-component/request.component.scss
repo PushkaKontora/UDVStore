@@ -30,9 +30,10 @@
 
     background-color: white;
     border-radius: 17.5px;
-    margin: 0 0 0 2.5rem;
+    margin: 0.25rem 0 0 2.5rem;
     padding: 0.5em 1em;
-    font-size: 0.8em;
+    font-size: 0.75em;
+    letter-spacing: 0.05em;
   }
 
   .file-label {
@@ -42,19 +43,21 @@
 
   .reg-buttons {
     margin: 0.5rem 0 0 2.5rem;
-    width: 100%;
+    width: calc(100% - 3rem);
 
-    .button-accept {
-      width: 50%;
+    .reg-button {
+      width: calc(50% - 6px);
       padding: 0.2em 0;
       letter-spacing: 0.05em;
+      box-sizing: border-box;
+      margin: 3px;
+    }
+
+    .reg-accept {
       background-color: #2CF2B3;
     }
 
-    .button-reject {
-      width: 50%;
-      padding: 0.2em 0;
-      letter-spacing: 0.05em;
+    .reg-reject {
       border: 2px solid #2CF2B3;
     }
   }
