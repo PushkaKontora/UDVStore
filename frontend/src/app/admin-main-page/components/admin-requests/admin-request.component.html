@@ -1,9 +1,22 @@
 <div class="wrapper">
-    <div class="req-holder" *ngIf="requests">
-        <app-request-component
-                *ngFor="let dataItem of requests"
-                [data]="dataItem">
+    <div class="req-holder" *ngIf="requests" (click)="openModel('modal-3')">
 
-        </app-request-component>
+        <div class="contentWrapper">
+            <app-request-component
+                    *ngFor="let dataItem of requests"
+                    [data]="dataItem">
+
+            </app-request-component>
+        </div>
+
+    </div>
+
+    <div class="modal-wrapper" id="modal-3">
+        <div class="model">
+            <div class="modelBody">
+                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            </div>
+        </div>
+        <div class="modelBackground"></div>
     </div>
 </div>

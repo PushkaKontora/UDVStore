@@ -51,4 +51,16 @@ export class AdminRequestComponent implements OnInit {
         }
     }
 
+    public openModel(nameModel: string) {
+        document.getElementById(nameModel)!.style.display = 'block';
+        document.body.style.overflow = "hidden";
+        document.body.classList.add('modalOpen');
+    }
+
+    public closeModel(nameModel: string) {
+        document.getElementById(nameModel)!.style.display = 'none';
+        document.body.style.overflow = "visible";
+        document.body.classList.remove('modalOpen');
+    }
+
 }

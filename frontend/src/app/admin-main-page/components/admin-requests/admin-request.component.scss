@@ -1,8 +1,20 @@
+@import "../../../../usedCSS/model-popUp";
+
 .wrapper {
+    height: 100%;
     color: #1C1B1B;
 
     .req-holder {
-        padding: 2em;
+        padding: 1.5em;
+    }
+
+    .contentWrapper {
+        overflow: auto;
+        height: 81vh;
+
+        &::-webkit-scrollbar {
+            width: 0;
+        }
     }
 
 }
