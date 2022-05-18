@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AdminMainPageWrapperComponent} from "../admin-main-page -wrapper/admin-main-page-wrapper.component";
 import {RequestService} from "../../services/request.service";
-import {FormControl, Validator, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validator, Validators} from "@angular/forms";
 import {IRequestData} from "./request-component/IRequestData";
 import {HttpClient} from "@angular/common/http";
 import {PeopleService} from "../../../login/services/people.service";
@@ -9,6 +9,7 @@ import {ITransaction} from "../../../../interfaces/transaction";
 import {map} from "rxjs";
 import {ITransactionFile} from "../../../../interfaces/transaction_file";
 import {FilemanagerService} from "../../services/filemanager.service";
+import {ModalWorker} from "../../services/modalworker.service";
 
 @Component({
     selector: 'personal-area',
@@ -17,50 +18,54 @@ import {FilemanagerService} from "../../services/filemanager.service";
 })
 export class AdminRequestComponent implements OnInit {
 
+    MAX_COMMENT_LENGTH = 2048
 
-    requests: IRequestData[]
+    requests: ITransaction[]
+    acceptForm: FormGroup
+
+    /*
     public accrualInputControl = new FormControl(0, [
         Validators.required, Validators.min(0)
     ]);
 
 
-    public commentInputControl = new FormControl('')
+    public commentInputControl = new FormControl('')*/
 
-    constructor(private _service: RequestService) {
+    constructor(private _service: RequestService,
+                public _modals: ModalWorker) {
 
     }
 
     ngOnInit(): void {
         this.getRequestData()
+        this.createAcceptForm()
+    }
+
+    createAcceptForm() {
+        var coins = new FormControl(1, [
+            Validators.required, Validators.min(1)
+        ])
+        var comment = new FormControl("", [
+            Validators.maxLength(this.MAX_COMMENT_LENGTH)
+        ])
+
+        this.acceptForm = new FormGroup({
+            coins: coins,
+            comment: comment
+        })
     }
 
     getRequestData() {
         this._service.getRequests()
             .subscribe((res: ITransaction[]) => {
-                this.requests = res.map(this.processTransaction, this)
+                //this.requests = res.map(this.processTransaction, this)
+                this.requests = res
                 console.log(this.requests)
             })
     }
 
-    processTransaction(t: ITransaction): IRequestData {
-        return {
-            photoUrl: t.from_profile.photo,
-            name: t.from_profile.first_name + ' ' + t.from_profile.last_name,
-            description: t.description,
-            filenames: t.files.map((file: ITransactionFile) => FilemanagerService.getFilename(file.filename), this)
-        }
-    }
-
-    public openModel(nameModel: string) {
-        document.getElementById(nameModel)!.style.display = 'block';
-        document.body.style.overflow = "hidden";
-        document.body.classList.add('modalOpen');
-    }
-
-    public closeModel(nameModel: string) {
-        document.getElementById(nameModel)!.style.display = 'none';
-        document.body.style.overflow = "visible";
-        document.body.classList.remove('modalOpen');
+    public tryAccept() {
+        this._service.approve()
     }
 
 }

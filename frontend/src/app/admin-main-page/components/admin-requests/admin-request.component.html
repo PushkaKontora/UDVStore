@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="req-holder" *ngIf="requests" (click)="openModel('modal-3')">
+    <div class="req-holder" *ngIf="requests">
 
         <div class="contentWrapper">
             <app-request-component
@@ -11,10 +11,32 @@
 
     </div>
 
-    <div class="modal-wrapper" id="modal-3">
+    <div class="modal-wrapper" id="modal-accept">
         <div class="model">
             <div class="modelBody">
-                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+                <h1>НАЧИСЛЕНИЕ ПО ЗАПРОСУ</h1>
+                <img class="modal-close"
+                     src="/assets/images-main-page/cross.svg"
+                     (click)="_modals.closeModal('modal-accept')">
+
+                <form [formGroup]="acceptForm">
+                    <div>
+                        <label>UCoins</label>
+                        <input placeholder="1" type="number" formControlName="coins" />
+                    </div>
+
+                    <div>
+                        <label>КОММЕНТАРИЙ</label>
+                        <input placeholder="Напишите что-нибудь..." type="text" formControlName="comment" />
+                    </div>
+
+                    <div>
+                        <button [disabled]="acceptForm.invalid"
+                                (click)="tryAccept()">ОТПРАВИТЬ</button>
+                    </div>
+                </form>
+
             </div>
         </div>
         <div class="modelBackground"></div>
