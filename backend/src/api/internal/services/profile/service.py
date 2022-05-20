@@ -3,6 +3,7 @@ from typing import List, Optional
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import IntegrityError, transaction
+from django.db.models import Q
 from django.utils.datastructures import MultiValueDict
 
 from api.internal.models.profile import Profile
@@ -10,7 +11,9 @@ from api.internal.models.store import Transaction, TransactionFile, TransactionT
 
 
 def get_profile_history(profile: Profile):
-    return Transaction.objects.filter(source=profile).order_by("-created_at")
+    return Transaction.objects.filter(
+        (Q(source=profile) | Q(destination=profile)) & ~Q(type=TransactionTypes.REQUEST)
+    ).order_by("-created_at")
 
 
 def create_activity(
