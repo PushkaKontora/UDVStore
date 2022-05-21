@@ -1,7 +1,7 @@
 <div class="wrapper">
     <div class="titleText">ЗАКАЗЫ</div>
     <div class="contentWrapper">
-        <div *ngFor="let order of orders" class="ordr">
+        <div *ngFor="let order of orders | async" class="ordr">
             <div class="img"><img src="{{order.order.product.photo}}" alt="product photo"></div>
             <div class="content">
                 <div class="topLine">

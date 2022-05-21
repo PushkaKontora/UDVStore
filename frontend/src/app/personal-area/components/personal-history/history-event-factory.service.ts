@@ -11,6 +11,8 @@ import {incline} from "lvovich";
 import {IProfile} from "../../../../interfaces/profile";
 import {LvovichPersonT} from "lvovich/lib/incline";
 import {IDeposit} from "./interfaces/IDeposit";
+import {PeopleService} from "../../../login/services/people.service";
+import {IUser} from "../../../../interfaces/interfaces";
 
 
 // TODO: must will add photo
@@ -19,6 +21,11 @@ import {IDeposit} from "./interfaces/IDeposit";
 })
 export class HistoryEventFactory
 {
+    public static User: IUser;
+    constructor(private _peopleService: PeopleService) {
+
+    }
+
     private static readonly _creators: Map<number, Function> = new Map([
         [1, HistoryEventFactory.createBoughtProduct],
         [2, HistoryEventFactory.createDeposit],
@@ -84,11 +91,13 @@ export class HistoryEventFactory
     public static createGift(transaction: ITransaction): IHistoryEvent
     {
         // TODO: set id of authenticated user to '228'
-        if (transaction.from_profile.id === 228)
+        if (transaction.from_profile.id === this.User.id)
         {
+            console.log(this.User);
+
             return HistoryEventFactory.createSentGift(transaction);
         }
-        else if (transaction.to_profile.id === 228)
+        else if (transaction.to_profile.id === this.User.id)
         {
             return HistoryEventFactory.createReceivedGift(transaction);
         }

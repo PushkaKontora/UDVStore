@@ -7,6 +7,8 @@ import {PersonalOrdersComponent} from "./components/personal-orders/personal-ord
 import {PersonalHistoryComponent} from "./components/personal-history/personal-history.component";
 import {PersonalActivityComponent} from "./components/personal-activity/personal-activity.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {TypeofPipe} from "./components/personal-history/pipes/typeof.pipe";
+import {CastTypePipe} from "./components/personal-history/pipes/cast-type.pipe";
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         PersonalAreaWrapperComponent,
         PersonalOrdersComponent,
         PersonalHistoryComponent,
-        PersonalActivityComponent
+        PersonalActivityComponent,
+        TypeofPipe,
+        CastTypePipe,
     ],
     imports: [
         CommonModule,

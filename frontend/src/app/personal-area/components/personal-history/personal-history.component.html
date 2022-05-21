@@ -2,8 +2,8 @@
     <div class="titleText">ИСТОРИЯ</div>
     <div class="contentWrapper">
         <div *ngFor="let card of events" class="ordr">
-{{card.title}}
-            <div class="content">
+            <div class="content" *ngIf="((card | typeof) === 'ICommented')">
+                {{card | castType: 'ICommented'}}
             </div>
         </div>
     </div>
