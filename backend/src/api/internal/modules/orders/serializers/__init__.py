@@ -1,2 +1,1 @@
 from .FormedOrderSerializer import FormedOrderSerializer
-from .OrderSerializer import OrderSerializer

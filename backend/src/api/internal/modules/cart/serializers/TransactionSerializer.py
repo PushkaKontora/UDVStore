@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from api.internal.models.store import Transaction
-from api.internal.modules.orders.serializers import OrderSerializer
+from api.internal.serializers.OrderSerializer import OrderSerializer
 
 
 class TransactionSerializer(serializers.ModelSerializer):

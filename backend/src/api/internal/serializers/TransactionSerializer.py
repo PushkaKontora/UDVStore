@@ -2,6 +2,7 @@ from rest_framework.serializers import ModelSerializer
 
 from api.internal.models.store import Transaction
 from api.internal.modules.profile.serializers.ProfileSerializer import ProfileSerializer
+from api.internal.serializers.OrderSerializer import OrderSerializer
 from api.internal.serializers.RequestSerializer import RequestSerializer
 from api.internal.serializers.TransactionFileSerializer import TransactionFileSerializer
 
@@ -9,6 +10,7 @@ from api.internal.serializers.TransactionFileSerializer import TransactionFileSe
 class TransactionSerializer(ModelSerializer):
     from_profile = ProfileSerializer(source="source", required=False)
     to_profile = ProfileSerializer(source="destination", required=False)
+    order = OrderSerializer(required=False)
     request = RequestSerializer(required=False)
     files = TransactionFileSerializer(many=True)
 

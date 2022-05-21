@@ -3,6 +3,8 @@ import {PersonalHistoryService} from "./personal-history.service";
 import {ITransaction} from "../../../../interfaces/transaction";
 import {IHistoryEvent} from "./interfaces/components/IHistoryEvent";
 import {HistoryEventFactory} from "./history-event-factory.service";
+import {PeopleService} from "../../../login/services/people.service";
+import {IUser} from "../../../../interfaces/interfaces";
 
 @Component({
     selector: 'personal-history',
@@ -12,15 +14,23 @@ import {HistoryEventFactory} from "./history-event-factory.service";
 export class PersonalHistoryComponent implements OnInit {
     public events: IHistoryEvent[];
 
-    constructor(private _historyService: PersonalHistoryService) {
+    constructor(private _historyService: PersonalHistoryService, private _peopleService: PeopleService) {
     }
 
     ngOnInit(): void {
-        this._historyService.getHistory()
-            .subscribe((transactions: ITransaction[]) => {
-                this.events = <IHistoryEvent[]>transactions
-                    .map(HistoryEventFactory.create)
-                    .filter((event: IHistoryEvent | null) => event !== null);
-            });
+        let user: IUser;
+
+        this._peopleService.findUser.subscribe({
+                next: (findUser: IUser) => user = findUser,
+                complete: () => {
+                    this._historyService.getHistory()
+                        .subscribe((transactions: ITransaction[]) => {
+                            this.events = <IHistoryEvent[]>transactions
+                                .map((transaction: ITransaction) => HistoryEventFactory.create(transaction, user))
+                                .filter((event: IHistoryEvent | null) => event !== null);
+                        });
+                }
+            }
+        )
     }
 }

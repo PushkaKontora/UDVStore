@@ -11,21 +11,15 @@ import {incline} from "lvovich";
 import {IProfile} from "../../../../interfaces/profile";
 import {LvovichPersonT} from "lvovich/lib/incline";
 import {IDeposit} from "./interfaces/IDeposit";
-import {PeopleService} from "../../../login/services/people.service";
 import {IUser} from "../../../../interfaces/interfaces";
 
 
-// TODO: must will add photo
+// TODO: add photo!!!!!!!!!!!!!!
 @Injectable({
     providedIn: 'root'
 })
 export class HistoryEventFactory
 {
-    public static User: IUser;
-    constructor(private _peopleService: PeopleService) {
-
-    }
-
     private static readonly _creators: Map<number, Function> = new Map([
         [1, HistoryEventFactory.createBoughtProduct],
         [2, HistoryEventFactory.createDeposit],
@@ -34,16 +28,16 @@ export class HistoryEventFactory
         [6, HistoryEventFactory.createAcceptedRequest]
     ]);
 
-    public static create(transaction: ITransaction): IHistoryEvent | null
+    public static create(transaction: ITransaction, user: IUser): IHistoryEvent | null
     {
         const creator = HistoryEventFactory._creators.get(transaction.type);
         if (!creator)
             return null;
 
-        return creator(transaction);
+        return creator(transaction, user);
     }
 
-    public static createBoughtProduct(transaction: ITransaction): IBoughtProduct
+    public static createBoughtProduct(transaction: ITransaction, user: IUser): IBoughtProduct
     {
         return {
             title: transaction.order.product.name,
@@ -55,7 +49,7 @@ export class HistoryEventFactory
         }
     }
 
-    public static createDeposit(transaction: ITransaction): IDeposit
+    public static createDeposit(transaction: ITransaction, user: IUser): IDeposit
     {
         return {
             title: "UDV-store",
@@ -65,7 +59,7 @@ export class HistoryEventFactory
         }
     }
 
-    public static createAcceptedRequest(transaction: ITransaction): IAcceptedRequest
+    public static createAcceptedRequest(transaction: ITransaction, user: IUser): IAcceptedRequest
     {
         return {
             title: "UDV-store одобрил заявку",
@@ -77,7 +71,7 @@ export class HistoryEventFactory
         }
     }
 
-    public static createRejectedRequest(transaction: ITransaction): IRejectedRequest
+    public static createRejectedRequest(transaction: ITransaction, user: IUser): IRejectedRequest
     {
         return {
             title: "UDV-store отклонил заявку",
@@ -88,24 +82,21 @@ export class HistoryEventFactory
         }
     }
 
-    public static createGift(transaction: ITransaction): IHistoryEvent
+    public static createGift(transaction: ITransaction, user: IUser): IHistoryEvent
     {
-        // TODO: set id of authenticated user to '228'
-        if (transaction.from_profile.id === this.User.id)
+        if (transaction.from_profile.id === user.id)
         {
-            console.log(this.User);
-
-            return HistoryEventFactory.createSentGift(transaction);
+            return HistoryEventFactory.createSentGift(transaction, user);
         }
-        else if (transaction.to_profile.id === this.User.id)
+        else if (transaction.to_profile.id === user.id)
         {
-            return HistoryEventFactory.createReceivedGift(transaction);
+            return HistoryEventFactory.createReceivedGift(transaction, user);
         }
 
         throw new ArgumentOutOfRangeError();
     }
 
-    public static createSentGift(transaction: ITransaction): ISentGift
+    public static createSentGift(transaction: ITransaction, user: IUser): ISentGift
     {
         const receiver: IProfile = transaction.to_profile;
 
@@ -122,7 +113,7 @@ export class HistoryEventFactory
         }
     }
 
-    public static createReceivedGift(transaction: ITransaction): IReceivedGift
+    public static createReceivedGift(transaction: ITransaction, user: IUser): IReceivedGift
     {
         const sender: IProfile = transaction.from_profile;
 

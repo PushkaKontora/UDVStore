@@ -80,13 +80,6 @@ export class PeopleService {
                 (user: IUser) => {
                     if (user) {
                         this.findUser.next(user);
-                        this.findUser
-                            .subscribe({
-                                next: (user: IUser) => {
-                                    HistoryEventFactory.User = user;
-                                }
-                            })
-
                     } else {
                         alert('user not found');
                     }
