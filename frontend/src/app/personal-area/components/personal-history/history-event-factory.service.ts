@@ -29,7 +29,7 @@ export class HistoryEventFactory
 
     public static create(transaction: ITransaction): IHistoryEvent | null
     {
-        const creator = this._creators.get(transaction.type);
+        const creator = HistoryEventFactory._creators.get(transaction.type);
         if (!creator)
             return null;
 

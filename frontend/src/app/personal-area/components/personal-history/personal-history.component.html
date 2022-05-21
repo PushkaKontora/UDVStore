@@ -1,1 +1,10 @@
-<p>personal-history works!</p>
+<div class="wrapper">
+    <div class="titleText">ИСТОРИЯ</div>
+    <div class="contentWrapper">
+        <div *ngFor="let card of events" class="ordr">
+{{card.title}}
+            <div class="content">
+            </div>
+        </div>
+    </div>
+</div>
