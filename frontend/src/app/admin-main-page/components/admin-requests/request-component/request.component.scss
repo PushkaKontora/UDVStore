@@ -5,23 +5,29 @@
 
   .req-header {
     width: 100%;
+    height: 2.5rem;
 
     .req-avatar {
-      width: 2rem;
-      height: 2rem;
+      width: 2.5rem;
+      height: 2.5rem;
       background-color: #2CF2B3;
       border-radius: 30px;
+
+      object-fit: cover;
     }
 
     .req-name {
       font-family: "Roboto Black", sans-serif;
 
       width: 50%;
-      height: 30px;
+      //height: 100%;
       display: inline-block;
-      transform: translate(0%, 25%);
 
-      margin-left: 1.2rem;
+      position: relative;
+      top: 50%;
+      transform: translate(0, -50%);
+
+      margin-left: 0.6rem;
     }
   }
 
@@ -30,14 +36,16 @@
 
     background-color: white;
     border-radius: 17.5px;
-    margin: 0.25rem 0 0 2.5rem;
-    padding: 0.5em 1em;
+    margin: 0 0 0 3rem;
+    padding: 0.8em 1.2em;
     font-size: 0.75em;
     letter-spacing: 0.05em;
+
+    display: inline-block;
   }
 
   .file-label-container {
-    margin: 0.25rem 0 0 2.5rem;
+    margin: 0.25rem 0 0 3rem;
 
     .file-label {
       font-size: 0.8em;
@@ -52,8 +60,8 @@
   }
 
   .reg-buttons {
-    margin: 0.5rem 0 0 2.5rem;
-    width: calc(100% - 3rem);
+    margin: 1rem 0 0 3rem;
+    width: 70%;
 
     .reg-button {
       width: calc(50% - 6px);

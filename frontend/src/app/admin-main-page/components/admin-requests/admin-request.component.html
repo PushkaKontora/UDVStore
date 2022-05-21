@@ -3,7 +3,7 @@
 
         <div class="contentWrapper">
             <app-request-component
-                    *ngFor="let dataItem of requests"
+                    *ngFor="let dataItem of requests; let i = index"
                     [data]="dataItem">
 
             </app-request-component>
@@ -18,22 +18,32 @@
                 <h1>НАЧИСЛЕНИЕ ПО ЗАПРОСУ</h1>
                 <img class="modal-close"
                      src="/assets/images-main-page/cross.svg"
-                     (click)="_modals.closeModal('modal-accept')">
+                     (click)="closeAcceptModal()">
 
-                <form [formGroup]="acceptForm">
-                    <div>
-                        <label>UCoins</label>
-                        <input placeholder="1" type="number" formControlName="coins" />
+                <form [formGroup]="acceptForm" class="reg-accept-form">
+
+                    <div class="fields">
+                        <div>
+                            <label>
+                                UCoins
+                                <img class="img-coins" src="/assets/images-main-page/greenBlockCoins.svg">
+                            </label>
+                            <input placeholder="1" type="number" formControlName="coins" />
+                        </div>
+
+                        <div>
+                            <label>КОММЕНТАРИЙ</label>
+                            <input placeholder="Напишите что-нибудь..." type="text" formControlName="comment" />
+                        </div>
+
+                        <div class="reg-form-mark">
+                            необязательное поле
+                        </div>
                     </div>
 
-                    <div>
-                        <label>КОММЕНТАРИЙ</label>
-                        <input placeholder="Напишите что-нибудь..." type="text" formControlName="comment" />
-                    </div>
-
-                    <div>
-                        <button [disabled]="acceptForm.invalid"
-                                (click)="tryAccept()">ОТПРАВИТЬ</button>
+                    <div class="btn-container">
+                        <button class="submit" [disabled]="acceptForm.invalid"
+                                (click)="submitAccept()">ОТПРАВИТЬ</button>
                     </div>
                 </form>
 
@@ -41,4 +51,42 @@
         </div>
         <div class="modelBackground"></div>
     </div>
+
+
+    <div class="modal-wrapper" id="modal-discard">
+        <div class="model">
+            <div class="modelBody">
+
+                <h1>НАПИШИТЕ ПРИЧИНУ ОТКЛОНЕНИЯ</h1>
+                <img class="modal-close"
+                     src="/assets/images-main-page/cross.svg"
+                     (click)="closeDiscardModal()">
+
+                <form [formGroup]="discardForm" class="reg-discard-form">
+
+                    <div class="fields">
+                        <div>
+                            <input placeholder="Напишите что-нибудь или отклоните без комментария..."
+                                   type="text" formControlName="comment" />
+                        </div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button class="submit" [disabled]="discardForm.invalid"
+                                (click)="submitDiscard()">ОТПРАВИТЬ</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="modelBackground"></div>
+    </div>
+
+    <div class="message">
+        <img class="modal-close"
+             src="/assets/images-main-page/"
+             (click)="closeAcceptModal()">
+        UCoins НАЧИСЛЕНЫ!
+    </div>
+
 </div>
