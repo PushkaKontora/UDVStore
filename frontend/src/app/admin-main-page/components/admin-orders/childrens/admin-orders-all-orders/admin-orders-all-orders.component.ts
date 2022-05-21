@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PersonalTransactionsService} from "../../../../../services/personal-transactions.service";
-import {IOrder} from "../../../../../../interfaces/order";
+import {ITransaction} from "../../../../../../interfaces/transaction";
 
 @Component({
     selector: 'app-admin-accrual-all-orders',
@@ -8,7 +8,7 @@ import {IOrder} from "../../../../../../interfaces/order";
     styleUrls: ['./admin-orders-all-orders.component.scss']
 })
 export class AdminOrdersAllOrdersComponent implements OnInit {
-    public orders?: IOrder[];
+    public transactions?: ITransaction[];
 
     constructor(private _personalTransactionsService: PersonalTransactionsService) {
         this.getOrders();
@@ -19,8 +19,8 @@ export class AdminOrdersAllOrdersComponent implements OnInit {
 
     private getOrders(): void{
         this._personalTransactionsService.getAllOrders()
-            .subscribe((orders: IOrder[]) => {
-                this.orders = orders;
+            .subscribe((orders: ITransaction[]) => {
+                this.transactions = orders;
             });
     }
 

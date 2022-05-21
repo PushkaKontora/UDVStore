@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PersonalTransactionsService} from "../../../services/personal-transactions.service";
-import {IOrder} from "../../../../interfaces/order";
-import {Observable} from "rxjs";
+import {ITransaction} from "../../../../interfaces/transaction";
 
 @Component({
     selector: 'personal-orders',
@@ -9,7 +8,7 @@ import {Observable} from "rxjs";
     styleUrls: ['./personal-orders.component.scss']
 })
 export class PersonalOrdersComponent implements OnInit {
-    public orders?: Observable<IOrder[]>;
+    public transactions?: ITransaction[];
 
     constructor(
         private _PersonalTransactionsService: PersonalTransactionsService,
@@ -21,6 +20,11 @@ export class PersonalOrdersComponent implements OnInit {
     }
 
     private getOrders(): void {
-        this.orders = this._PersonalTransactionsService.getOrdersUser();
+        this._PersonalTransactionsService.getOrdersUser()
+            .subscribe(
+                (orders: ITransaction[]) => {
+                    this.transactions = orders;
+                }
+            )
     }
 }

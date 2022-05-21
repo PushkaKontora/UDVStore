@@ -46,11 +46,11 @@ export class HistoryEventFactory
     public static createBoughtProduct(transaction: ITransaction): IBoughtProduct
     {
         return {
-            title: transaction.order.order.product.name,
-            photo: transaction.order.order.product.photo,
+            title: transaction.order.product.name,
+            photo: transaction.order.product.photo,
             date: transaction.created_at,
-            size: transaction.order.order.product.size,
-            amount: transaction.order.order.amount,
+            size: transaction.order.product.size,
+            amount: transaction.order.amount,
             price: -transaction.accrual,
         }
     }
