@@ -18,8 +18,7 @@ import {IUser} from "../../../../interfaces/interfaces";
 @Injectable({
     providedIn: 'root'
 })
-export class HistoryEventFactory
-{
+export class HistoryEventFactory {
     private static readonly _creators: Map<number, Function> = new Map([
         [1, HistoryEventFactory.createBoughtProduct],
         [2, HistoryEventFactory.createDeposit],
@@ -28,8 +27,7 @@ export class HistoryEventFactory
         [6, HistoryEventFactory.createAcceptedRequest]
     ]);
 
-    public static create(transaction: ITransaction, user: IUser): IHistoryEvent | null
-    {
+    public static create(transaction: ITransaction, user: IUser): IHistoryEvent | null {
         const creator = HistoryEventFactory._creators.get(transaction.type);
         if (!creator)
             return null;
@@ -37,9 +35,9 @@ export class HistoryEventFactory
         return creator(transaction, user);
     }
 
-    public static createBoughtProduct(transaction: ITransaction, user: IUser): IBoughtProduct
-    {
+    public static createBoughtProduct(transaction: ITransaction, user: IUser): IBoughtProduct {
         return {
+            type: 'IBoughtProduct',
             title: transaction.order.product.name,
             photo: transaction.order.product.photo,
             date: transaction.created_at,
@@ -49,21 +47,21 @@ export class HistoryEventFactory
         }
     }
 
-    public static createDeposit(transaction: ITransaction, user: IUser): IDeposit
-    {
+    public static createDeposit(transaction: ITransaction, user: IUser): IDeposit {
         return {
+            type: 'IDeposit',
             title: "UDV-store",
-            photo: "",
+            photo: "../../../../assets/images-personal-area/logoDeposit.svg",
             date: transaction.created_at,
             price: transaction.accrual,
         }
     }
 
-    public static createAcceptedRequest(transaction: ITransaction, user: IUser): IAcceptedRequest
-    {
+    public static createAcceptedRequest(transaction: ITransaction, user: IUser): IAcceptedRequest {
         return {
+            type: 'IAcceptedRequest',
             title: "UDV-store одобрил заявку",
-            photo: "",
+            photo: "../../../../assets/images-personal-area/logoDeposit.svg",
             date: transaction.created_at,
             comment: transaction.response.description,
             description: transaction.description,
@@ -71,33 +69,28 @@ export class HistoryEventFactory
         }
     }
 
-    public static createRejectedRequest(transaction: ITransaction, user: IUser): IRejectedRequest
-    {
+    public static createRejectedRequest(transaction: ITransaction, user: IUser): IRejectedRequest {
         return {
+            type: 'IRejectedRequest',
             title: "UDV-store отклонил заявку",
-            photo: "",
+            photo: "../../../../assets/images-personal-area/logoDeposit.svg",
             date: transaction.created_at,
             comment: transaction.response.description,
             description: transaction.description,
         }
     }
 
-    public static createGift(transaction: ITransaction, user: IUser): IHistoryEvent
-    {
-        if (transaction.from_profile.id === user.id)
-        {
+    public static createGift(transaction: ITransaction, user: IUser): IHistoryEvent {
+        if (transaction.from_profile.id === user.id) {
             return HistoryEventFactory.createSentGift(transaction, user);
-        }
-        else if (transaction.to_profile.id === user.id)
-        {
+        } else if (transaction.to_profile.id === user.id) {
             return HistoryEventFactory.createReceivedGift(transaction, user);
         }
 
         throw new ArgumentOutOfRangeError();
     }
 
-    public static createSentGift(transaction: ITransaction, user: IUser): ISentGift
-    {
+    public static createSentGift(transaction: ITransaction, user: IUser): ISentGift {
         const receiver: IProfile = transaction.to_profile;
 
         const person: LvovichPersonT = incline(
@@ -106,15 +99,15 @@ export class HistoryEventFactory
         );
 
         return {
+            type: 'ISentGift',
             title: `ПОДАРОК ${person.first} ${person.last}`,
-            photo: "",
+            photo: "../../../../assets/images-personal-area/giftCard.svg",
             date: transaction.created_at,
             price: -transaction.accrual,
         }
     }
 
-    public static createReceivedGift(transaction: ITransaction, user: IUser): IReceivedGift
-    {
+    public static createReceivedGift(transaction: ITransaction, user: IUser): IReceivedGift {
         const sender: IProfile = transaction.from_profile;
 
         const person: LvovichPersonT = incline(
@@ -123,8 +116,9 @@ export class HistoryEventFactory
         );
 
         return {
+            type: 'IReceivedGift',
             title: `ПОДАРОК от ${person.first} ${person.last}`,
-            photo: "",
+            photo: "../../../../assets/images-personal-area/giftCard.svg",
             date: transaction.created_at,
             comment: transaction.description,
             price: transaction.accrual,

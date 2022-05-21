@@ -2,9 +2,78 @@
     <div class="titleText">ИСТОРИЯ</div>
     <div class="contentWrapper">
         <div *ngFor="let card of events" class="ordr">
-            <div class="content" *ngIf="((card | typeof) === 'ICommented')">
-                {{card | castType: 'ICommented'}}
-            </div>
+            <div class="img"><img src="{{card.photo}}" alt="card photo"></div>
+            <div class="content">
+                <div class="topLine">
+                    <div class="valueTopLine valueTopLine__name">{{card.title}}</div>
+                    <div class="valueTopLine valueTopLine__rightValue">
+                        <div class="data">{{card.date | date : 'dd.MM.yyyy'}}</div>
+                    </div>
+                </div>
+                <div class="additionalInformation" *ngIf="card.type === 'IBoughtProduct'">
+                    <div class="valueAdditional valueAdditional__size" *ngIf="(card | castType: 'IBoughtProduct').size !== 0">
+                        <div *ngIf="(card | castType: 'IBoughtProduct').size === 1">
+                            Размер: <span class="borderElement">XS</span>
+                        </div>
+                        <div *ngIf="(card | castType: 'IBoughtProduct').size=== 2">
+                            Размер: <span class="borderElement">S</span>
+                        </div>
+                        <div *ngIf="(card | castType: 'IBoughtProduct').size === 3">
+                            Размер: <span class="borderElement">M</span>
+                        </div>
+                        <div *ngIf="(card | castType: 'IBoughtProduct').size === 4">
+                            Размер: <span class="borderElement">L</span>
+                        </div>
+                        <div *ngIf="(card | castType: 'IBoughtProduct').size === 5">
+                            Размер: <span class="borderElement">XL</span>
+                        </div>
+                        <div *ngIf="(card | castType: 'IBoughtProduct').size === 6">
+                            Размер: <span class="borderElement">XXL</span>
+                        </div>
+                        <div *ngIf="(card | castType: 'IBoughtProduct').size === 7">
+                            Размер: <span class="borderElement">XXXL</span>
+                        </div>
+                    </div>
+                    <div class="valueAdditional valueAdditional__amount">
+                        Количество: <span class="borderElement">{{(card | castType: 'IBoughtProduct').amount}}</span>
+                    </div>
+                </div>
+
+                <div class="additionalInformation">
+                    <div class="valueAdditional valueAdditional__size" *ngIf="card.type === 'IAcceptedRequest' || 'IRejectedRequest'">
+                        <div>
+                           <span class="borderElement">{{(card | castType: 'IAcceptedRequest').description}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="coinsWrapper" *ngIf="card.type !== 'IRejectedRequest'">
+
+                        <div class="descriptionComment" *ngIf="card.type === 'IAcceptedRequest' || 'IRejectedRequest' || 'IReceivedGift'">
+                            <div class="comment">
+                                {{(card | castType: 'IReceivedGift').comment}}
+                            </div>
+                        </div>
+                    <ul class="coins coins__green" *ngIf="(card | castType: 'IDeposit').price > 0">
+                        <li class="wrapper_num">
+                            + {{(card | castType: 'IDeposit').price}}
+                        </li>
+                        <li>
+                            <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
+                                 alt="greenBlockCoins">
+                        </li>
+                    </ul>
+
+                    <ul class="coins coins__black" *ngIf="(card | castType: 'IDeposit').price < 0">
+                        <li class="wrapper_num">
+                            - {{(card | castType: 'IDeposit').price | castTypeNumber}}
+                        </li>
+                        <li>
+                            <img src="../../../../assets/images-main-page/blackCoins.svg"
+                                 alt="black">
+                        </li>
+                    </ul>
+                </div>
         </div>
     </div>
 </div>

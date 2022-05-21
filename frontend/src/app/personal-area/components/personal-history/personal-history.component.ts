@@ -18,18 +18,16 @@ export class PersonalHistoryComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        let user: IUser;
-
         this._peopleService.findUser.subscribe({
-                next: (findUser: IUser) => user = findUser,
-                complete: () => {
+                next: (findUser: IUser) => {
+                    const user = findUser;
                     this._historyService.getHistory()
                         .subscribe((transactions: ITransaction[]) => {
                             this.events = <IHistoryEvent[]>transactions
                                 .map((transaction: ITransaction) => HistoryEventFactory.create(transaction, user))
                                 .filter((event: IHistoryEvent | null) => event !== null);
                         });
-                }
+                },
             }
         )
     }
