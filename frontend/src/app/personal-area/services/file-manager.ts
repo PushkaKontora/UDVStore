@@ -40,6 +40,10 @@ export class FileManager
         return this._files.values();
     }
 
+    public getFileNames(): IterableIterator<string> {
+        return this._files.keys();
+    }
+
     public reset(): void
     {
         this._files.clear();
