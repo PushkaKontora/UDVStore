@@ -1,9 +1,92 @@
 <div class="wrapper">
     <div class="req-holder" *ngIf="requests">
-        <app-request-component
-                *ngFor="let dataItem of requests"
-                [data]="dataItem">
 
-        </app-request-component>
+        <div class="contentWrapper">
+            <app-request-component
+                    *ngFor="let dataItem of requests; let i = index"
+                    [data]="dataItem">
+
+            </app-request-component>
+        </div>
+
     </div>
+
+    <div class="modal-wrapper" id="modal-accept">
+        <div class="model">
+            <div class="modelBody">
+
+                <h1>НАЧИСЛЕНИЕ ПО ЗАПРОСУ</h1>
+                <img class="modal-close"
+                     src="/assets/images-main-page/cross.svg"
+                     (click)="closeAcceptModal()">
+
+                <form [formGroup]="acceptForm" class="reg-accept-form">
+
+                    <div class="fields">
+                        <div>
+                            <label>
+                                UCoins
+                                <img class="img-coins" src="/assets/images-main-page/greenBlockCoins.svg">
+                            </label>
+                            <input placeholder="1" type="number" formControlName="coins" />
+                        </div>
+
+                        <div>
+                            <label>КОММЕНТАРИЙ</label>
+                            <input placeholder="Напишите что-нибудь..." type="text" formControlName="comment" />
+                        </div>
+
+                        <div class="reg-form-mark">
+                            необязательное поле
+                        </div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button class="submit" [disabled]="acceptForm.invalid"
+                                (click)="submitAccept()">ОТПРАВИТЬ</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="modelBackground"></div>
+    </div>
+
+
+    <div class="modal-wrapper" id="modal-discard">
+        <div class="model">
+            <div class="modelBody">
+
+                <h1>НАПИШИТЕ ПРИЧИНУ ОТКЛОНЕНИЯ</h1>
+                <img class="modal-close"
+                     src="/assets/images-main-page/cross.svg"
+                     (click)="closeDiscardModal()">
+
+                <form [formGroup]="discardForm" class="reg-discard-form">
+
+                    <div class="fields">
+                        <div>
+                            <input placeholder="Напишите что-нибудь или отклоните без комментария..."
+                                   type="text" formControlName="comment" />
+                        </div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button class="submit" [disabled]="discardForm.invalid"
+                                (click)="submitDiscard()">ОТПРАВИТЬ</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="modelBackground"></div>
+    </div>
+
+    <div class="message" id="reg-message">
+        <img class="modal-close"
+             src="/assets/images/cross-non-rounded.svg"
+             (click)="closeMessage()">
+        UCoins НАЧИСЛЕНЫ!
+    </div>
+
 </div>
