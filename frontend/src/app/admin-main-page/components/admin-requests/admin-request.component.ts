@@ -12,6 +12,7 @@ import {FilemanagerService} from "../../services/filemanager.service";
 import {ModalWorker} from "../../services/modalworker.service";
 import {RequestComponent} from "./request-component/request.component";
 import {Router} from "@angular/router";
+import {MessagesService} from "../../../services/messages.service";
 
 @Component({
     selector: 'personal-area',
@@ -42,7 +43,8 @@ export class AdminRequestComponent implements OnInit {
 
     constructor(private _service: RequestService,
                 public _modals: ModalWorker,
-                private _router: Router) {
+                private _router: Router,
+                private _messages: MessagesService) {
 
     }
 
@@ -133,6 +135,10 @@ export class AdminRequestComponent implements OnInit {
                     this.closeDiscardModal()
                 })
         }
+    }
+
+    public closeMessage() {
+        this._messages.hide("reg-message")
     }
 
 }
