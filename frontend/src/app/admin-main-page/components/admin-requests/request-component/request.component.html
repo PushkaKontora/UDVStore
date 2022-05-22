@@ -2,26 +2,26 @@
 
     <div class="req-header">
 
-        <img *ngIf="data.photoUrl;else placeholder" class="req-avatar" src="{{ data.photoUrl }}"/>
+        <img *ngIf="data.from_profile.photo;else placeholder" class="req-avatar" src="{{ data.from_profile.photo }}"/>
         <ng-template #placeholder>
             <img class="req-avatar" src="/assets/images-main-page/account.svg"/>
         </ng-template>
 
-        <div class="req-name">{{ data.name }}</div>
+        <div class="req-name">{{ getFullName() }}</div>
 
     </div>
 
     <div *ngIf="data.description" class="req-description">{{ data.description }}</div>
 
-    <div class="file-label-container" *ngIf="data.filenames.length > 0">
-        <div class="file-label" *ngFor="let file of data.filenames">
-            {{ file }}
+    <div class="file-label-container" *ngIf="data.files.length > 0">
+        <div class="file-label" *ngFor="let file of data.files">
+            {{ getCutFilename(file.filename) }}
         </div>
     </div>
 
     <div class="reg-buttons">
-        <button class="button-accept">НАЧИСЛИТЬ</button>
-        <button class="button-reject">ОТКЛОНИТЬ</button>
+        <button class="reg-button reg-accept" (click)="approve()">НАЧИСЛИТЬ</button>
+        <button class="reg-button reg-reject" (click)="discard()">ОТКЛОНИТЬ</button>
     </div>
 
 </div>
