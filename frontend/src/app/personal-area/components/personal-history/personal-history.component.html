@@ -40,9 +40,14 @@
                 </div>
 
                 <div class="additionalInformation">
-                    <div class="valueAdditional valueAdditional__size" *ngIf="card.type === 'IAcceptedRequest' || 'IRejectedRequest'">
+                    <div class="valueAdditional valueAdditional__size" *ngIf="card.type === 'IAcceptedRequest'">
                         <div>
                            <span class="borderElement">{{(card | castType: 'IAcceptedRequest').description}}</span>
+                        </div>
+                    </div>
+                    <div class="valueAdditional valueAdditional__size" *ngIf="card.type === 'IRejectedRequest'">
+                        <div>
+                            <span class="borderElement">{{(card | castType: 'IRejectedRequest').description}}</span>
                         </div>
                     </div>
                 </div>

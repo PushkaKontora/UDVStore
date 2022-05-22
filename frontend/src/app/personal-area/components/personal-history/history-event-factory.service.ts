@@ -58,24 +58,27 @@ export class HistoryEventFactory {
     }
 
     public static createAcceptedRequest(transaction: ITransaction, user: IUser): IAcceptedRequest {
+
+        console.log(transaction);
         return {
             type: 'IAcceptedRequest',
             title: "UDV-store одобрил заявку",
             photo: "../../../../assets/images-personal-area/logoDeposit.svg",
             date: transaction.created_at,
-            comment: transaction.response.description,
+            comment: transaction.request.description,
             description: transaction.description,
             price: transaction.accrual,
         }
     }
 
     public static createRejectedRequest(transaction: ITransaction, user: IUser): IRejectedRequest {
+        console.log(transaction + 'dddd');
         return {
             type: 'IRejectedRequest',
             title: "UDV-store отклонил заявку",
             photo: "../../../../assets/images-personal-area/logoDeposit.svg",
             date: transaction.created_at,
-            comment: transaction.response.description,
+            comment: transaction.request.description,
             description: transaction.description,
         }
     }
