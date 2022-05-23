@@ -7,7 +7,7 @@ from rest_framework.viewsets import ViewSet
 from api.internal.models.profile import Profile
 from api.internal.models.store import Order
 from api.internal.modules.cart.serializers import CartSerializer, TransactionSerializer
-from api.internal.modules.orders.serializers import OrderSerializer
+from api.internal.serializers.OrderSerializer import OrderSerializer
 from api.internal.services.cart import (
     get_order,
     get_orders_by_profile,

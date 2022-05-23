@@ -76,7 +76,7 @@ export class MainPageWrapperComponent implements OnInit {
 
     public onSubmit() {
         this.writePers.patchValue({employee: this.testValue.value});
-        this._searchStringService.postUserAccrualCoins(this.testValue.value[0].id, this.writePers.value.coins, this.writePers.value.activity)
+        this._searchStringService.postUserAccrualCoins(this.testValue.value[0].id, this.writePers.value.coins, this.writePers.value.comment)
             .subscribe(
                 () => {
                     this.writePers.reset();

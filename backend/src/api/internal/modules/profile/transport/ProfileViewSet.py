@@ -45,7 +45,7 @@ class ProfileViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
             return Response(status=404)
 
         transactions = get_profile_history(profile)
-        ser = TransactionSerializer(transactions, many=True)
+        ser = TransactionSerializer(transactions, many=True, context={"request": request})
         return Response(ser.data)
 
     @action(detail=False, methods=["post"])
@@ -56,7 +56,7 @@ class ProfileViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
         data = {"description": request.data.get("activity")}
 
-        serializer = TransactionSerializer(data=data, partial=True)
+        serializer = TransactionSerializer(data=data, partial=True, context={"request": request})
         serializer.is_valid(raise_exception=True)
 
         transaction = create_activity(profile, data["description"], request.FILES)

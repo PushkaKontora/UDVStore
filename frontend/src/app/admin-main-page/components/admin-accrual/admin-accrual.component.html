@@ -60,14 +60,16 @@
                         class="button"
                         [disabled]="writePers.invalid"
                         (click)="openModel()"
-                >НАЧИСЛИТЬ</button>
+                >НАЧИСЛИТЬ
+                </button>
             </div>
         </div>
     </form>
     <div class="modal-wrapper" id="modal-1">
         <div class="model">
             <div class="modelBody">
-                <button><img src="../../../../assets/images-admin/crossPopUp.svg" alt="cross" (click)="closeModel()"></button>
+                <button><img src="../../../../assets/images-admin/crossPopUp.svg" alt="cross" (click)="closeModel()">
+                </button>
                 <div class="text">UCoins НАЧИСЛЕНЫ!</div>
             </div>
         </div>
@@ -76,5 +78,118 @@
     <div class="value">
         <div class="title">ИСТОРИЯ</div>
         <div class="content">Разверните карточку, чтобы увидеть историю сотрудника</div>
+        <div class="wrapperCard">
+            <div *ngFor="let persona of testValue.value" class="card">
+                <div class="selectedEmployee selectedEmployee__photo" *ngIf="persona?.photo === null">
+                    <img src="../../../../assets/images-main-page/account.svg" alt="avatar" class="account">
+                </div>
+                <div class="selectedEmployee selectedEmployee__photo" *ngIf="persona?.photo !== null">
+                    <img src="{{persona?.photo}}" alt="avatar" class="account">
+                </div>
+                <div class="selectedEmployee selectedEmployee__name">
+                    <div class="name">
+                        {{persona?.last_name}} {{persona?.first_name}} {{persona?.patronymic}}
+                    </div>
+                    <button class="buttonClick"><div class="click" (click)="openHistory(persona)">
+                        <img src="../../../../assets/images-admin/expandArrow.svg" alt="expand Arrow">
+                    </div></button>
+                </div>
+
+
+                <div *ngIf="click && pers === persona" class="historyCards">
+                    <div class="wrapperHistory">
+                        <div class="contentWrapper">
+                            <div *ngFor="let card of events" class="ordr">
+                                <div class="img"><img src="{{card.photo}}" alt="card photo"></div>
+                                <div class="content">
+                                    <div class="topLine">
+                                        <div class="valueTopLine valueTopLine__name">{{card.title}}</div>
+                                        <div class="valueTopLine valueTopLine__rightValue">
+                                            <div class="data">{{card.date | date : 'dd.MM.yyyy'}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="additionalInformation" *ngIf="card.type === 'IBoughtProduct'">
+                                        <div class="valueAdditional valueAdditional__size"
+                                             *ngIf="(card | castType: 'IBoughtProduct').size !== 0">
+                                            <div *ngIf="(card | castType: 'IBoughtProduct').size === 1">
+                                                Размер: <span class="borderElement">XS</span>
+                                            </div>
+                                            <div *ngIf="(card | castType: 'IBoughtProduct').size=== 2">
+                                                Размер: <span class="borderElement">S</span>
+                                            </div>
+                                            <div *ngIf="(card | castType: 'IBoughtProduct').size === 3">
+                                                Размер: <span class="borderElement">M</span>
+                                            </div>
+                                            <div *ngIf="(card | castType: 'IBoughtProduct').size === 4">
+                                                Размер: <span class="borderElement">L</span>
+                                            </div>
+                                            <div *ngIf="(card | castType: 'IBoughtProduct').size === 5">
+                                                Размер: <span class="borderElement">XL</span>
+                                            </div>
+                                            <div *ngIf="(card | castType: 'IBoughtProduct').size === 6">
+                                                Размер: <span class="borderElement">XXL</span>
+                                            </div>
+                                            <div *ngIf="(card | castType: 'IBoughtProduct').size === 7">
+                                                Размер: <span class="borderElement">XXXL</span>
+                                            </div>
+                                        </div>
+                                        <div class="valueAdditional valueAdditional__amount">
+                                            Количество: <span
+                                            class="borderElement">{{(card | castType: 'IBoughtProduct').amount}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="additionalInformation">
+                                        <div class="valueAdditional valueAdditional__size"
+                                             *ngIf="card.type === 'IAcceptedRequest'">
+                                            <div>
+                                        <span
+                                            class="borderElement">{{(card | castType: 'IAcceptedRequest').description}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="valueAdditional valueAdditional__size"
+                                             *ngIf="card.type === 'IRejectedRequest'">
+                                            <div>
+                                        <span
+                                            class="borderElement">{{(card | castType: 'IRejectedRequest').description}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="coinsWrapper" *ngIf="card.type !== 'IRejectedRequest'">
+
+                                        <div class="descriptionComment"
+                                             *ngIf="card.type === 'IAcceptedRequest' || 'IRejectedRequest' || 'IReceivedGift'">
+                                            <div class="comment">
+                                                {{(card | castType: 'IReceivedGift').comment}}
+                                            </div>
+                                        </div>
+                                        <ul class="coins coins__green" *ngIf="(card | castType: 'IDeposit').price > 0">
+                                            <li class="wrapper_num">
+                                                + {{(card | castType: 'IDeposit').price}}
+                                            </li>
+                                            <li>
+                                                <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
+                                                     alt="greenBlockCoins">
+                                            </li>
+                                        </ul>
+
+                                        <ul class="coins coins__black" *ngIf="(card | castType: 'IDeposit').price < 0">
+                                            <li class="wrapper_num">
+                                                - {{(card | castType: 'IDeposit').price | castTypeNumber}}
+                                            </li>
+                                            <li>
+                                                <img src="../../../../assets/images-main-page/blackCoins.svg"
+                                                     alt="black">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

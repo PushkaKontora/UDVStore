@@ -4,6 +4,7 @@ import {IUser} from "../../interfaces/interfaces";
 import {PeopleService} from "../login/services/people.service";
 import {IOrder} from "../../interfaces/order";
 import {environment} from "../../environments/environment";
+import {ITransaction} from "../../interfaces/transaction";
 
 @Injectable({
     providedIn: 'root'
@@ -24,11 +25,11 @@ export class PersonalTransactionsService {
             user = res
         });
         const urlOrdersUser: string = this._urlOrdersUser + user!.id + '/';
-        return this._http.get<IOrder[]>(urlOrdersUser, this._peopleService.optionsForHttp);
+        return this._http.get<ITransaction[]>(urlOrdersUser, this._peopleService.optionsForHttp);
     }
 
     public getAllOrders() {
-        return this._http.get<IOrder[]>(this._urlOrdersUser, this._peopleService.optionsForHttp);
+        return this._http.get<ITransaction[]>(this._urlOrdersUser, this._peopleService.optionsForHttp);
     }
 
     public patchStatusOrders(id: number, statusNumber: number) {
