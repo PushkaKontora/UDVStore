@@ -58,8 +58,6 @@ export class HistoryEventFactory {
     }
 
     public static createAcceptedRequest(transaction: ITransaction, user: IUser): IAcceptedRequest {
-
-        console.log(transaction);
         return {
             type: 'IAcceptedRequest',
             title: "UDV-store одобрил заявку",
@@ -72,7 +70,6 @@ export class HistoryEventFactory {
     }
 
     public static createRejectedRequest(transaction: ITransaction, user: IUser): IRejectedRequest {
-        console.log(transaction + 'dddd');
         return {
             type: 'IRejectedRequest',
             title: "UDV-store отклонил заявку",

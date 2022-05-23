@@ -7,8 +7,9 @@ import {PersonalOrdersComponent} from "./components/personal-orders/personal-ord
 import {PersonalHistoryComponent} from "./components/personal-history/personal-history.component";
 import {PersonalActivityComponent} from "./components/personal-activity/personal-activity.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CastTypeIBoughtProductPipe} from "./components/personal-history/pipes/cast-type-IBoughtProduct.pipe";
+import {AppModule} from "../app.module";
 import {CastTypeNumberPipe} from "./components/personal-history/pipes/cast-type-number.pipe";
+import {CastTypeIBoughtProductPipe} from "./components/personal-history/pipes/cast-type-IBoughtProduct.pipe";
 
 @NgModule({
     declarations: [
@@ -17,8 +18,8 @@ import {CastTypeNumberPipe} from "./components/personal-history/pipes/cast-type-
         PersonalOrdersComponent,
         PersonalHistoryComponent,
         PersonalActivityComponent,
-        CastTypeIBoughtProductPipe,
-        CastTypeNumberPipe
+        CastTypeNumberPipe,
+        CastTypeIBoughtProductPipe
     ],
     imports: [
         CommonModule,

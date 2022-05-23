@@ -26,6 +26,10 @@ import { AdminOrdersNewOrdersComponent } from './components/admin-orders/childre
 import { AdminOrdersProcessingOrdersComponent } from './components/admin-orders/childrens/admin-orders-processing-orders/admin-orders-processing-orders.component';
 import { RequestComponent } from './components/admin-requests/request-component/request.component';
 import {RequestService} from "./services/request.service";
+import {PersonalHistoryService} from "../personal-area/components/personal-history/personal-history.service";
+import {AppModule} from "../app.module";
+import {CastTypeIBoughtProductPipe} from "./components/admin-accrual/pipes/cast-type-IBoughtProduct.pipe";
+import {CastTypeNumberPipe} from "./components/admin-accrual/pipes/cast-type-number.pipe";
 
 
 @NgModule({
@@ -39,7 +43,9 @@ import {RequestService} from "./services/request.service";
         AdminOrdersAllOrdersComponent,
         AdminOrdersNewOrdersComponent,
         AdminOrdersProcessingOrdersComponent,
-        RequestComponent
+        RequestComponent,
+        CastTypeIBoughtProductPipe,
+        CastTypeNumberPipe
     ],
     imports: [
         CommonModule,
@@ -54,12 +60,11 @@ import {RequestService} from "./services/request.service";
         TuiAvatarModule,
         TuiDropdownControllerModule,
     ],
-     providers: [SearchStringService, RequestService]
+     providers: [
+         SearchStringService,
+         RequestService,
+         PersonalHistoryService
+     ]
 })
 export class AdminMainPageModule {
-    constructor(
-        private _peopleService: PeopleService,
-        private _searchStringService: SearchStringService,
-    ) {
-    }
 }

@@ -12,11 +12,16 @@ import {ITransaction} from "../../../../interfaces/transaction";
 export class PersonalHistoryService
 {
     private readonly _url: string = environment.api_address + "/profile/history/";
+    private readonly _urlPerson: string = environment.api_address + "/admin/";
 
     constructor(private _http: HttpClient, private _peopleService: PeopleService) {}
 
     public getHistory(): Observable<ITransaction[]>
     {
         return this._http.get<ITransaction[]>(this._url, this._peopleService.optionsForHttp);
+    }
+
+    public getHistoryAdmin(idPerson: number): Observable<ITransaction[]> {
+        return this._http.get<ITransaction[]>(this._urlPerson + idPerson + '/history/', this._peopleService.optionsForHttp);
     }
 }
