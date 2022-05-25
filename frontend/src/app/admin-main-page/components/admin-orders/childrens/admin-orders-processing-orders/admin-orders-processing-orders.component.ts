@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {IOrder} from "../../../../../../interfaces/order";
 import {PersonalTransactionsService} from "../../../../../services/personal-transactions.service";
+import {ITransaction} from "../../../../../../interfaces/transaction";
 
 @Component({
     selector: 'app-admin-accrual-processing-orders',
@@ -8,7 +8,7 @@ import {PersonalTransactionsService} from "../../../../../services/personal-tran
     styleUrls: ['./admin-orders-processing-orders.component.scss']
 })
 export class AdminOrdersProcessingOrdersComponent implements OnInit {
-    public orders?: IOrder[];
+    public transactions?: ITransaction[];
 
     constructor(private _personalTransactionsService: PersonalTransactionsService) {
         this.getOrders();
@@ -19,8 +19,8 @@ export class AdminOrdersProcessingOrdersComponent implements OnInit {
 
     private getOrders(): void {
         this._personalTransactionsService.getAllOrders()
-            .subscribe((orders: IOrder[]) => {
-                this.orders = orders;
+            .subscribe((orders: ITransaction[]) => {
+                this.transactions = orders;
             });
     }
 

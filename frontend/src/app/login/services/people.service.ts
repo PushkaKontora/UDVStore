@@ -7,6 +7,7 @@ import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {SearchStringService} from "../../services/searchString.service";
 import {CookieService} from "ngx-cookie-service";
 import {environment} from "../../../environments/environment";
+import {HistoryEventFactory} from "../../personal-area/components/personal-history/history-event-factory.service";
 
 
 @Injectable({
@@ -87,6 +88,7 @@ export class PeopleService {
                     alert('Something went wrong');
                 },);
     }
+
 
     public getUserHttp() {
         return this._http.get<IUser>(this._urlLoginUser, this.optionsForHttp)

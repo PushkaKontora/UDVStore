@@ -12,5 +12,6 @@ export interface ITransaction
     'description': string,
     'created_at': string,
     'order': IOrder,
+    'request': ITransaction,
     'files': ITransactionFile[]
 }

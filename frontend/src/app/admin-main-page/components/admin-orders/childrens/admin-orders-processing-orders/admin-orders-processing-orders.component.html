@@ -1,49 +1,49 @@
 <div class="wrapper">
     <div class="contentWrapper">
-        <div *ngFor="let order of orders" class="ordr">
-            <div class="card" *ngIf="order.order.status === 2">
+        <div *ngFor="let transaction of transactions" class="ordr">
+            <div class="card" *ngIf="transaction.order.status === 2">
                 <div class="valueGrid valueGrid__select">
-                    <select (change)="onChangeNew(order.id)" class="greyOption">
+                    <select (change)="onChangeNew(transaction.id)" class="greyOption">
                         <option>новый</option>
                         <option selected>выдан</option>
                     </select>
                 </div>
                 <div class="valueGrid valueGrid__denominations">
-                    <div class="img"><img src="{{order.order.product.photo}}" alt="product photo"></div>
+                    <div class="img"><img src="{{transaction.order.product.photo}}" alt="product photo"></div>
                     <div class="additionalInformation">
-                        <div class="valueTopLine valueTopLine__name">{{order.order.product.name}}</div>
-                        <div class="valueAdditional valueAdditional__size" *ngIf="order.order.product.size !== 0">
-                            <div *ngIf="order.order.product.size === 1">
+                        <div class="valueTopLine valueTopLine__name">{{transaction.order.product.name}}</div>
+                        <div class="valueAdditional valueAdditional__size" *ngIf="transaction.order.product.size !== 0">
+                            <div *ngIf="transaction.order.product.size === 1">
                                 Размер: <span class="borderElement">XS</span>
                             </div>
-                            <div *ngIf="order.order.product.size === 2">
+                            <div *ngIf="transaction.order.product.size === 2">
                                 Размер: <span class="borderElement">S</span>
                             </div>
-                            <div *ngIf="order.order.product.size === 3">
+                            <div *ngIf="transaction.order.product.size === 3">
                                 Размер: <span class="borderElement">M</span>
                             </div>
-                            <div *ngIf="order.order.product.size === 4">
+                            <div *ngIf="transaction.order.product.size === 4">
                                 Размер: <span class="borderElement">L</span>
                             </div>
-                            <div *ngIf="order.order.product.size === 5">
+                            <div *ngIf="transaction.order.product.size === 5">
                                 Размер: <span class="borderElement">XL</span>
                             </div>
-                            <div *ngIf="order.order.product.size === 6">
+                            <div *ngIf="transaction.order.product.size === 6">
                                 Размер: <span class="borderElement">XXL</span>
                             </div>
-                            <div *ngIf="order.order.product.size === 7">
+                            <div *ngIf="transaction.order.product.size === 7">
                                 Размер: <span class="borderElement">XXXL</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="valueGrid valueGrid__amount">{{order.order.amount}}</div>
+                <div class="valueGrid valueGrid__amount">{{transaction.order.amount}}</div>
                 <div class="valueGrid valueGrid__name">
-                    <div class="stroke stroke__patronymic">{{order.order.profile.patronymic}}</div>
-                    <div class="stroke">{{order.order.profile.first_name}} {{order.order.profile.last_name}}</div>
+                    <div class="stroke stroke__patronymic">{{transaction.order.profile.patronymic}}</div>
+                    <div class="stroke">{{transaction.order.profile.first_name}} {{transaction.order.profile.last_name}}</div>
                 </div>
                 <div class="valueGrid valueGrid__data">
-                    <div class="data">{{order.created_at | date : 'dd.MM.yyyy'}}</div>
+                    <div class="data">{{transaction.created_at | date : 'dd.MM.yyyy'}}</div>
                 </div>
             </div>
         </div>

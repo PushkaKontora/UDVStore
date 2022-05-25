@@ -5,7 +5,11 @@ import {IUser, UsersSearch} from "../../../../interfaces/interfaces";
 import {SearchStringService} from "../../../services/searchString.service";
 import {User} from "../../../../generalClasses/User";
 import {Router} from "@angular/router";
-
+import {PersonalHistoryService} from "../../../personal-area/components/personal-history/personal-history.service";
+import {PeopleService} from "../../../login/services/people.service";
+import {ITransaction} from "../../../../interfaces/transaction";
+import {IHistoryEvent} from "../../../personal-area/components/personal-history/interfaces/components/IHistoryEvent";
+import {HistoryEventFactory} from "../../../personal-area/components/personal-history/history-event-factory.service";
 
 
 const databaseMockData: UsersSearch[] = [];
@@ -20,11 +24,17 @@ export class AdminAccrualComponent implements OnInit {
     search$ = new Subject<string>();
     readonly testValue = new FormControl();
     public foundUsers!: UsersSearch[];
+    public events: IHistoryEvent[];
+    public pers: IUser;
+
+    public click: boolean = false;
 
     constructor(
         private _searchStringService: SearchStringService,
         private _router: Router,
-        ) {
+        private _historyService: PersonalHistoryService,
+        private _peopleService: PeopleService,
+    ) {
         if (this._searchStringService.foundUsers) {
             this.foundUsers = this._searchStringService.foundUsers;
         }
@@ -43,13 +53,14 @@ export class AdminAccrualComponent implements OnInit {
 
     ngOnInit(): void {
     }
+
     public openModel() {
         document.getElementById('modal-1')!.style.display = 'block';
         document.body.style.overflow = "hidden";
         document.body.classList.add('modalOpen');
     }
 
-    public closeModel(){
+    public closeModel() {
         document.getElementById('modal-1')!.style.display = 'none';
         document.body.style.overflow = "visible";
         document.body.classList.remove('modalOpen');
@@ -61,6 +72,7 @@ export class AdminAccrualComponent implements OnInit {
         for (let user of this.writePers.value.employee) {
             arrayId.push(user.id);
         }
+
         this._searchStringService.postAdminAccrualCoins(arrayId, this.writePers.value.coins, this.writePers.value.activity)
             .subscribe(
                 (res: any) => {
@@ -108,6 +120,19 @@ export class AdminAccrualComponent implements OnInit {
         );
 
         return of(result).pipe(delay(Math.random() * 1000 + 500));
+    }
+
+    public openHistory(user: IUser) {
+        this.pers = user;
+        this.click = !this.click;
+        this.events = [];
+        console.log(user);
+        this._historyService.getHistoryAdmin(user.id)
+            .subscribe((transactions: ITransaction[]) => {
+                this.events = <IHistoryEvent[]>transactions
+                    .map((transaction: ITransaction) => HistoryEventFactory.create(transaction, user))
+                    .filter((event: IHistoryEvent | null) => event !== null);
+            });
     }
 }
 

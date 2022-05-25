@@ -16,10 +16,12 @@ import {TuiSheetModule} from "@taiga-ui/addon-mobile";
 import {TuiAvatarModule, TuiDataListWrapperModule, TuiMultiSelectModule} from "@taiga-ui/kit";
 import {TuiLetModule} from "@taiga-ui/cdk";
 import { CookieService } from 'ngx-cookie-service';
+import {CastTypeIBoughtProductPipe} from "./admin-main-page/components/admin-accrual/pipes/cast-type-IBoughtProduct.pipe";
+import {CastTypeNumberPipe} from "./admin-main-page/components/admin-accrual/pipes/cast-type-number.pipe";
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
     ],
     imports: [
         BrowserModule,

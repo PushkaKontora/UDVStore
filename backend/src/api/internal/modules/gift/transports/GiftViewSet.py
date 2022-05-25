@@ -30,4 +30,8 @@ class GiftViewSet(ViewSet):
 
         transaction = try_transfer(source, destination, description, accrual)
 
-        return Response(data=TransactionSerializer(transaction, context={"request": request}).data) if transaction else Response(status=400)
+        return (
+            Response(data=TransactionSerializer(transaction, context={"request": request}).data)
+            if transaction
+            else Response(status=400)
+        )

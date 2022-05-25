@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PersonalTransactionsService} from "../../../services/personal-transactions.service";
-import {IOrder} from "../../../../interfaces/order";
+import {ITransaction} from "../../../../interfaces/transaction";
 
 @Component({
     selector: 'personal-orders',
@@ -8,7 +8,7 @@ import {IOrder} from "../../../../interfaces/order";
     styleUrls: ['./personal-orders.component.scss']
 })
 export class PersonalOrdersComponent implements OnInit {
-    public orders?: IOrder[];
+    public transactions?: ITransaction[];
 
     constructor(
         private _PersonalTransactionsService: PersonalTransactionsService,
@@ -22,8 +22,8 @@ export class PersonalOrdersComponent implements OnInit {
     private getOrders(): void {
         this._PersonalTransactionsService.getOrdersUser()
             .subscribe(
-                (orders: IOrder[]) => {
-                    this.orders = orders;
+                (orders: ITransaction[]) => {
+                    this.transactions = orders;
                 }
             )
     }

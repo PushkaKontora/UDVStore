@@ -12,18 +12,18 @@ def get_formed_orders() -> QuerySet[Transaction]:
     return (
         Transaction.objects.filter(~Q(order=None))
         .annotate(
-            timediff=models.Case(
+            delta=models.Case(
                 models.When(order__status=StatusChoices.IN_PROCESS, then=F("created_at") - now),
                 models.When(order__status=StatusChoices.DONE, then=now - F("created_at")),
                 output_field=models.DurationField(),
             )
         )
-        .order_by("order__status", "timediff")
+        .order_by("order__status", "delta")
     )
 
 
 def get_formed_orders_by_user(profile_id: int) -> QuerySet[Transaction]:
-    return get_formed_orders().filter(source=profile_id)
+    return Transaction.objects.filter(~Q(order=None) & Q(source=profile_id)).order_by("order__status", "-created_at")
 
 
 def get_formed_order_by_transaction(transaction_id: int) -> Order:

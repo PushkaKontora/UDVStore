@@ -4,6 +4,7 @@ import {IUser, products} from "../../../../interfaces/interfaces";
 import {PeopleService} from "../../../login/services/people.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Observable, Subscription} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
@@ -27,6 +28,8 @@ export class MerchStoreComponent implements OnInit {
         private _storeService: StoreService,
         private _fb: FormBuilder,
         private _renderer: Renderer2,
+        private _router: Router,
+        private _route: ActivatedRoute,
     ) {
     }
 
@@ -41,6 +44,11 @@ export class MerchStoreComponent implements OnInit {
                     });
                 }
             });
+    }
+
+    public checkOrder(){
+        this.closeModel('modal2');
+        this._router.navigate(['main-page', 'personal-area', 'orders']);
     }
 
 
