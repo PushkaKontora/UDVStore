@@ -3,7 +3,7 @@ import {IRequestData} from "./IRequestData";
 import {RequestService} from "../../../services/request.service";
 import {ITransaction} from "../../../../../interfaces/transaction";
 import {ModalWorker} from "../../../services/modalworker.service";
-import {FilemanagerService} from "../../../services/filemanager.service";
+import {FilemanagerService} from "../../../../services/filemanager.service";
 import {AdminRequestComponent} from "../admin-request.component";
 
 @Component({

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {FileManager} from "../../services/file-manager";
 import {PersonalActivityService} from "../../services/personal-activity.service";
+import {FilemanagerService} from "../../../services/filemanager.service";
 
 @Component({
     selector: 'personal-activity',
@@ -11,7 +12,7 @@ import {PersonalActivityService} from "../../services/personal-activity.service"
 export class PersonalActivityComponent implements OnInit {
     public inputControl: FormControl = new FormControl('', [Validators.required]);
 
-    constructor(private _fileManager: FileManager, private _service: PersonalActivityService) {}
+    constructor(public _fileManager: FileManager, private _service: PersonalActivityService) {}
 
     public ngOnInit()
     {
@@ -42,5 +43,14 @@ export class PersonalActivityComponent implements OnInit {
         const isRemoved: boolean = this._fileManager.tryRemoveFile(name);
 
         // TODO: removing blank
+    }
+
+    public getFilename(path: string): string {
+        return FilemanagerService.getFilename(path)
+    }
+
+    public removeFile(path: string) {
+        this._fileManager.tryRemoveFile(path)
+        console.log(this._fileManager.getFileNames())
     }
 }

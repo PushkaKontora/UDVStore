@@ -11,6 +11,18 @@
         <div class="field">
             <input type="text"
                    [formControl]="inputControl">
+
+            <div class="file-label-container">
+                <div *ngFor="let file of _fileManager.getFileNames()" class="file-label">
+                    <a href="{{ file }}">
+                        {{ getFilename(file) }}
+                    </a>
+                    <img class="file-close"
+                         src="/assets/images-personal-area/cross-rounded.svg"
+                         (click)="removeFile(file)">
+                </div>
+            </div>
+
             <div class="send">
                 <button class="button" [disabled]="inputControl.invalid" (click)="onSubmit()">ОТПРАВИТЬ ЗАПРОС</button>
                 <div class="attachFile">

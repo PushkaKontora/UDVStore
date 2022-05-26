@@ -15,7 +15,9 @@
 
     <div class="file-label-container" *ngIf="data.files.length > 0">
         <div class="file-label" *ngFor="let file of data.files">
-            {{ getCutFilename(file.filename) }}
+            <a href="{{ file.filename }}">
+                {{ getCutFilename(file.filename) }}
+            </a>
         </div>
     </div>
 
