@@ -9,15 +9,6 @@ before_script:
   - apk add make
   - cat $DOT_ENV > $(pwd)/backend/src/config/.env
 
-build:
-  stage: build
-  script:
-    - make build
-  tags:
-    - job:build
-  only:
-    - master
-
 test:
   stage: test
   tags:
