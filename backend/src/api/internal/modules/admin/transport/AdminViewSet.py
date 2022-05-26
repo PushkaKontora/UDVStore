@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser
@@ -11,7 +12,7 @@ from api.internal.serializers import TransactionSerializer
 from api.internal.services.admin import get_requests_from_users, try_accrue
 from api.internal.services.admin.service import try_connect_transactions
 from api.internal.services.profile import get_profile_history
-from api.internal.services.user import get_profile
+from api.internal.services.user import get_profile, get_default_user_profile
 
 
 class AdminViewSet(viewsets.ViewSet):
@@ -20,7 +21,8 @@ class AdminViewSet(viewsets.ViewSet):
 
     @action(detail=True, methods=["get"], url_path="history", url_name="history")
     def history(self, request: Request, pk=None) -> Response:
-        profile = get_profile(pk)
+        user = User.objects.filter(id=pk).first()
+        profile = get_default_user_profile(user)
 
         if not profile:
             return Response(status=404)
