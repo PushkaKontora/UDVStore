@@ -8,7 +8,7 @@ import {PeopleService} from "../../../login/services/people.service";
 import {ITransaction} from "../../../../interfaces/transaction";
 import {map} from "rxjs";
 import {ITransactionFile} from "../../../../interfaces/transaction_file";
-import {FilemanagerService} from "../../services/filemanager.service";
+import {FilemanagerService} from "../../../services/filemanager.service";
 import {ModalWorker} from "../../services/modalworker.service";
 import {RequestComponent} from "./request-component/request.component";
 import {Router} from "@angular/router";
@@ -99,6 +99,13 @@ export class AdminRequestComponent implements OnInit {
         this._modals.closeModal('modal-discard')
     }
 
+    public deleteRequest() {
+        var idx = this.requests.findIndex(t => {
+            return JSON.stringify(t) === JSON.stringify(this.currentRequestComponent?.data)
+        })
+        this.requests.splice(idx, 1)
+    }
+
     public submitAccept() {
         if (this.currentRequestComponent) {
             var amount = this.acceptForm.controls["coins"].value
@@ -108,11 +115,8 @@ export class AdminRequestComponent implements OnInit {
                 .subscribe(() => {
                     console.log("Coins are accrued")
                     this.message = this.APPROVED_MESSAGE
-                    //window.location.reload()
-                    var idx = this.requests.findIndex(t => {
-                        return JSON.stringify(t) === JSON.stringify(this.currentRequestComponent?.data)
-                    })
-                    this.requests.splice(idx, 1)
+                    this.deleteRequest()
+                    this._messages.show("reg-message")
                     this.closeAcceptModal()
                 })
         }
@@ -127,11 +131,8 @@ export class AdminRequestComponent implements OnInit {
                 .subscribe(() => {
                     console.log("Coins are discarded")
                     this.message = this.DISCARDED_MESSAGE
-                    //window.location.reload()
-                    var idx = this.requests.findIndex(t => {
-                        return JSON.stringify(t) === JSON.stringify(this.currentRequestComponent?.data)
-                    })
-                    this.requests.splice(idx, 1)
+                    this._messages.show("reg-message")
+                    this.deleteRequest()
                     this.closeDiscardModal()
                 })
         }
