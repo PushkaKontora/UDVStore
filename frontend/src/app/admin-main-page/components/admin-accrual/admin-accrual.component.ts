@@ -22,7 +22,7 @@ const databaseMockData: UsersSearch[] = [];
 export class AdminAccrualComponent implements OnInit {
     public writePers: FormGroup = new FormGroup({});
     search$ = new Subject<string>();
-    readonly testValue = new FormControl();
+    public testValue = new FormControl();
     public foundUsers!: UsersSearch[];
     public events: IHistoryEvent[];
     public pers: IUser;
@@ -80,6 +80,7 @@ export class AdminAccrualComponent implements OnInit {
                 });
         this.search$.next('');
         this.makeUserArray();
+        this.testValue = new FormControl();
     }
 
     private createForm(): void {
@@ -126,7 +127,6 @@ export class AdminAccrualComponent implements OnInit {
         this.pers = user;
         this.click = !this.click;
         this.events = [];
-        console.log(user);
         this._historyService.getHistoryAdmin(user.id)
             .subscribe((transactions: ITransaction[]) => {
                 this.events = <IHistoryEvent[]>transactions
