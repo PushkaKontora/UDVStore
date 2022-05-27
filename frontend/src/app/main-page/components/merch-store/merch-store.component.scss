@@ -4,9 +4,10 @@ img {
     width: 100%;
 }
 
-.loading {
+.wrapper_load {
     background-color: #1F1F1F;
     height: 100vh;
+    width: 100%;
 }
 
 .wrapper {
@@ -63,6 +64,13 @@ img {
                         border-radius: 0.7em;
                         max-height: 1.4rem;
                         display: flex;
+                        transition: 1.9s easy;
+
+                        &:hover {
+                            background-color: #424040;
+                            color: #2CF2B3;
+                            transition: 1.9s easy;
+                        }
 
 
                         li {
@@ -264,15 +272,15 @@ img {
                 }
             }
 
-            &__checking{
+            &__checking {
                 justify-content: space-around;
                 text-align: center;
                 width: 23rem;
 
-                .text{
-                    font-family: 'Roboto Thin', serif ;
+                .text {
+                    font-family: 'Roboto Thin', serif;
                     font-weight: 540;
-                    color:#7B7B7B;
+                    color: #7B7B7B;
                     font-size: 1.4em;
                     padding-top: 0.4em;
                     padding-bottom: 1rem;
@@ -280,12 +288,13 @@ img {
             }
         }
 
-        .nav{
-            .btn{
+        .nav {
+            .btn {
                 margin-top: 0.5rem;
-                .button{
-                    &__grey{
-                        background-color:#E3E3E3;
+
+                .button {
+                    &__grey {
+                        background-color: #E3E3E3;
                     }
                 }
             }

@@ -22,6 +22,8 @@ export class StoreService {
     }
 
     public postSelectedProduct(amount: number, storage_cell: number) {
+        console.log(amount, storage_cell);
+
         return this._http.post<any>(this._urlApiCartPost, {
             "amount": amount,
             "storage_cell": storage_cell

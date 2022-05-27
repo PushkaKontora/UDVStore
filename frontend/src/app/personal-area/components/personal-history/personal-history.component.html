@@ -59,7 +59,7 @@
                                 {{(card | castType: 'IReceivedGift').comment}}
                             </div>
                         </div>
-                    <ul class="coins coins__green" *ngIf="(card | castType: 'IDeposit').price > 0">
+                    <ul class="coins coins__green" *ngIf="(card | castType: 'IDeposit').total > 0">
                         <li class="wrapper_num">
                             + {{(card | castType: 'IDeposit').price}}
                         </li>
@@ -69,9 +69,9 @@
                         </li>
                     </ul>
 
-                    <ul class="coins coins__black" *ngIf="(card | castType: 'IDeposit').price < 0">
+                    <ul class="coins coins__black" *ngIf="(card | castType: 'IDeposit').total < 0">
                         <li class="wrapper_num">
-                            - {{(card | castType: 'IDeposit').price | castTypeNumber}}
+                            - {{(card | castType: 'IDeposit').total | castTypeNumber}}
                         </li>
                         <li>
                             <img src="../../../../assets/images-main-page/blackCoins.svg"
