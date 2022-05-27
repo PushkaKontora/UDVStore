@@ -1,3 +1,4 @@
+<link rel="prefetch prerender " href="../../../../assets/images/loadingImage.svg">
 <div class="wrapper">
     <div class="banner">
         <img src="../../../../assets/images-main-page/banner.svg" alt="banner">
@@ -8,8 +9,8 @@
     <div class="allContentWrapper" *ngIf="loaded">
         <div class="content">
             <div class="wrapperGrid">
-                <div class="contentGrid" *ngFor="let item  of storeProducts">
-                    <div class="content_image"><img src="{{item?.photo }}" alt="product image"></div>
+                <div class="contentGrid" *ngFor="let item  of storeProducts" (click)="openModel('modal1', item)">
+                    <div class="content_image"><img src="{{item?.photo }}" alt="product image" loading="lazy"></div>
                     <div class="cardFilling">
                         <div class="text">{{item?.name | uppercase}}</div>
                         <div class="price">
@@ -131,7 +132,7 @@
                     <div class="mainTitle">
                         <div class="text">ОПЛАТА ПРОШЛА УСПЕШНО</div>
                         <button><img src="../../../../assets/images-main-page/cross.svg" class="crossImg" alt="cross"
-                                     (click)="closeModel('modal1')">
+                                     (click)="closeModel('modal2')">
                         </button>
                     </div>
                     <div class="contentModel contentModel__checking">
@@ -151,7 +152,7 @@
                         </div>
 
                         <div class="btn">
-                            <button (click) ="closeModel('modal2')" class="button button__grey">
+                            <button (click)="closeModel('modal2')" class="button button__grey">
                                 ВЕРНУТЬСЯ НА ГЛАВНУЮ
                             </button>
                         </div>

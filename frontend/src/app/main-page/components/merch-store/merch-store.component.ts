@@ -20,7 +20,7 @@ export class MerchStoreComponent implements OnInit {
     public user: IUser;
     public selectedProduct!: products;
 
-    private _cellsId: number = 0;
+    private _cellsId: number = 1;
 
 
     constructor(
@@ -53,7 +53,8 @@ export class MerchStoreComponent implements OnInit {
 
 
     public chooseProduct(product: products, amountProduct: number) {
-        this._storeService.postSelectedProduct(amountProduct, product.cells[this._cellsId].id)
+        console.log(product.cells);
+        this._storeService.postSelectedProduct(amountProduct, product.cells[this._cellsId - 1].id)
             .subscribe({
                 next:() => {
                     this._storeService.postBuyProduct();
@@ -84,6 +85,7 @@ export class MerchStoreComponent implements OnInit {
 
     public changeSize(node: any, sizeNumber: number) {
         this._cellsId = sizeNumber;
+        console.log(this._cellsId);
         let el = document.querySelectorAll('.selectedSize');
         el.forEach(function (i) {
             i.classList.remove('selectedSize');
@@ -94,9 +96,9 @@ export class MerchStoreComponent implements OnInit {
     }
 
     public onSubmit() {
+        this.chooseProduct(this.selectedProduct, this.amountMerch);
         this.closeModel('modal1');
         this.openModel('modal2', this.selectedProduct);
-        this.chooseProduct(this.selectedProduct, this.amountMerch);
     }
 
     public reduceAmount() {

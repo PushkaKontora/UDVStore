@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Iterable
 
 from django.db import IntegrityError, transaction
 from django.db.models import F
@@ -33,6 +33,16 @@ def try_transfer(source: Profile, destination: Profile, description: str, accrua
         return _get_transaction(source, destination, description, accrual)
     except IntegrityError:
         return None
+
+
+def try_gift(source: Profile, destinations: Iterable[Profile], description: str, accrual: int) -> List[Transaction]:
+    transactions = []
+    for destination in destinations:
+        transaction_ = try_transfer(source, destination, description, accrual)
+        if transaction_:
+            transactions.append(transaction_)
+
+    return transactions
 
 
 def _get_transaction(source: Profile, destination: Profile, description: str, accrual: int) -> Transaction:

@@ -8,7 +8,7 @@ from api.internal.models.store import Transaction, TransactionTypes
 
 
 def get_requests_from_users() -> QuerySet[Transaction]:
-    return Transaction.objects.filter(type=TransactionTypes.REQUEST, response=None).order_by("-created_at")
+    return Transaction.objects.filter(type=TransactionTypes.REQUEST, response=None).order_by("created_at")
 
 
 def try_accrue(transactions: List[Transaction]) -> bool:

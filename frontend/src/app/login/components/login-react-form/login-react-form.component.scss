@@ -11,14 +11,16 @@ $widthFieldForm: 392px;
 
     .left_leg {
         position: absolute;
-        height: 95%;
+        max-height: 95%;
+        max-width: 40%;
         left: 0;
         bottom: 0;
     }
 
     .right_leg {
         position: absolute;
-        height: 70%;
+        max-height: 70%;
+        max-width: 50%;
         right: 0;
         bottom: 0;
     }
@@ -76,18 +78,19 @@ $widthFieldForm: 392px;
                 }
 
                 .input {
-                    display: flex;
+                    display: grid;
                     text-align: center;
-                    align-items: start;
-                    justify-content: center;
+                    grid-template-columns: auto 5rem;
+
+                    &__password {
+                        grid-template-columns: auto;
+                    }
 
                     .done__email {
-                        width: 25%;
-                        display: inline-block;
                         background-color: #F2F2F2;
                         font-size: 1.2em;
                         font-weight: 300;
-                        line-height: 24px;
+                        line-height: 1.5em;
                         padding-top: 0.1em;
                         letter-spacing: 0.05em;
                     }
@@ -96,7 +99,7 @@ $widthFieldForm: 392px;
                 .form__input {
                     font-size: 1.2em;
                     font-weight: 300;
-                    line-height: 24px;
+                    line-height: 1.5em;
                     letter-spacing: 0.05em;
                     text-indent: 3px;
                     color: #1C1B1B;
