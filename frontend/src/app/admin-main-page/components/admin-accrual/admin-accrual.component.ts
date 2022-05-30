@@ -79,7 +79,7 @@ export class AdminAccrualComponent implements OnInit {
                     this.writePers.reset();
                 });
         this.search$.next('');
-        this.makeUserArray();
+        // this.makeUserArray();
         this.testValue = new FormControl();
     }
 

@@ -6,7 +6,7 @@ export interface IUser {
     last_name: string;
     patronymic: string;
     balance: number;
-    avatarUrl: string | null;
+    photo: string;
     is_staff: boolean
 }
 

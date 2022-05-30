@@ -13,7 +13,7 @@ export class PersonalAreaWrapperComponent implements OnInit {
 
     constructor(private _peopleService: PeopleService, private _router: Router) {
         this._peopleService.findUser.subscribe((res) => {
-            this.user = res
+            this.user = res;
         });
         _router.navigate(["/main-page/personal-area/orders"]);
     }
