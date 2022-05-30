@@ -46,6 +46,10 @@ export class MerchStoreComponent implements OnInit {
             });
     }
 
+    public handleClick(event: Event): void {
+        event.stopPropagation();
+    }
+
     public checkOrder(){
         this.closeModel('modal2');
         this._router.navigate(['main-page', 'personal-area', 'orders']);

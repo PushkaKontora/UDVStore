@@ -54,6 +54,11 @@ export class AdminAccrualComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    public handleClick(event: Event): void {
+        event.stopPropagation();
+    }
+
+
     public openModel() {
         document.getElementById('modal-1')!.style.display = 'block';
         document.body.style.overflow = "hidden";

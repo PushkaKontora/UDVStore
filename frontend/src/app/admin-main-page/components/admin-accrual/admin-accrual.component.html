@@ -66,8 +66,8 @@
         </div>
     </form>
     <div class="modal-wrapper" id="modal-1">
-        <div class="model">
-            <div class="modelBody">
+        <div class="model" (click)="closeModel()">
+            <div class="modelBody" (click)="handleClick($event)">
                 <button><img src="../../../../assets/images-admin/crossPopUp.svg" alt="cross" (click)="closeModel()">
                 </button>
                 <div class="text">UCoins НАЧИСЛЕНЫ!</div>

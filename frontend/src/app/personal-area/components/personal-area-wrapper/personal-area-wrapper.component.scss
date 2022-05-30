@@ -38,7 +38,7 @@
             height: 100%;
 
             &__account {
-                max-height: 41vh;
+                max-height: 40vh;
                 box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
             }
 
@@ -63,12 +63,15 @@
                 .figure img {
                     margin: 0 auto;
                     display: block;
-                    height: 3rem;
-                    width: 3rem;
+                    height: 5rem;
+                    width: 5rem;
+                    border-radius: 50%;
+                    object-fit: cover;
                 }
 
                 .nav {
                     margin-top: 1.4rem;
+                    padding-bottom: 1rem;
                     display: flex;
                     flex-direction: column;
                     justify-content:  space-around;
@@ -81,9 +84,9 @@
                         background-color: #F7F7F7;
                         color: #797979;
                         margin: 0.1em auto;
-                        font-size: 1.1rem;
-                        line-height: 1.2rem;
-                        padding: 0.4rem 0;
+                        font-size: 1rem;
+                        line-height: 1.1rem;
+                        padding: 0.3rem 0;
                         font-weight: 500;
                     }
 

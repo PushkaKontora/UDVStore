@@ -32,7 +32,14 @@ img {
             max-width: 63%;
 
             .contentGrid {
+                &:hover {
+                    box-shadow:  3px 3px 20px #27D89F;
+                    transform: scale(1.04);
+                    transition: 1.9s easy;
+                }
+
                 box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.75);
+                transition: 1.9s easy;
 
                 .content_image {
                     border-radius: 2px 2px 0px 0px;
@@ -65,13 +72,6 @@ img {
                         max-height: 1.4rem;
                         display: flex;
                         transition: 1.9s easy;
-
-                        &:hover {
-                            background-color: #424040;
-                            color: #2CF2B3;
-                            transition: 1.9s easy;
-                        }
-
 
                         li {
                             display: inline-block;

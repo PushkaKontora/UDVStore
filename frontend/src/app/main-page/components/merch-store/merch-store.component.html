@@ -32,8 +32,8 @@
         </div>
 
         <div class="modal-wrapper" id="modal1">
-            <div class="model">
-                <div class="modelBody">
+            <div class="model" (click)="closeModel('modal1')">
+                <div class="modelBody" (click)="handleClick($event)">
                     <div class="mainTitle">
                         <div class="text">КУПИТЬ В ОДИН КЛИК</div>
                         <button><img src="../../../../assets/images-main-page/cross.svg" class="crossImg" alt="cross"
@@ -127,8 +127,8 @@
         </div>
 
         <div class="modal-wrapper" id="modal2">
-            <div class="model">
-                <div class="modelBody">
+            <div class="model" (click)="closeModel('modal2')">
+                <div class="modelBody" (click)="handleClick($event)">
                     <div class="mainTitle">
                         <div class="text">ОПЛАТА ПРОШЛА УСПЕШНО</div>
                         <button><img src="../../../../assets/images-main-page/cross.svg" class="crossImg" alt="cross"
