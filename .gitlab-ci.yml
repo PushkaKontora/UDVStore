@@ -1,0 +1,26 @@
+image: docker/compose:alpine-1.28.0
+
+stages:
+  - build
+  - test
+  - deploy
+
+before_script:
+  - apk add make
+  - cat $DOT_ENV > $(pwd)/backend/src/config/.env
+
+test:
+  stage: test
+  tags:
+    - job:test
+  script: make test
+  only:
+    - master
+
+deploy:
+  stage: deploy
+  tags:
+    - job:deploy
+  script: make restart
+  only:
+    - master
