@@ -41,7 +41,6 @@ export class MainPageWrapperComponent implements OnInit {
             .subscribe((users: UsersSearch[]) => {
                 this._searchStringService.foundUsers = users;
                 this.foundUsers = users;
-                console.log(this.foundUsers);
             }, () => {
                 console.log('Something went wrong - getProfiles');
             }, () => {
