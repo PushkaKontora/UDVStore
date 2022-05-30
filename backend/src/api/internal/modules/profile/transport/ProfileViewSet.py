@@ -23,7 +23,7 @@ class ProfileViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     def list(self, request: Request) -> Response:
         profiles = get_profiles_without(request.user)
 
-        serializer = ProfileSerializer(profiles, many=True)
+        serializer = ProfileSerializer(profiles, many=True, context={"request": request})
 
         return Response(data=serializer.data)
 
