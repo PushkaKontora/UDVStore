@@ -26,9 +26,12 @@ class GiftViewSet(ViewSet):
 
         destinations = get_destinations(source.id, data["destination"])
         description = data["description"]
-        accrual = data["accrual"]
+        accrual = int(data["accrual"])
 
         transactions = try_gift(source, destinations, description, accrual)
 
-        return Response(data=TransactionSerializer(transactions, many=True, context={"request": request}).data)
-
+        return (
+            Response(data=TransactionSerializer(transactions, many=True, context={"request": request}).data)
+            if len(transactions) == len(data["destination"])
+            else Response(status=400)
+        )
