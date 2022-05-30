@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Optional, Union, Iterable
 
 from django.contrib.auth.models import User
 from django.db.models import Q, QuerySet
@@ -20,3 +20,7 @@ def get_profiles() -> QuerySet[Profile]:
 
 def get_profiles_without(user: User) -> QuerySet[Profile]:
     return get_profiles().filter(~Q(user=user))
+
+
+def get_destinations(source_id: int, ids: Iterable[int]) -> QuerySet[Profile]:
+    return get_profiles().filter(Q(id__in=ids) & ~Q(id=source_id))

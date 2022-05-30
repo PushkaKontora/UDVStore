@@ -5,8 +5,8 @@ from rest_framework.viewsets import ViewSet
 
 from api.internal.modules.gift.serializers import GiftSerializer
 from api.internal.serializers import TransactionSerializer
-from api.internal.services.gift import try_transfer
-from api.internal.services.user import get_default_user_profile, get_profile
+from api.internal.services.gift import try_transfer, try_gift
+from api.internal.services.user import get_default_user_profile, get_profile, get_destinations
 
 
 class GiftViewSet(ViewSet):
@@ -24,14 +24,14 @@ class GiftViewSet(ViewSet):
         serializer = GiftSerializer(data=data)
         serializer.is_valid(raise_exception=True)
 
-        destination = get_profile(serializer.data["destination"])
-        description = serializer.data["description"]
-        accrual = serializer.data["accrual"]
+        destinations = get_destinations(source.id, data["destination"])
+        description = data["description"]
+        accrual = data["accrual"]
 
-        transaction = try_transfer(source, destination, description, accrual)
+        transactions = try_gift(source, destinations, description, accrual)
 
         return (
-            Response(data=TransactionSerializer(transaction, context={"request": request}).data)
-            if transaction
-            else Response(status=400)
+            Response(data=TransactionSerializer(transactions, many=True, context={"request": request}).data)
+            if len(transactions) == len(data["destination"])
+            else Response(status=500)
         )
