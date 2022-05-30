@@ -50,7 +50,7 @@ export class MerchStoreComponent implements OnInit {
         event.stopPropagation();
     }
 
-    public checkOrder(){
+    public checkOrder() {
         this.closeModel('modal2');
         this._router.navigate(['main-page', 'personal-area', 'orders']);
     }
@@ -60,10 +60,10 @@ export class MerchStoreComponent implements OnInit {
         console.log(product.cells);
         this._storeService.postSelectedProduct(amountProduct, product.cells[this._cellsId - 1].id)
             .subscribe({
-                next:() => {
+                next: () => {
                     this._storeService.postBuyProduct();
                 },
-                complete: () =>  this._peopleService.getUserProduct()
+                complete: () => this._peopleService.getUserProduct()
             });
         this._peopleService.getUserProduct();
         this._peopleService.findUser.subscribe((res) => {
@@ -89,7 +89,6 @@ export class MerchStoreComponent implements OnInit {
 
     public changeSize(node: any, sizeNumber: number) {
         this._cellsId = sizeNumber;
-        console.log(this._cellsId);
         let el = document.querySelectorAll('.selectedSize');
         el.forEach(function (i) {
             i.classList.remove('selectedSize');
@@ -100,6 +99,9 @@ export class MerchStoreComponent implements OnInit {
     }
 
     public onSubmit() {
+        this._cellsId = 1;
+        this.amountMerch = 1;
+        this.priceMerchValue= 0;
         this.chooseProduct(this.selectedProduct, this.amountMerch);
         this.closeModel('modal1');
         this.openModel('modal2', this.selectedProduct);

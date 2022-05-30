@@ -84,6 +84,7 @@ export class MainPageWrapperComponent implements OnInit {
         for (let user of this.writePers.value.employee) {
             arrayId.push(user.id);
         }
+        console.log(this.writePers.value.comment)
         this._searchStringService.postUserAccrualCoins(arrayId, this.writePers.value.coins, this.writePers.value.comment)
             .subscribe(
                 () => {

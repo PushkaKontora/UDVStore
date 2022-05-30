@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import { Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {delay, EMPTY, filter, first, Observable, of, retry, startWith, Subject, switchMap, takeUntil} from "rxjs";
 import {IUser, UsersSearch} from "../../../../interfaces/interfaces";
@@ -52,6 +52,10 @@ export class AdminAccrualComponent implements OnInit {
     }
 
     ngOnInit(): void {
+    }
+
+    public toTop(){
+
     }
 
     public handleClick(event: Event): void {
