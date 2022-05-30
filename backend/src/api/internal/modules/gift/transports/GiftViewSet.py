@@ -30,8 +30,5 @@ class GiftViewSet(ViewSet):
 
         transactions = try_gift(source, destinations, description, accrual)
 
-        return (
-            Response(data=TransactionSerializer(transactions, many=True, context={"request": request}).data)
-            if len(transactions) == len(data["destination"])
-            else Response(status=500)
-        )
+        return Response(data=TransactionSerializer(transactions, many=True, context={"request": request}).data)
+
