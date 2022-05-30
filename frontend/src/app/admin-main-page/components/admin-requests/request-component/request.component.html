@@ -15,7 +15,8 @@
 
     <div class="file-label-container" *ngIf="data.files.length > 0">
         <div class="file-label" *ngFor="let file of data.files">
-            <a href="{{ file.filename }}">
+            <a target="_blank" rel="noopener noreferrer"
+                    href="{{ file.filename }}">
                 {{ getCutFilename(file.filename) }}
             </a>
         </div>

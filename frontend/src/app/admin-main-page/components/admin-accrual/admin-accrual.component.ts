@@ -64,6 +64,7 @@ export class AdminAccrualComponent implements OnInit {
 
 
     public openModel() {
+        console.log("modal-1 was opened");
         document.getElementById('modal-1')!.style.display = 'block';
         document.body.style.overflow = "hidden";
         document.body.classList.add('modalOpen');
