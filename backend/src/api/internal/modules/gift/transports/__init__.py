@@ -1,1 +1,0 @@
-from .GiftViewSet import GiftViewSet
