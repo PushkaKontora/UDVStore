@@ -1,7 +1,8 @@
 <div class="wrapper-router" xmlns="http://www.w3.org/1999/html">
     <div class="wrapper">
         <div class="header">
-            <a href="#" routerLink="./merch"><img src="../../../../assets/images/logoUDVstore.svg" alt="logo UDVstor" class="logo"></a>
+            <a href="#" routerLink="./merch"><img src="../../../../assets/images/logoUDVstore.svg" alt="logo UDVstor"
+                                                  class="logo"></a>
             <nav class="header_nav">
                 <nav class="header_nav-page">
                     <ul class="menu_top_page">
@@ -24,9 +25,16 @@
                                 src="../../../../assets/images-main-page/gift.svg"
                                 alt="gift"></button>
                         </li>
-                        <li><a href="#" class="li_account" routerLink="./personal-area"><img
-                            src="../../../../assets/images-main-page/account.svg"
-                            alt="account - octopus"></a></li>
+                        <li>
+                            <a href="#" class="li_account" routerLink="./personal-area"><img
+                                src="../../../../assets/images-main-page/account.svg"
+                                alt="account - octopus"></a>
+                        </li>
+                        <li>
+                            <a href="/" class="li_account"><img
+                                src="../../../../assets/images-main-page/exit-white.svg"
+                                alt="exit"></a>
+                        </li>
                         <li>
                             <ul>
                                 <li class="wrapper_num">
@@ -44,8 +52,8 @@
         </div>
     </div>
     <div class="modal-wrapper" id="modal-1">
-        <div class="model">
-            <div class="modelBody">
+        <div class="model" (click)="closeModel('modal-1')">
+            <div class="modelBody" (click)="handleClick($event)">
                 <div class="mainTitle">
                     <div class="text">СДЕЛАТЬ ПОДАРОК</div>
                     <button><img src="../../../../assets/images-main-page/cross.svg" class="crossImg" alt="cross"
@@ -56,11 +64,6 @@
                       (ngSubmit)="onSubmit()">
                     <div class="value">
                         <div class="title">КОМУ</div>
-<!--                        <div class="content">-->
-<!--                            <select [(ngModel)]="selectedUser" (ngModelChange)="onChange($event)" placeholder="Количество койнов ">-->
-<!--                                <option *ngFor="let user of foundUsers" [ngValue]="user"> {{user.first_name}} </option>-->
-<!--                            </select>-->
-<!--                        </div> в случае передлки можно использовать вместо туи-->
                         <div class="content">
                             <tui-multi-select
                                 *tuiLet="items$ | async as items"
@@ -124,8 +127,8 @@
         <div class="modelBackground"></div>
     </div>
     <div class="modal-wrapper" id="modal-2">
-        <div class="model">
-            <div class="modelBody modelBody__giftImg">
+        <div class="model" (click)="closeModel('modal-2')">
+            <div class="modelBody modelBody__giftImg" (click)="handleClick($event)">
                 <div class="elementModel elementModel__crossImg">
                     <button>
                         <img src="../../../../assets/images-main-page/cross.svg" class="crossImg" alt="cross"

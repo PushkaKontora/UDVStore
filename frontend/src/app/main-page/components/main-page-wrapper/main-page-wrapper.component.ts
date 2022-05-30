@@ -19,7 +19,7 @@ import {MerchStoreComponent} from "../merch-store/merch-store.component";
 export class MainPageWrapperComponent implements OnInit {
     public writePers: FormGroup = new FormGroup({})
     public user?: IUser;
-    public selectedUser: string = 'abj';
+    public selectedUser: string = '';
     public foundUsers!: UsersSearch[];
 
     public value = null;
@@ -56,6 +56,10 @@ export class MainPageWrapperComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    public handleClick(event: Event): void {
+        event.stopPropagation();
+    }
+
     public createGift(): void {
         this._router.navigate(['./merch/present'], {relativeTo: this._route})
     }
@@ -76,14 +80,15 @@ export class MainPageWrapperComponent implements OnInit {
 
     public onSubmit() {
         this.writePers.patchValue({employee: this.testValue.value});
-        this._searchStringService.postUserAccrualCoins(this.testValue.value[0].id, this.writePers.value.coins, this.writePers.value.comment)
+        let arrayId = [];
+        for (let user of this.writePers.value.employee) {
+            arrayId.push(user.id);
+        }
+        console.log(this.writePers.value.comment)
+        this._searchStringService.postUserAccrualCoins(arrayId, this.writePers.value.coins, this.writePers.value.comment)
             .subscribe(
                 () => {
                     this.writePers.reset();
-                },
-                () => {
-                },
-                () => {
                 }
             );
         this.search$.next('');

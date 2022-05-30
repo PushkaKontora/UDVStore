@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import { Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {delay, EMPTY, filter, first, Observable, of, retry, startWith, Subject, switchMap, takeUntil} from "rxjs";
 import {IUser, UsersSearch} from "../../../../interfaces/interfaces";
@@ -54,6 +54,15 @@ export class AdminAccrualComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    public toTop(){
+
+    }
+
+    public handleClick(event: Event): void {
+        event.stopPropagation();
+    }
+
+
     public openModel() {
         console.log("modal-1 was opened");
         document.getElementById('modal-1')!.style.display = 'block';
@@ -80,7 +89,7 @@ export class AdminAccrualComponent implements OnInit {
                     this.writePers.reset();
                 });
         this.search$.next('');
-        this.makeUserArray();
+        // this.makeUserArray();
         this.testValue = new FormControl();
     }
 

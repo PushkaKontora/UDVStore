@@ -39,8 +39,8 @@
                 </div>
                 <div class="valueGrid valueGrid__amount">{{transaction.order.amount}}</div>
                 <div class="valueGrid valueGrid__name">
-                    <div class="stroke stroke__patronymic">{{transaction.order.profile.patronymic}}</div>
-                    <div class="stroke">{{transaction.order.profile.first_name}} {{transaction.order.profile.last_name}}</div>
+                    <div class="stroke stroke__patronymic">{{transaction.order.profile.last_name}}</div>
+                    <div class="stroke">{{transaction.order.profile.first_name}} {{transaction.order.profile.patronymic}}</div>
                 </div>
                 <div class="valueGrid valueGrid__data">
                     <div class="data">{{transaction.created_at | date : 'dd.MM.yyyy'}}</div>

@@ -56,6 +56,10 @@ export class AdminRequestComponent implements OnInit {
         console.log("message = " + this.message)
     }
 
+    public handleClick(event: Event): void {
+        event.stopPropagation();
+    }
+
     createAcceptForm() {
         const coins = new FormControl(1, [
             Validators.required, Validators.min(1)

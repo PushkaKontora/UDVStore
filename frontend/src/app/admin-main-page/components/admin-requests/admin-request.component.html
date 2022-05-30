@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" (click)="closeMessage()">
     <div class="req-holder" *ngIf="requests">
 
         <div class="contentWrapper">
@@ -12,8 +12,8 @@
     </div>
 
     <div class="modal-wrapper" id="modal-accept">
-        <div class="model">
-            <div class="modelBody">
+        <div class="model" (click)="closeAcceptModal()">
+            <div class="modelBody" (click)="handleClick($event)">
 
                 <h1>НАЧИСЛЕНИЕ ПО ЗАПРОСУ</h1>
                 <img class="modal-close"
@@ -54,8 +54,8 @@
 
 
     <div class="modal-wrapper" id="modal-discard">
-        <div class="model">
-            <div class="modelBody">
+        <div class="model" (click)="closeDiscardModal()">
+            <div class="modelBody" (click)="handleClick($event)">
 
                 <h1>НАПИШИТЕ ПРИЧИНУ ОТКЛОНЕНИЯ</h1>
                 <img class="modal-close"
@@ -82,7 +82,7 @@
         <div class="modelBackground"></div>
     </div>
 
-    <div class="message" id="reg-message">
+    <div class="message" id="reg-message" (click)="handleClick($event)">
         <img class="modal-close"
              src="/assets/images/cross-non-rounded.svg"
              (click)="closeMessage()">

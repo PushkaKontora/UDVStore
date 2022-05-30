@@ -6,11 +6,11 @@
     <div class="grid">
         <div class="value_grid__account value_grid">
             <div class="content_item">
-                <div class="figure" *ngIf="user?.avatarUrl !== null">
-                    <img src="{{user?.avatarUrl}}" alt="avatar">
+                <div class="figure" *ngIf="user?.photo !== null">
+                    <img src="{{user?.photo}}" alt="avatar">
                     <!--                <img class="imageCompanyItem" src="{{companyItem.logo}}" alt="rr"> будет так -->
                 </div>
-                <div class="figure" *ngIf="user?.avatarUrl === null">
+                <div class="figure" *ngIf="!user?.photo === null">
                     <img src="../../../../assets/images-main-page/account.svg" alt="avatar">
                     <!--                <img class="imageCompanyItem" src="{{companyItem.logo}}" alt="rr"> будет так -->
                 </div>

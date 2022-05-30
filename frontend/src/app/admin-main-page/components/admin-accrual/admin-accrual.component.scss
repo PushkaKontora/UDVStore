@@ -1,9 +1,17 @@
 @import "../../../../usedCSS/fieldFindUser";
 @import '../../../../../node_modules/@taiga-ui/core/styles/taiga-ui-local';
 @import "../../../../usedCSS/model-popUp";
+@import "../../../../usedCSS/historyPerson";
+
 
 .wrapper {
     margin: 2rem;
+    height: calc(100vh - 4rem - 5rem);
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
 }
 
 .template {
@@ -73,6 +81,8 @@
                 background-color: #1C1B1B;
                 border-radius: 50%;
                 width: 2rem;
+                height: 2rem;
+                object-fit: cover;
             }
         }
 
@@ -99,176 +109,25 @@
 .historyCards {
     background-color: #F4F4F4;
     padding: 0.8rem 1.5rem;
-
-    .wrapperHistory {
-        height: 100%;
-        font-family: "Roboto Thin", Arial, sans-serif;
-
-        .contentWrapper {
-            height: 100%;
-            overflow: auto;
-            width: 100%;
-
-            .ordr {
-                padding: 0.9rem;
-                padding-top: 0.2rem;
-                background: #FFFFFF;
-                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-                border-radius: 2px;
-                display: flex;
-                margin: 0 auto 0.55rem auto;
-                width: 100%;
-
-                .img {
-                    img {
-                        width: 5.5rem;
-                    }
-                }
-
-                .content {
-                    display: block;
-
-                    .topLine {
-                        padding-left: 0.5em;
-                        display: flex;
-                        justify-content: space-between;
-                        width: 140%;
-
-                        .valueTopLine {
-                            display: block;
-
-                            &__name {
-                                padding: 0.5em 0;
-                                color: #1C1B1B;
-                                font-weight: 700;
-                            }
-
-                            &__rightValue {
-                                display: flex;
-
-                                .status {
-                                    border: 1px solid #302E2E;
-                                    border-radius: 1em;
-                                    margin-right: 0.8em;
-                                    font-family: 'Kapra Neue Pro', Arial, sans-serif;
-
-                                    &__green {
-                                        color: #00D18F;
-                                        border-color: #00D18F;
-                                    }
-
-                                    &__black {
-                                        color: #302E2E;
-                                    }
-
-                                    .statusText {
-                                        padding: 0.45em 0.8em;
-                                    }
-
-                                }
-
-                                .data {
-                                    padding-top: 0.5em;
-                                    padding-right: 0.5em;
-                                    color: #727272;
-                                    font-weight: 600;
-                                    font-family: 'Kapra Neue Pro', Arial, sans-serif;
-                                }
-                            }
-                        }
-                    }
-
-                    .additionalInformation {
-                        float: left;
-                        width: 140%;
-                        color: #1C1B1B;
-                        font-size: 0.8em;
-                        margin-left: 0.5rem;
-
-                        .valueAdditional {
-                            margin-bottom: 0.5em;
-
-                            .borderElement {
-                                text-decoration-line: underline;
-                            }
-                        }
-                    }
-
-
-                    .coinsWrapper {
-                        width: 140%;
-                        padding-right: 0.5em;
-                        margin-top: 1.55rem;
-                        display: flex;
-                        align-items: flex-end;
-                        justify-content: space-between;
-                        font-family: 'Kapra Neue Pro', Arial, sans-serif;
-
-                        .descriptionComment {
-                            .comment {
-                                min-width: 20rem;
-                                color: #727272;
-                                font-size: 1em;
-                                float: bottom;
-                                margin-top: auto;
-                                margin-left: 0.5rem;
-                                font-weight: 500;
-                            }
-                        }
-
-                        .coins {
-                            align-items: center;
-                            padding: 0.85em 0.2em 0.85em 0.6em;
-                            border-radius: 0.9em;
-                            max-height: 1.6rem;
-                            display: flex;
-
-                            &__green {
-                                background-color: #2CF2B3;
-                                color: #252424;
-                            }
-
-                            &__black {
-                                background-color: #302E2E;
-                                color: #2CF2B3;
-                            }
-
-                            li {
-                                display: inline-block;
-                                margin: 0;
-                                padding: 0;
-                                vertical-align: middle;
-
-                                img {
-                                    max-height: 1.4rem;
-                                }
-                            }
-
-                            li.wrapper_num {
-                                font-size: 1.2em;
-                                line-height: 1.2em;
-                                padding-right: 0.03em;
-                                font-weight: 650;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        .contentWrapper::-webkit-scrollbar {
-            width: 0;
-        }
-    }
-}
-
-.wrapperCard {
-    height: 43vh;
+    max-height: calc(7.3rem * 3);
     overflow: auto;
 
     &::-webkit-scrollbar {
-        width: 0;
+        width: 0.6rem;
     }
+
+    &::-webkit-scrollbar-thumb {
+       background-color: #C4C4C4;
+        border-radius: 2.5rem;
+    }
+
+    .contentWrapper{
+        font-family: "Roboto Thin", Arial, sans-serif;
+        &::-webkit-scrollbar {
+            width: 0;
+        }
+    }
+
 }
 
 .buttonClick{

@@ -41,7 +41,7 @@ export class SearchStringService {
         });
     }
 
-    public postUserAccrualCoins(to_profile_id: number, price: number, comment: string) {
+    public postUserAccrualCoins(to_profile_id: number[], price: number, comment: string) {
         return this.postAccrualCoins(this._urlUserPostAccrual,
             {
                 "destination": to_profile_id,
