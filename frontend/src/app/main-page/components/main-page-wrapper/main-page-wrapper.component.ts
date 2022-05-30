@@ -19,7 +19,7 @@ import {MerchStoreComponent} from "../merch-store/merch-store.component";
 export class MainPageWrapperComponent implements OnInit {
     public writePers: FormGroup = new FormGroup({})
     public user?: IUser;
-    public selectedUser: string = 'abj';
+    public selectedUser: string = '';
     public foundUsers!: UsersSearch[];
 
     public value = null;
@@ -41,6 +41,7 @@ export class MainPageWrapperComponent implements OnInit {
             .subscribe((users: UsersSearch[]) => {
                 this._searchStringService.foundUsers = users;
                 this.foundUsers = users;
+                console.log(this.foundUsers);
             }, () => {
                 console.log('Something went wrong - getProfiles');
             }, () => {
