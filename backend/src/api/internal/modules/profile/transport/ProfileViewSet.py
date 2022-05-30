@@ -34,7 +34,7 @@ class ProfileViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
         if not profile:
             return Response(status=404)
 
-        ser = ProfileSerializer(profile)
+        ser = ProfileSerializer(profile, context={"request": request})
         return Response(ser.data)
 
     @action(detail=False, methods=["get"])
