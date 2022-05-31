@@ -57,7 +57,6 @@ export class MerchStoreComponent implements OnInit {
 
 
     public chooseProduct(product: products, amountProduct: number) {
-        console.log(product.cells);
         this._storeService.postSelectedProduct(amountProduct, product.cells[this._cellsId - 1].id)
             .subscribe({
                 next: () => {
@@ -80,8 +79,6 @@ export class MerchStoreComponent implements OnInit {
     }
 
     public closeModel(nameModel: string) {
-        this.amountMerch = 1;
-        this._cellsId = 0;
         document.getElementById(nameModel)!.style.display = 'none';
         document.body.style.overflow = "visible";
         document.body.classList.remove('modalOpen');
@@ -99,12 +96,12 @@ export class MerchStoreComponent implements OnInit {
     }
 
     public onSubmit() {
-        this._cellsId = 1;
-        this.amountMerch = 1;
-        this.priceMerchValue= 0;
         this.chooseProduct(this.selectedProduct, this.amountMerch);
         this.closeModel('modal1');
         this.openModel('modal2', this.selectedProduct);
+        this._cellsId = 1;
+        this.amountMerch = 1;
+        this.priceMerchValue= 0;
     }
 
     public reduceAmount() {

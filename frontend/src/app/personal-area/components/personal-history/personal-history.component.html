@@ -92,6 +92,17 @@
                                 </li>
                             </ul>
                         </div>
+                        <div class="coinsWrapper" *ngIf="card.type === 'IDeposit'">
+                            <ul class="coins coins__green">
+                                <li class="wrapper_num">
+                                    + {{(card | castType: 'IDeposit').price}}
+                                </li>
+                                <li>
+                                    <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
+                                         alt="greenBlockCoins">
+                                </li>
+                            </ul>
+                        </div>
                         <div class="coinsWrapper" *ngIf="card.type === 'IBoughtProduct'">
                             <ul class="coins coins__black">
                                 <li class="wrapper_num">

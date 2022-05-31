@@ -15,6 +15,7 @@ import {CookieService} from "ngx-cookie-service";
 export class LoginReactFormComponent implements OnInit {
     public login: FormGroup = new FormGroup({});
     public activeUser?: Subscription;
+    public warning: boolean = false;
 
     @ViewChild('btn')
     btn!: ElementRef;
@@ -41,41 +42,51 @@ export class LoginReactFormComponent implements OnInit {
         this.login = new FormGroup({
             email: new FormControl('', [Validators.required]),
             password: new FormControl('', [Validators.required]),
-        })
+        });
+    }
+
+    public changeForm(newValue: any) {
+        this.warning = false;
     }
 
     public onSubmit() {
         const loginEmail = this.login.value.email + "@ussc.ru";
         this._peopleService.postToken(loginEmail, this.login.value.password)
             .subscribe(
-                (res: any) => {
-                    this._peopleService.token = res?.auth_token;
-                    localStorage.setItem('token', this._peopleService.token);
-                    this._peopleService.optionsForHttp = {
-                        headers: new HttpHeaders({
-                            'Content-Type': 'application/json',
-                            'Authorization': "Token " + localStorage.getItem('token'),
-                        })
-                    }
-                    this._peopleService.getUserHttp()
-                        .subscribe(
-                            (user: IUser) => {
-                                if (user) {
-                                    if (!user.is_staff) {
-                                        this._peopleService.findUser.next(user);
-                                        this._router.navigate(['main-page', 'merch']);
-                                    } else if (user.is_staff) {
-                                        this._peopleService.findUser.next(user);
-                                        this._router.navigate(["admin", "accrual"]);
+                {
+                    next: (res: any) => {
+                        this._peopleService.token = res?.auth_token;
+                        localStorage.setItem('token', this._peopleService.token);
+                        this._peopleService.optionsForHttp = {
+                            headers: new HttpHeaders({
+                                'Content-Type': 'application/json',
+                                'Authorization': "Token " + localStorage.getItem('token'),
+                            })
+                        }
+                        this._peopleService.getUserHttp()
+                            .subscribe(
+                                (user: IUser) => {
+                                    if (user) {
+                                        if (!user.is_staff) {
+                                            this._peopleService.findUser.next(user);
+                                            this._router.navigate(['main-page', 'merch']);
+                                        } else if (user.is_staff) {
+                                            this._peopleService.findUser.next(user);
+                                            this._router.navigate(["admin", "accrual"]);
+                                        }
+                                    } else {
+                                        alert('user not found');
                                     }
-                                } else {
-                                    alert('user not found');
-                                }
 
-                            }, () => {
-                                alert('Something went wrong');
-                            });
-                    this.login.reset();
+                                }, () => {
+                                    alert('Something went wrong');
+                                });
+                        this.login.reset();
+                    },
+
+                    error: () => {
+                        this.warning = true;
+                    }
                 });
         // this.activeUser = this._peopleService.getUser(loginEmail, this.login.value.password, this.login);
     }

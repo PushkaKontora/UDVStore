@@ -21,6 +21,13 @@ img {
     width: 100%;
 }
 
+.helper-text{
+    font-size: 0.9rem;
+    color: #BA3434;
+    letter-spacing: 0.05em;
+    padding-top: 0.4rem;
+}
+
 .wrapper {
     background-color: #1C1B1B;
     height: 4.7rem;
@@ -190,7 +197,7 @@ img {
             }
 
             .explanatoryText{
-                font-family: "Roboto Thin", Arial, sans-serif ;
+                font-family: "Roboto Medium", sans-serif;
                 font-weight: 600;
                 margin-top: 1em;
                 font-size: 1.8em;

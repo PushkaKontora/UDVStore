@@ -22,6 +22,9 @@ export class MainPageWrapperComponent implements OnInit {
     public selectedUser: string = '';
     public foundUsers!: UsersSearch[];
 
+    public userExist: boolean = false;
+    public disabled: boolean = false;
+
     public value = null;
     public search$ = new Subject<string>();
     readonly testValue = new FormControl();
@@ -45,7 +48,8 @@ export class MainPageWrapperComponent implements OnInit {
                 console.log('Something went wrong - getProfiles');
             }, () => {
                 this._peopleService.findUser.subscribe((res) => {
-                    this.user = res
+                    this.user = res;
+                    this.userExist = true;
                 });
                 this.makeUserArray();
             });
@@ -78,13 +82,24 @@ export class MainPageWrapperComponent implements OnInit {
         // this.user = this._peopleService.findUser;
     }
 
+    public changeForm(event: any) {
+        if(this.user?.balance) {
+            if (this.testValue?.value?.length * Number(this.writePers?.value?.coins) > this.user?.balance) {
+                this.userExist = true;
+            } else {
+                this.userExist = false;
+            }
+        } else {
+            this.userExist = false;
+        }
+    }
+
     public onSubmit() {
         this.writePers.patchValue({employee: this.testValue.value});
         let arrayId = [];
         for (let user of this.writePers.value.employee) {
             arrayId.push(user.id);
         }
-        console.log(this.writePers.value.comment)
         this._searchStringService.postUserAccrualCoins(arrayId, this.writePers.value.coins, this.writePers.value.comment)
             .subscribe(
                 () => {
