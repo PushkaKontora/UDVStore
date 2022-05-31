@@ -2,60 +2,67 @@
     <div class="titleText">ЗАКАЗЫ</div>
     <div class="contentWrapper">
         <div *ngFor="let transaction of transactions" class="ordr">
-            <div class="img"><img src="{{transaction.order.product.photo}}" alt="product photo"></div>
+            <div class="img"><img src="{{transaction.order.product.photo}}" alt="card photo"></div>
             <div class="content">
-                <div class="topLine">
-                    <div class="valueTopLine valueTopLine__name">{{transaction.order.product.name}}</div>
-                    <div class="valueTopLine valueTopLine__rightValue">
-                        <div class="status status__green" *ngIf="transaction.order.status === 1">
-                            <div class="statusText">в обработке</div>
+                <div class="valueContent valueContent__leftSide">
+                    <div class="valueTextInformation valueTextInformation__title">
+                        {{transaction.order.product.name}}
+                    </div>
+
+                    <div class="valueTextInformation valueTextInformation__IBought">
+                        <div class="size" *ngIf="transaction.order.product.size !== 0">
+                            <div *ngIf="transaction.order.product.size === 1">
+                                Размер: <span class="borderElement">XS</span>
+                            </div>
+                            <div *ngIf="transaction.order.product.size === 2">
+                                Размер: <span class="borderElement">S</span>
+                            </div>
+                            <div *ngIf="transaction.order.product.size === 3">
+                                Размер: <span class="borderElement">M</span>
+                            </div>
+                            <div *ngIf="transaction.order.product.size === 4">
+                                Размер: <span class="borderElement">L</span>
+                            </div>
+                            <div *ngIf="transaction.order.product.size === 5">
+                                Размер: <span class="borderElement">XL</span>
+                            </div>
+                            <div *ngIf="transaction.order.product.size === 6">
+                                Размер: <span class="borderElement">XXL</span>
+                            </div>
+                            <div *ngIf="transaction.order.product.size === 7">
+                                Размер: <span class="borderElement">XXXL</span>
+                            </div>
                         </div>
-                        <div class="status status__black" *ngIf="transaction.order.status === 2">
-                            <div class="statusText">выдано</div>
+                        <div class="amount">
+                            Количество: <span class="borderElement">{{transaction.order.amount}}</span>
                         </div>
-                        <div class="data">{{transaction.created_at | date : 'dd.MM.yyyy'}}</div>
                     </div>
                 </div>
-
-                <div class="additionalInformation">
-                    <div class="valueAdditional valueAdditional__size" *ngIf="transaction.order.product.size !== 0">
-                        <div *ngIf="transaction.order.product.size === 1">
-                            Размер: <span class="borderElement">XS</span>
+                <div class="valueContent valueContent__rightSide">
+                    <div class="informationFlex">
+                        <div class="data">
+                            <div class="status status__green" *ngIf="transaction.order.status === 1">
+                                <div class="statusText">в обработке</div>
+                            </div>
+                            <div class="status status__black" *ngIf="transaction.order.status === 2">
+                                <div class="statusText">выдано</div>
+                            </div>
+                            <div class="data">
+                                {{transaction.created_at | date : 'dd.MM.yyyy'}}
+                            </div>
                         </div>
-                        <div *ngIf="transaction.order.product.size === 2">
-                            Размер: <span class="borderElement">S</span>
-                        </div>
-                        <div *ngIf="transaction.order.product.size === 3">
-                            Размер: <span class="borderElement">M</span>
-                        </div>
-                        <div *ngIf="transaction.order.product.size === 4">
-                            Размер: <span class="borderElement">L</span>
-                        </div>
-                        <div *ngIf="transaction.order.product.size === 5">
-                            Размер: <span class="borderElement">XL</span>
-                        </div>
-                        <div *ngIf="transaction.order.product.size === 6">
-                            Размер: <span class="borderElement">XXL</span>
-                        </div>
-                        <div *ngIf="transaction.order.product.size === 7">
-                            Размер: <span class="borderElement">XXXL</span>
+                        <div class="coinsWrapper">
+                            <ul class="coins">
+                                <li class="wrapper_num">
+                                    {{transaction.accrual}}
+                                </li>
+                                <li>
+                                    <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
+                                         alt="greenBlockCoins">
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="valueAdditional valueAdditional__amount">
-                        Количество: <span class="borderElement">{{transaction.order.amount}}</span>
-                    </div>
-                </div>
-
-                <div class="coinsWrapper">
-                    <ul class="coins">
-                        <li class="wrapper_num">
-                            {{transaction.accrual}}
-                        </li>
-                        <li>
-                            <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
-                                 alt="greenBlockCoins">
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
