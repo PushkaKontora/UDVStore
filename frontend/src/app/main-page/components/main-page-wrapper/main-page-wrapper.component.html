@@ -108,7 +108,11 @@
                                                     placeholder="Количество койнов "
                                                     class="inputField"
                                                     formControlName="coins"
+                                                    (ngModelChange)="changeForm($event)"
                         ></div>
+                        <div class="helper-text"  *ngIf="userExist && this.writePers.controls['coins'].dirty">
+                        <span>*на вашем счёте недостаточно средств</span>
+                        </div>
                     </div>
                     <div class="value">
                         <div class="title">КОММЕНТАРИЙ</div>
@@ -121,7 +125,7 @@
                         </div>
                     </div>
                 </form>
-                <button (click)="onSubmit()" class="button" [disabled]="writePers.invalid">ОТПРАВИТЬ ПОДАРОК</button>
+                <button (click)="onSubmit()" class="button" [disabled]="writePers.invalid || userExist">ОТПРАВИТЬ ПОДАРОК</button>
             </div>
         </div>
         <div class="modelBackground"></div>

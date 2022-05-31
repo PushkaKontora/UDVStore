@@ -36,13 +36,11 @@ export class RequestComponent implements OnInit {
     public approve() {
         this._parent.currentRequestComponent = this
         this._modals.openModal('modal-accept')
-        console.log(this._parent.currentRequestComponent)
     }
 
     public discard() {
         this._parent.currentRequestComponent = this
         this._modals.openModal('modal-discard')
-        console.log(this._parent.currentRequestComponent)
     }
 
 }

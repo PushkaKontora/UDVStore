@@ -89,7 +89,6 @@ export class AdminRequestComponent implements OnInit {
             .subscribe((res: ITransaction[]) => {
                 //this.requests = res.map(this.processTransaction, this)
                 this.requests = res
-                console.log(this.requests)
             })
     }
 

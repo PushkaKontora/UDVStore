@@ -16,6 +16,8 @@
                                        formControlName="email"
                                        tabindex="1"
                                        class="form__input"
+                                       (ngModelChange)="changeForm($event)"
+                                       [class.redWrapper]="warning"
                                 />
                                 <div class="form__input done__email">@ussc.ru</div>
                             </div>
@@ -27,12 +29,15 @@
                                        type="password"
                                        formControlName="password"
                                        class="form__input password__input"
+                                       (ngModelChange)="changeForm($event)"
+                                       [class.redWrapper]="warning"
                                        #password
                                 />
                             </div>
                             <div class="password__btn"><img #btn src="../../../../assets/images/closeEye.svg"
                                                             class="password-control" alt="c"></div>
                         </div>
+                        <span class="warning" *ngIf="warning">Неверный логин или пароль</span>
                     </div>
                     <nav>
                         <button type="submit" class="btn" [disabled]="login.invalid">

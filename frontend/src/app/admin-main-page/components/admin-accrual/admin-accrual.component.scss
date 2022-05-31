@@ -47,7 +47,7 @@
     height: 3.6rem;
 
     .text {
-        font-family: "Roboto Thin", Arial, sans-serif;
+        font-family: "Roboto Medium", sans-serif;
         font-weight: 600;
         letter-spacing: 0.05em;
         text-align: center;
@@ -109,7 +109,7 @@
 .historyCards {
     background-color: #F4F4F4;
     padding: 0.8rem 1.5rem;
-    max-height: calc(7.3rem * 3);
+    max-height: calc(8rem * 3);
     overflow: auto;
 
     &::-webkit-scrollbar {
@@ -122,7 +122,7 @@
     }
 
     .contentWrapper{
-        font-family: "Roboto Thin", Arial, sans-serif;
+        font-family: "Roboto Medium", sans-serif;
         &::-webkit-scrollbar {
             width: 0;
         }
