@@ -1,4 +1,6 @@
+
 .wrapper {
+    overflow: hidden !important;
     height: 100%;
     font-family: "Roboto Medium", sans-serif;
     margin: 1.8rem;
@@ -10,7 +12,7 @@
     }
 
     .contentWrapper {
-        height: 75vh;
+        height: 72vh;
         overflow: auto;
 
         .ordr {
@@ -29,90 +31,102 @@
             }
 
             .content {
-                display: block;
+                display: flex;
+                height: 5.5rem;
+                width: 100%;
+                justify-content: space-between;
 
+                .valueContent {
+                    position: relative;
 
-                .topLine {
-                    padding-left: 0.5em;
-                    display: flex;
-                    justify-content: space-between;
-                    width: 35em;
+                    &__leftSide {
 
-                    .valueTopLine {
-                        display: block;
+                        .valueTextInformation {
+                            margin-left: 0.5rem;
+                            font-family: "Roboto Medium", sans-serif;
 
-                        &__name {
-                            padding: 0.5em 0;
-                            color: #1C1B1B;
-                            font-weight: 700;
-                        }
-
-                        &__rightValue {
-                            display: flex;
-
-                            .status {
-                                border: 1px solid #302E2E;
-                                border-radius: 1em;
-                                margin-right: 0.8em;
-                                font-family: 'Kapra Neue Pro', Arial, sans-serif;
-
-                                &__green {
-                                    color: #00D18F;
-                                    border-color: #00D18F;
-                                }
-
-                                &__black {
-                                    color: #302E2E;
-                                }
-
-                                .statusText {
-                                    padding: 0.45em 0.8em;
-                                }
-
+                            &__title {
+                                color: #1C1B1B;
+                                font-weight: 700;
                             }
 
-                            .data {
-                                padding-top: 0.5em;
-                                padding-right: 0.5em;
+                            &__IBought {
+                                .size, .amount {
+                                    margin-top: 0.5rem;
+                                    font-size: 0.85rem;
+                                    color: #1C1B1B;
+
+                                    .borderElement {
+                                        text-decoration: underline;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                    &__rightSide {
+
+                        .informationFlex {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-between;
+                            align-items: flex-end;
+                            height: 100%;
+
+                            .data{
+                                display: flex;
+                                align-items: center;
                                 color: #727272;
                                 font-weight: 600;
-                                font-family: 'Kapra Neue Pro', Arial, sans-serif;
+                                font-size: 1.05rem;
+
+                                .status {
+                                    border: 1px solid #302E2E;
+                                    border-radius: 1em;
+                                    margin-right: 0.8em;
+                                    size: 0.8rem;
+                                    font-family: 'Kapra Neue Pro', Arial, sans-serif;
+
+                                    &__green {
+                                        color: #00D18F;
+                                        border-color: #00D18F;
+                                    }
+
+                                    &__black {
+                                        color: #302E2E;
+                                    }
+
+                                    .statusText {
+                                        padding: 0.45em 0.8em;
+                                    }
+
+                                }
                             }
                         }
                     }
                 }
 
-                .additionalInformation {
-                    float: left;
-                    max-width: 20rem;
-                    color: #1C1B1B;
-                    font-size: 0.8em;
-                    margin-left: 0.5rem;
-
-                    .valueAdditional {
-                        margin-bottom: 0.5em;
-
-                        .borderElement {
-                            text-decoration-line: underline;
-                        }
-                    }
-                }
 
                 .coinsWrapper {
-                    padding-right: 0.5em;
-                    margin-top: 1.55rem;
-                    float: right;
-                    font-family: 'Kapra Neue Pro', Arial, sans-serif;
+                    display: block;
 
-                    ul {
+                    .coins {
                         align-items: center;
-                        background-color: #2CF2B3;
-                        color: #252424;
-                        padding: 0.85em 0.2em 0.85em 0.4em;
+                        padding: 0.85em 0.2em 0.85em 0.6em;
                         border-radius: 0.9em;
                         max-height: 1.4rem;
                         display: flex;
 
+                        &__green {
+                            background-color: #2CF2B3;
+                            color: #252424;
+                        }
+
+                        &__black {
+                            background-color: #302E2E;
+                            color: #2CF2B3;
+                        }
 
                         li {
                             display: inline-block;
@@ -129,13 +143,14 @@
                             font-size: 0.9em;
                             line-height: 0.9em;
                             padding-right: 0.03em;
-                            font-weight: 600;
+                            font-weight: 650;
                         }
                     }
                 }
             }
         }
     }
+
 
     .contentWrapper::-webkit-scrollbar {
         width: 0;

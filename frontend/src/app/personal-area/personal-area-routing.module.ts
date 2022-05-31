@@ -17,8 +17,6 @@ const childrenRoutes:Routes =[
     {path: 'write-activity', component: PersonalActivityComponent},
 ]
 
-
-
 const routes: Routes = [
     {path: 'personal-area', component: PersonalAreaWrapperComponent},
     {path: '', component: PersonalAreaWrapperComponent, children: childrenRoutes}
