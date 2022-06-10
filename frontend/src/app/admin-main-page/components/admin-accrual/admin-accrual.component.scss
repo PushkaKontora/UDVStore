@@ -107,24 +107,20 @@
 }
 
 .historyCards {
-    background-color: #F4F4F4;
-    padding: 0.8rem 1.5rem;
-    max-height: calc(8rem * 3);
-    overflow: auto;
-
-    &::-webkit-scrollbar {
-        width: 0.6rem;
-    }
-
-    &::-webkit-scrollbar-thumb {
-       background-color: #C4C4C4;
-        border-radius: 2.5rem;
-    }
+    overflow: hidden;
 
     .contentWrapper{
+        background-color: #F4F4F4;
+        padding: 0.8rem 1.5rem;
+        max-height: calc(8rem * 3);
         font-family: "Roboto Medium", sans-serif;
         &::-webkit-scrollbar {
-            width: 0;
+            width: 0.6rem;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #C4C4C4;
+            border-radius: 2.5rem;
         }
     }
 
