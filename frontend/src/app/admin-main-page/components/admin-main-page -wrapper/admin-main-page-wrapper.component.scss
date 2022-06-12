@@ -6,6 +6,7 @@
     background-color: #302E2E;
     position: relative;
     height: 100vh;
+    overflow: hidden;
 
     .wrapper-header {
         background-color: #1C1B1B;
@@ -33,16 +34,20 @@
 
     .left_leg {
         position: absolute;
-        height: 80%;
+        max-height: 87vh;
+        max-width: 35vw;
         left: 0;
         bottom: 0;
+        z-index: 1;
     }
 
     .right_leg {
         position: absolute;
-        height: 35%;
+        max-height: 35vh;
+        max-width: 20%;
         right: 0;
         bottom: 0;
+        z-index: 1;
     }
 
 
@@ -55,6 +60,7 @@
         grid-template-columns: 1fr 3.2fr;
 
         .value_grid {
+            z-index: 2;
             background-color: #F7F7F7;
             border-radius: 0.1em;
 
