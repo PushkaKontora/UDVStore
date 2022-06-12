@@ -5,16 +5,15 @@
          class="decor right_leg">
     <div class="grid">
         <div class="value_grid__account value_grid">
-            <div class="content_item content_item__leftSide">
-                <div class="figure" *ngIf="user?.photo !== null">
-                    <img src="{{user?.photo}}" alt="avatar">
-                    <!--                <img class="imageCompanyItem" src="{{companyItem.logo}}" alt="rr"> будет так -->
-                </div>
-                <div class="figure" *ngIf="!user?.photo === null">
-                    <img src="../../../../assets/images-main-page/account.svg" alt="avatar">
-                    <!--                <img class="imageCompanyItem" src="{{companyItem.logo}}" alt="rr"> будет так -->
-                </div>
-                <div class="wrapperNav">
+                <div class="content_item">
+                    <div class="figure" *ngIf="user?.photo !== null">
+                        <img src="{{user?.photo}}" alt="avatar">
+                        <!--                <img class="imageCompanyItem" src="{{companyItem.logo}}" alt="rr"> будет так -->
+                    </div>
+                    <div class="figure" *ngIf="!user?.photo === null">
+                        <img src="../../../../assets/images-main-page/account.svg" alt="avatar">
+                        <!--                <img class="imageCompanyItem" src="{{companyItem.logo}}" alt="rr"> будет так -->
+                    </div>
                     <nav class="nav">
                         <button class="button_value" routerLink="./data" routerLinkActive="active-link">ЛИЧНЫЕ ДАННЫЕ
                         </button>
@@ -27,7 +26,6 @@
                         </button>
                     </nav>
                 </div>
-            </div>
         </div>
         <div class="value_grid__content value_grid">
             <div class="content_item">

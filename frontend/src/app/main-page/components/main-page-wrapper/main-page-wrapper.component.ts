@@ -136,7 +136,7 @@ export class MainPageWrapperComponent implements OnInit {
     private createForm(): void {
         this.writePers = new FormGroup({
             employee: new FormControl(''),
-            coins: new FormControl('', [Validators.required]),
+            coins: new FormControl('', [Validators.required, Validators.min(1)]),
             comment: new FormControl('', [Validators.required]),
         });
     }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {FileManager} from "../../services/file-manager";
 import {PersonalActivityService} from "../../services/personal-activity.service";
@@ -12,10 +12,36 @@ import {FilemanagerService} from "../../../services/filemanager.service";
 export class PersonalActivityComponent implements OnInit {
     public inputControl: FormControl = new FormControl('', [Validators.required]);
 
+    @ViewChild('dropbox')
+    dropbox!: any;
+
     constructor(public _fileManager: FileManager, private _service: PersonalActivityService) {}
 
     public ngOnInit()
     {
+        this.dropbox.addEventListener("dragenter", this.dragenter, false);
+        this.dropbox.addEventListener("dragover", this.dragover, false);
+        this.dropbox.addEventListener("drop", this.drop, false);
+    }
+
+    private dragenter(e: any) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
+
+    private dragover(e: any) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
+
+    private drop(e: any) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        let dt = e.dataTransfer;
+        let files = dt.files;
+
+        this._fileManager.addFiles(files);
     }
 
     public onSubmit()
