@@ -1,4 +1,4 @@
-<div class="wrapper" (click)="closeMessage()">
+<div class="wrapper">
     <div class="req-holder" *ngIf="requests">
 
         <div class="contentWrapper">
@@ -11,7 +11,7 @@
 
     </div>
 
-    <div class="modal-wrapper" id="modal-accept">
+    <div class="modal-wrapper modal-action-wrapper" id="modal-accept">
         <div class="model" (click)="closeAcceptModal()">
             <div class="modelBody" (click)="handleClick($event)">
 
@@ -53,7 +53,7 @@
     </div>
 
 
-    <div class="modal-wrapper" id="modal-discard">
+    <div class="modal-wrapper modal-action-wrapper" id="modal-discard">
         <div class="model" (click)="closeDiscardModal()">
             <div class="modelBody" (click)="handleClick($event)">
 
@@ -82,12 +82,24 @@
         <div class="modelBackground"></div>
     </div>
 
+    <div class="modal-wrapper" id="reg-message">
+        <div class="model" (click)="closeModel()">
+            <div class="modelBody" (click)="handleClick($event)">
+                <button><img src="../../../../assets/images-admin/crossPopUp.svg" alt="cross" (click)="closeModel()">
+                </button>
+                <div class="text">{{ message }}</div>
+            </div>
+        </div>
+        <div class="modelBackground"></div>
+    </div>
 
+    <!--
     <div class="message" id="reg-message" (click)="handleClick($event)">
         <img class="modal-close"
              src="/assets/images/cross-non-rounded.svg"
              (click)="closeMessage()">
         {{ message }}
     </div>
+    -->
 
 </div>

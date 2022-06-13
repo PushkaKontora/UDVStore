@@ -60,6 +60,18 @@ export class AdminRequestComponent implements OnInit {
         event.stopPropagation();
     }
 
+    public closeModel() {
+        document.getElementById('reg-message')!.style.display = 'none';
+        document.body.style.overflow = "visible";
+        document.body.classList.remove('modalOpen');
+    }
+
+    public openModel() {
+        document.getElementById('reg-message')!.style.display = 'block';
+        document.body.style.overflow = "hidden";
+        document.body.classList.add('modalOpen');
+    }
+
     createAcceptForm() {
         const coins = new FormControl(1, [
             Validators.required, Validators.min(1)
@@ -119,8 +131,9 @@ export class AdminRequestComponent implements OnInit {
                     console.log("Coins are accrued")
                     this.message = this.APPROVED_MESSAGE
                     this.deleteRequest()
-                    this._messages.show("reg-message")
+                    //this._messages.show("reg-message")
                     this.closeAcceptModal()
+                    this.openModel()
                 })
         }
     }
@@ -134,9 +147,10 @@ export class AdminRequestComponent implements OnInit {
                 .subscribe(() => {
                     console.log("Coins are discarded")
                     this.message = this.DISCARDED_MESSAGE
-                    this._messages.show("reg-message")
+                    //this._messages.show("reg-message")
                     this.deleteRequest()
                     this.closeDiscardModal()
+                    this.openModel()
                 })
         }
     }
