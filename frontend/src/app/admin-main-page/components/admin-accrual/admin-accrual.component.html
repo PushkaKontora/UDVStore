@@ -104,8 +104,11 @@
                             <div class="img"><img src="{{card.photo}}" alt="card photo"></div>
                             <div class="content">
                                 <div class="valueContent valueContent__leftSide">
-                                    <div class="valueTextInformation valueTextInformation__title">
+                                    <div class="valueTextInformation valueTextInformation__title" *ngIf="card.type !== 'IDeposit'">
                                         {{card.title}}
+                                    </div>
+                                    <div class="valueTextInformation valueTextInformation__title" *ngIf="card.type === 'IDeposit'">
+                                        {{card.title}} начисление
                                     </div>
 
                                     <div class="valueTextInformation valueTextInformation__IBought"

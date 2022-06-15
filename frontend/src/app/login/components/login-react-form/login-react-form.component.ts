@@ -68,9 +68,11 @@ export class LoginReactFormComponent implements OnInit {
                                 (user: IUser) => {
                                     if (user) {
                                         if (!user.is_staff) {
+                                            localStorage.removeItem('admin');
                                             this._peopleService.findUser.next(user);
                                             this._router.navigate(['main-page', 'merch']);
                                         } else if (user.is_staff) {
+                                            localStorage.setItem('admin', 'true');
                                             this._peopleService.findUser.next(user);
                                             this._router.navigate(["admin", "accrual"]);
                                         }
