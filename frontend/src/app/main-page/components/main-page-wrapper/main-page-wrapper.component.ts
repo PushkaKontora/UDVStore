@@ -31,7 +31,6 @@ export class MainPageWrapperComponent implements OnInit {
     private databaseMockData: UsersSearch[] = [];
     readonly disabledItemHandler: TuiBooleanHandler<User> = ({photo}) => !!photo;
 
-
     constructor(
         private _router: Router,
         private _route: ActivatedRoute,
