@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {FileManager} from "../../services/file-manager";
 import {PersonalActivityService} from "../../services/personal-activity.service";
