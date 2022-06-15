@@ -12,6 +12,8 @@ import {FilemanagerService} from "../../../services/filemanager.service";
 export class PersonalActivityComponent implements OnInit {
     public inputControl: FormControl = new FormControl('', [Validators.required]);
 
+    public files: IterableIterator<string>
+
     constructor(public _fileManager: FileManager, private _service: PersonalActivityService) {}
 
     public ngOnInit()
@@ -24,8 +26,6 @@ export class PersonalActivityComponent implements OnInit {
         this._service.sendActivity(formData).subscribe();
         this._fileManager.reset()
 
-        // TODO: removing blanks
-
         this.inputControl.reset();
         this.openModel()
     }
@@ -34,7 +34,7 @@ export class PersonalActivityComponent implements OnInit {
     {
         this._fileManager.addFiles(event.target.files);
 
-        const files: IterableIterator<File> = this._fileManager.getFiles();
+        this.files = this._fileManager.getFileNames()
 
         console.log(this._fileManager.getFileNames())
     }
@@ -45,6 +45,7 @@ export class PersonalActivityComponent implements OnInit {
 
     public removeFile(path: string) {
         this._fileManager.tryRemoveFile(path)
+        this.files = this._fileManager.getFileNames()
         console.log(this._fileManager.getFileNames())
     }
 
