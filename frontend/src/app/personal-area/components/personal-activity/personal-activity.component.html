@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" xmlns="http://www.w3.org/1999/html">
     <div class="text__explanatory text">
         <div class="title">НАЧИСЛЕНИЕ UCoins</div>
         <div class="field">
@@ -13,7 +13,7 @@
                    [formControl]="inputControl">
 
             <div class="file-label-container">
-                <div *ngFor="let file of _fileManager.getFileNames()" class="file-label">
+                <div *ngFor="let file of files" class="file-label">
                     <a href="{{ file }}">
                         {{ getFilename(file) }}
                     </a>
@@ -29,7 +29,7 @@
                     <label class="label">
                         <i class="material-icons"><img src="../../../../assets/images-personal-area/clip.svg"
                                                        alt="clip"></i>
-                        <input type="file" multiple id="file-selector" (change)="onFilesSelected($event)">
+                        <input type="file" multiple id="file-selector" (change)="onFilesSelected($event)" onclick="this.value = null">
                     </label>
                 </div>
             </div>
