@@ -20,6 +20,12 @@ export class PersonalAreaWrapperComponent implements OnInit {
 
 
     ngOnInit(): void {
+        let jj = [{name: ''}, {name: ','}, {name: ''}];
+        let hh: any;
+        jj.map((value: any) => {
+            hh += value;
+        });
+        console.log(hh);
     }
 
 }

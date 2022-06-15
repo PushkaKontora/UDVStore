@@ -25,7 +25,7 @@
 
             <div class="send">
                 <button class="button" [disabled]="inputControl.invalid" (click)="onSubmit()">ОТПРАВИТЬ ЗАПРОС</button>
-                <div class="attachFile">
+                <div class="attachFile" #dropbox>
                     <label class="label">
                         <i class="material-icons"><img src="../../../../assets/images-personal-area/clip.svg"
                                                        alt="clip"></i>
