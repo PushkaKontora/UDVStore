@@ -1,6 +1,41 @@
+@import "../../../../usedCSS/model-popUp";
+
 .wrapper {
     font-family: "Roboto Medium", sans-serif;
     margin: 1.8rem;
+
+    #success-message {
+        .modelBody {
+            background-color: #E8E8E8;
+            color: #282829;
+            border-radius: 1.7rem;
+            margin-left: 50%;
+            margin-top: 4.8rem;
+            width: 18rem;
+            height: 3.6rem;
+
+            .text {
+                font-family: "Roboto Medium", sans-serif;
+                font-weight: 600;
+                letter-spacing: 0.05em;
+                text-align: center;
+            }
+
+            button {
+                align-items: end;
+                background-color: #E8E8E8;
+                padding-top: 0.75em;
+                margin-right: 1.4rem;
+                margin-left: auto;
+                display: block;
+                height: 1.4em;
+
+                img {
+                    height: 0.6em;
+                }
+            }
+        }
+    }
 
     .text {
         margin-bottom: 1.4rem;

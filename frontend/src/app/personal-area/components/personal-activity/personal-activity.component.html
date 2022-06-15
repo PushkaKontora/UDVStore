@@ -35,4 +35,15 @@
             </div>
         </div>
     </div>
+
+    <div class="modal-wrapper" id="success-message">
+        <div class="model" (click)="closeModel()">
+            <div class="modelBody" (click)="handleClick($event)">
+                <button><img src="../../../../assets/images-admin/crossPopUp.svg" alt="cross" (click)="closeModel()">
+                </button>
+                <div class="text">ЗАПРОС ОТПРАВЛЕН</div>
+            </div>
+        </div>
+        <div class="modelBackground"></div>
+    </div>
 </div>

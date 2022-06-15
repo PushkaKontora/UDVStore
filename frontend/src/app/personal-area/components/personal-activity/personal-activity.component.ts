@@ -27,6 +27,7 @@ export class PersonalActivityComponent implements OnInit {
         // TODO: removing blanks
 
         this.inputControl.reset();
+        this.openModel()
     }
 
     public onFilesSelected(event: any)
@@ -35,14 +36,7 @@ export class PersonalActivityComponent implements OnInit {
 
         const files: IterableIterator<File> = this._fileManager.getFiles();
 
-        // TODO: placing blanks from names of files
-    }
-
-    public onFileRemoved(event: any, name: string)
-    {
-        const isRemoved: boolean = this._fileManager.tryRemoveFile(name);
-
-        // TODO: removing blank
+        console.log(this._fileManager.getFileNames())
     }
 
     public getFilename(path: string): string {
@@ -52,5 +46,21 @@ export class PersonalActivityComponent implements OnInit {
     public removeFile(path: string) {
         this._fileManager.tryRemoveFile(path)
         console.log(this._fileManager.getFileNames())
+    }
+
+    public handleClick(event: Event): void {
+        event.stopPropagation();
+    }
+
+    public closeModel() {
+        document.getElementById('success-message')!.style.display = 'none';
+        document.body.style.overflow = "visible";
+        document.body.classList.remove('modalOpen');
+    }
+
+    public openModel() {
+        document.getElementById('success-message')!.style.display = 'block';
+        document.body.style.overflow = "hidden";
+        document.body.classList.add('modalOpen');
     }
 }

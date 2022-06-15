@@ -3,6 +3,6 @@ export class FilemanagerService {
         if (!path)
             return path
         let arr = path.split('/')
-        return arr[arr.length-1]
+        return decodeURI(arr[arr.length-1])
     }
 }
