@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
 from api.internal.models.store import Order
-from api.internal.serializers.cart.ProductDetailsSerializer import ProductDetailsSerializer
 from api.internal.serializers.profile import ProfileSerializer
 from api.internal.services.cart import get_total
+from api.internal.user.domain.serializers.product_details import ProductDetailsSerializer
 
 
 class OrderSerializer(serializers.ModelSerializer):

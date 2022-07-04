@@ -1,4 +1,4 @@
-from typing import List, Optional, Iterable
+from typing import Iterable, List, Optional
 
 from django.db import IntegrityError, transaction
 from django.db.models import F

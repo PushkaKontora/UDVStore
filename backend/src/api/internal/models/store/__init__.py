@@ -1,5 +1,4 @@
-from api.internal.models.store.order import Order, StatusChoices
-from api.internal.models.store.storage_cells.StorageCell import StorageCell
 from api.internal.models.store.transactions import Transaction, TransactionFile, TransactionTypes
+from api.internal.user.db.models.storage_cell import StorageCell
 
 from .Product import Product

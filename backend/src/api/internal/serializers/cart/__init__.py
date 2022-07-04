@@ -1,3 +1,0 @@
-from .CartSerializer import CartSerializer
-from .OrderSerializer import OrderSerializer
-from .ProductDetailsSerializer import ProductDetailsSerializer

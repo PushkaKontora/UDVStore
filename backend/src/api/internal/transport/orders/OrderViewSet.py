@@ -3,8 +3,8 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-from api.internal.serializers.cart.OrderSerializer import OrderSerializer
 from api.internal.services.order import change_status_order_to, get_formed_order_by_transaction
+from api.internal.user.domain.serializers.order import OrderSerializer
 
 
 class OrderViewSet(GenericViewSet):

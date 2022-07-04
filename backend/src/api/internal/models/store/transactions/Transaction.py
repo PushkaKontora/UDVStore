@@ -1,7 +1,7 @@
 from django.core.validators import MinValueValidator
 from django.db import models
+from djoser.conf import User
 
-from api.internal.models.profile.Profile import Profile
 from api.internal.models.store import Order
 from api.internal.models.store.transactions.TransactionTypes import TransactionTypes
 
@@ -10,9 +10,9 @@ class Transaction(models.Model):
     DESCRIPTION_LENGTH = 2048
 
     type = models.IntegerField(choices=TransactionTypes.choices, default=TransactionTypes.BUYING)
-    source = models.ForeignKey(Profile, on_delete=models.PROTECT, null=True)
+    source = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
     destination = models.ForeignKey(
-        Profile, on_delete=models.PROTECT, default=None, null=True, related_name="transactions_to_me"
+        User, on_delete=models.PROTECT, default=None, null=True, related_name="transactions_to_me"
     )
     accrual = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     order = models.OneToOneField(Order, null=True, on_delete=models.PROTECT)
