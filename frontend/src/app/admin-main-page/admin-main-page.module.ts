@@ -9,7 +9,12 @@ import {AdminAccrualComponent} from "./components/admin-accrual/admin-accrual.co
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AdminRulesComponent} from "./components/admin-rules/admin-rules.component";
 import {TuiSheetModule} from '@taiga-ui/addon-mobile';
-import {TuiAvatarModule, TuiDataListWrapperModule, TuiMultiSelectModule} from "@taiga-ui/kit";
+import {
+    TuiAvatarModule, TuiComboBoxModule,
+    TuiDataListWrapperModule,
+    TuiFilterByInputPipeModule, TuiInputModule,
+    TuiMultiSelectModule
+} from "@taiga-ui/kit";
 import {
     TuiButtonModule,
     TuiDataListModule,
@@ -59,6 +64,9 @@ import {CastTypeNumberPipe} from "./components/admin-accrual/pipes/cast-type-num
         TuiLetModule,
         TuiAvatarModule,
         TuiDropdownControllerModule,
+        TuiFilterByInputPipeModule,
+        TuiInputModule,
+        TuiComboBoxModule,
     ],
      providers: [
          SearchStringService,

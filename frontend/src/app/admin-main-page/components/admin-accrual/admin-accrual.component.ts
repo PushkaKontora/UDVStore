@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {delay, EMPTY, filter, first, Observable, of, retry, startWith, Subject, switchMap, takeUntil} from "rxjs";
 import {IUser, UsersSearch} from "../../../../interfaces/interfaces";
@@ -18,16 +18,33 @@ const databaseMockData: UsersSearch[] = [];
     selector: 'personal-activity',
     templateUrl: './admin-accrual.component.html',
     styleUrls: ['./admin-accrual.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminAccrualComponent implements OnInit {
-    public writePers: FormGroup = new FormGroup({});
-    search$ = new Subject<string>();
-    public testValue = new FormControl();
+    public search$ = new Subject<string>();
     public foundUsers!: UsersSearch[];
     public events: IHistoryEvent[];
     public pers: IUser;
-
     public click: boolean = false;
+
+
+    readonly stringify = (name: string): string => name;
+
+    readonly writePers = new FormGroup({
+        employee: new FormControl(),
+        coins: new FormControl('', [Validators.required, Validators.min(1)]),
+        activity: new FormControl('',),
+        checkField: new FormControl()
+    });
+
+    readonly items = [
+        'John Cleese',
+        'Eric Idle',
+        'Graham Chapman',
+        'Michael Palin',
+        'Terry Gilliam',
+        'Terry Jones',
+    ];
 
     constructor(
         private _searchStringService: SearchStringService,
@@ -47,21 +64,14 @@ export class AdminAccrualComponent implements OnInit {
             }, () => {
                 this.makeUserArray();
             });
-
-        this.createForm();
     }
 
     ngOnInit(): void {
     }
 
-    public toTop(){
-
-    }
-
     public handleClick(event: Event): void {
         event.stopPropagation();
     }
-
 
     public openModel() {
         console.log("modal-1 was opened");
@@ -77,37 +87,31 @@ export class AdminAccrualComponent implements OnInit {
     }
 
     public onSubmit() {
-        this.writePers.patchValue({employee: this.testValue.value});
         let arrayId = [];
         for (let user of this.writePers.value.employee) {
             arrayId.push(user.id);
         }
-
+        console.log(this.writePers.value.activity)
+        console.log(this.writePers.value.coins)
         this._searchStringService.postAdminAccrualCoins(arrayId, this.writePers.value.coins, this.writePers.value.activity)
             .subscribe(
                 (res: any) => {
                     this.writePers.reset();
                 });
         this.search$.next('');
-        // this.makeUserArray();
-        this.testValue = new FormControl();
-    }
 
-    private createForm(): void {
-        this.writePers = new FormGroup({
-            employee: new FormControl(),
-            coins: new FormControl('', [Validators.required, Validators.min(1)]),
-            activity: new FormControl('', [Validators.required]),
-        });
     }
-
+    public fff(event: any)
+    {
+        console.log(this.writePers.value.activity)
+        console.log(event.target.value)
+    }
     private makeUserArray(): void {
         for (let user of this.foundUsers) {
             databaseMockData.push(new User(user.id, user.username, user.first_name, user.last_name, user.email,
                 user.patronymic, user.balance, user.photo, user.is_staff));
         }
     }
-
 
     readonly items$: Observable<readonly UsersSearch[] | null> = this.search$.pipe(
         filter(value => value !== null),
@@ -116,7 +120,6 @@ export class AdminAccrualComponent implements OnInit {
         ),
         startWith(databaseMockData),
     );
-
 
     public onSearchChange(search: string | null) {
         this.search$.next(search || '');
@@ -145,4 +148,6 @@ export class AdminAccrualComponent implements OnInit {
             });
     }
 }
+
+// при нажатии на элемент выпадающего списка - срабатывает activity формы. ха отсутствием этого, выводить значение по функции fff
 
