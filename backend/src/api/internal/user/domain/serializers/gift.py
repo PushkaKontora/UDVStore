@@ -9,4 +9,4 @@ class GiftSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Transaction
-        fields = ("source", "destination", "description", "accrual")
+        fields = ["source", "destination", "description", "accrual"]

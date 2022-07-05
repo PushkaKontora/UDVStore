@@ -6,7 +6,7 @@ from rest_framework.viewsets import ViewSet
 
 from api.internal.permissions import IsDefaultUser
 from api.internal.user.db.repositories import OrderRepository, StorageRepository, TransactionRepository, UserRepository
-from api.internal.user.domain.serializers import DeclarationSerializer, OrderSerializer
+from api.internal.user.domain.serializers import OrderDeclarationSerializer, OrderSerializer
 from api.internal.user.domain.services import CartService
 
 
@@ -39,7 +39,7 @@ class CartViewSet(ViewSet):
     def create(self, request: Request) -> Response:
         data = self._get_data(request)
 
-        serializer = DeclarationSerializer(data=data)
+        serializer = OrderDeclarationSerializer(data=data)
         serializer.is_valid(raise_exception=True)
 
         order = self.cart_service.try_create_order(data["user"], data["storage_cell"], data["amount"])
@@ -56,7 +56,7 @@ class CartViewSet(ViewSet):
         if not order:
             return Response(status=404)
 
-        cart_serializer = DeclarationSerializer(order, data=data, partial=True)
+        cart_serializer = OrderDeclarationSerializer(order, data=data, partial=True)
         cart_serializer.is_valid(raise_exception=True)
 
         was_updated = self.cart_service.try_update_order(order, data["amount"])
