@@ -2,8 +2,13 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from djoser.conf import User
 
-from api.internal.user.db.models.status_choices import StatusChoices
 from api.internal.user.db.models.storage_cell import StorageCell
+
+
+class StatusChoices(models.IntegerChoices):
+    NEW = 0
+    IN_PROCESS = 1
+    DONE = 2
 
 
 class Order(models.Model):

@@ -4,7 +4,7 @@ from django.db import IntegrityError
 from django.db.transaction import atomic
 
 from api.internal.models.store import TransactionTypes
-from api.internal.user.domain.interfaces import IUserRepository, ITransactionRepository
+from api.internal.user.domain.interfaces import ITransactionRepository, IUserRepository
 
 
 class GiftService:

@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
-from api.internal.models.profile import Profile
+from api.internal.user.db.models import Profile
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source="user.username", required=False)
     first_name = serializers.CharField(source="user.first_name", required=False)
     last_name = serializers.CharField(source="user.last_name", required=False)
@@ -12,5 +12,5 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ("id", "username", "first_name", "last_name", "email", "patronymic", "balance", "photo", "is_staff")
+        fields = ["id", "username", "first_name", "last_name", "email", "patronymic", "balance", "photo", "is_staff"]
         extra_kwargs = {"patronymic": {"required": False}, "balance": {"read_only": True}}
