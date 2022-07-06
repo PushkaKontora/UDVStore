@@ -1,3 +1,3 @@
-from .TransactionVerdictSerializer import TransactionVerdictSerializer
 from .AccrualRequestSerializer import AccrualRequestSerializer
 from .RequestSerializer import RequestSerializer
+from .TransactionVerdictSerializer import TransactionVerdictSerializer

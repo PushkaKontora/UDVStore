@@ -1,9 +1,9 @@
 from django.contrib.auth.models import User
-from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
 
 from api.internal.models.store import Transaction, TransactionTypes
 from api.internal.serializers.admin import AccrualRequestSerializer, TransactionVerdictSerializer
@@ -14,9 +14,8 @@ from api.internal.services.profile import get_profile_history
 from api.internal.services.user import get_default_user_profile
 
 
-class AdminViewSet(viewsets.ViewSet):
-    queryset = Transaction.objects.all()
-    permission_classes = (IsAdminUser,)
+class AdminViewSet(GenericViewSet):
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
     @action(detail=True, methods=["get"], url_path="history", url_name="history")
     def history(self, request: Request, pk=None) -> Response:

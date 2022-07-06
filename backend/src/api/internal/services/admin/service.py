@@ -1,10 +1,11 @@
-from typing import List
+from typing import Iterable, List, Optional
 
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import IntegrityError
 from django.db.models import F, QuerySet
 from django.db.transaction import atomic
 
-from api.internal.models.store import Transaction, TransactionTypes
+from api.internal.models.store import Product, StorageCell, Transaction, TransactionTypes
 
 
 def get_requests_from_users() -> QuerySet[Transaction]:
@@ -38,3 +39,27 @@ def try_connect_transactions(old_transaction: Transaction, response: Transaction
         return True
     except IntegrityError:
         return False
+
+
+def try_create_product(
+    name: str, photo: InMemoryUploadedFile, description: str, price: int, cells: List[dict]
+) -> Optional[Product]:
+    try:
+        with atomic():
+            product = Product.objects.create(name=name, photo=photo, description=description, price=price)
+
+            StorageCell.objects.bulk_create(
+                StorageCell(product=product, size=cell["size"], amount=cell["amount"]) for cell in cells
+            )
+
+            return product
+    except IntegrityError:
+        return None
+
+
+def delete_products(ids: List[int]) -> None:
+    Product.objects.filter(id__in=ids).delete()
+
+
+def delete_cells(ids: List[int]) -> None:
+    StorageCell.objects.filter(id__in=ids).delete()
