@@ -7,14 +7,14 @@ from rest_framework.viewsets import ViewSet
 from api.internal.permissions import IsDefaultUser
 from api.internal.user.db.repositories import OrderRepository, StorageRepository, TransactionRepository, UserRepository
 from api.internal.user.domain.serializers import OrderDeclarationSerializer, OrderSerializer
-from api.internal.user.domain.services import CartService
+from api.internal.user.domain.services import OrderService
 
 
 class CartViewSet(ViewSet):
     permission_classes = [IsAuthenticated, IsDefaultUser]
     http_method_names = ["GET", "POST", "PATCH", "DELETE"]
 
-    cart_service = CartService(
+    order_service = OrderService(
         order_repo=OrderRepository(),
         storage_repo=StorageRepository(),
         user_repo=UserRepository(),
@@ -22,14 +22,14 @@ class CartViewSet(ViewSet):
     )
 
     def list(self, request: Request) -> Response:
-        orders = self.cart_service.get_orders_in_cart(request.user)
+        orders = self.order_service.get_orders_in_cart(request.user)
 
         serializer = OrderSerializer(orders, many=True, context={"request": request})
 
         return Response(data=serializer.data)
 
     def retrieve(self, request: Request, pk: int) -> Response:
-        order = self.cart_service.get_order_in_cart(request.user, order_id=pk)
+        order = self.order_service.get_order_in_cart(request.user, order_id=pk)
 
         if not order:
             return Response(status=404)
@@ -42,7 +42,7 @@ class CartViewSet(ViewSet):
         serializer = OrderDeclarationSerializer(data=data)
         serializer.is_valid(raise_exception=True)
 
-        order = self.cart_service.try_create_order(data["user"], data["storage_cell"], data["amount"])
+        order = self.order_service.try_create_order(data["user"], data["storage_cell"], data["amount"])
 
         if not order:
             return Response(status=422)
@@ -52,25 +52,25 @@ class CartViewSet(ViewSet):
     def partial_update(self, request: Request, pk: int) -> Response:
         data = self._get_data(request)
 
-        order = self.cart_service.get_order_in_cart(request.user, order_id=pk)
+        order = self.order_service.get_order_in_cart(request.user, order_id=pk)
         if not order:
             return Response(status=404)
 
         cart_serializer = OrderDeclarationSerializer(order, data=data, partial=True)
         cart_serializer.is_valid(raise_exception=True)
 
-        was_updated = self.cart_service.try_update_order(order, data["amount"])
+        was_updated = self.order_service.try_update_amount(order, data["amount"])
 
         return Response(status=200 if was_updated else 422)
 
     def destroy(self, request: Request, pk: int) -> Response:
-        was_deleted = self.cart_service.try_delete_order(request.user, order_id=pk)
+        was_deleted = self.order_service.try_delete_order(request.user, order_id=pk)
 
         return Response(status=200 if was_deleted else 404)
 
     @action(methods=["POST"], detail=False)
     def pay(self, request: Request) -> Response:
-        was_paid = self.cart_service.try_pay(request.user)
+        was_paid = self.order_service.try_pay(request.user)
 
         return Response(status=200 if was_paid else 422)
 

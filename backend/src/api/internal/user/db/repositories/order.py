@@ -19,8 +19,11 @@ class OrderRepository(IOrderRepository):
     def exists_in_cart(self, user_id: int, storage_cell_id: int) -> bool:
         return self.get_orders_in_cart(user_id).filter(storage_cell_id=storage_cell_id).exists()
 
-    def update(self, order_id: int, amount: int) -> bool:
+    def update_amount(self, order_id: int, amount: int) -> bool:
         return Order.objects.filter(id=order_id).update(amount=amount) > 0
+
+    def update_status(self, order_id: int, status_id: int) -> bool:
+        return Order.objects.filter(id=order_id).update(status=status_id) > 0
 
     def delete_by_user(self, user_id: int, order_id: int) -> bool:
         return tuple(Order.objects.filter(user_id=user_id, id=order_id).delete())[0] > 0

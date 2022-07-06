@@ -8,8 +8,8 @@ from django.db.transaction import atomic
 from django.utils.datastructures import MultiValueDict
 from djoser.conf import User
 
-from api.internal.user.db.models import Transaction, TransactionTypes
-from api.internal.user.domain.interfaces import ITransactionRepository
+from api.internal.user.db.models import Order, Transaction, TransactionTypes
+from api.internal.user.domain.interfaces import IOrderRepository, ITransactionRepository
 
 
 class TransactionService:
@@ -32,3 +32,9 @@ class TransactionService:
                 return True
         except IntegrityError:
             return False
+
+    def get_orders_details_by_user(self, user_id: int) -> QuerySet[Transaction]:
+        return self._transaction_repo.get_orders_details_by_user(user_id)
+
+    def get_orders_details(self) -> QuerySet[Transaction]:
+        return self._transaction_repo.get_orders_details()

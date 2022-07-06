@@ -6,7 +6,7 @@ from django.db.transaction import atomic
 from djoser.conf import User
 
 from api.internal.models.store import TransactionTypes
-from api.internal.user.db.models import Order
+from api.internal.user.db.models import Order, StatusChoices
 from api.internal.user.domain.interfaces import (
     IOrderRepository,
     IStorageRepository,
@@ -15,7 +15,7 @@ from api.internal.user.domain.interfaces import (
 )
 
 
-class CartService:
+class OrderService:
     def __init__(
         self,
         order_repo: IOrderRepository,
@@ -42,11 +42,20 @@ class CartService:
 
         return self._order_repo.create(user.id, storage_cell, amount)
 
-    def try_update_order(self, order: Order, amount: int) -> bool:
+    def try_update_amount(self, order: Order, amount: int) -> bool:
         if amount > order.storage_cell.amount:
             return False
 
-        return self._order_repo.update(order.id, amount)
+        return self._order_repo.update_amount(order.id, amount)
+
+    def try_update_status(self, order: Order, status_id: int) -> bool:
+        if status_id not in StatusChoices:
+            raise ValueError("Unknown status_id")
+
+        if status_id == StatusChoices.NEW and not order.in_cart:
+            return False
+
+        return self._order_repo.update_status(order.id, status_id)
 
     def try_delete_order(self, user: User, order_id: int) -> bool:
         return self._order_repo.delete_by_user(user.id, order_id)
@@ -77,3 +86,6 @@ class CartService:
                 return True
         except IntegrityError:
             return False
+
+    def get_order_by_transaction(self, transaction_id: int) -> Optional[Order]:
+        return self._order_repo.get_formed_order_by_transaction(transaction_id)

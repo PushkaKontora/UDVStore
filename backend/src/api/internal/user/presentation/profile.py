@@ -8,7 +8,7 @@ from api.internal.permissions import IsDefaultUser
 from api.internal.serializers.transaction import TransactionSerializer
 from api.internal.user.db.repositories import TransactionRepository, UserRepository
 from api.internal.user.domain.serializers import UserSerializer
-from api.internal.user.domain.services import UserService, TransactionService
+from api.internal.user.domain.services import TransactionService, UserService
 
 
 class ProfileViewSet(viewsets.GenericViewSet):
@@ -48,3 +48,9 @@ class ProfileViewSet(viewsets.GenericViewSet):
         was_reported = self.transaction_service.try_create_activity(request.user, data["description"], request.FILES)
 
         return Response(status=200 if was_reported else 422)
+
+    @action(methods=["GET"], detail=True, permission_classes=[IsAuthenticated])
+    def orders(self, request: Request, pk: int) -> Response:
+        transactions = self.transaction_service.get_orders_details_by_user(user_id=pk)
+
+        return Response(data=TransactionSerializer(transactions, many=True, context={"request": request}).data)

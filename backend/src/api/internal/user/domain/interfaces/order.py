@@ -3,7 +3,7 @@ from typing import Optional
 
 from django.db.models import QuerySet
 
-from api.internal.user.db.models import Order
+from api.internal.user.db.models import Order, StatusChoices
 
 
 class IOrderRepository(ABC):
@@ -24,7 +24,11 @@ class IOrderRepository(ABC):
         ...
 
     @abstractmethod
-    def update(self, order_id: int, amount: int) -> bool:
+    def update_amount(self, order_id: int, amount: int) -> bool:
+        ...
+
+    @abstractmethod
+    def update_status(self, order_id: int, status_id: int) -> bool:
         ...
 
     @abstractmethod
@@ -33,4 +37,8 @@ class IOrderRepository(ABC):
 
     @abstractmethod
     def pay(self, order: Order) -> None:
+        ...
+
+    @abstractmethod
+    def get_formed_order_by_transaction(self, transaction_id: int) -> Optional[Order]:
         ...

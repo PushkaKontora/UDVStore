@@ -39,3 +39,11 @@ class ITransactionRepository(ABC):
     @abstractmethod
     def attach_files(self, activity: Transaction, files: Iterable[InMemoryUploadedFile]) -> None:
         ...
+
+    @abstractmethod
+    def get_orders_details_by_user(self, user_id: int) -> QuerySet[Transaction]:
+        ...
+
+    @abstractmethod
+    def get_orders_details(self) -> QuerySet[Transaction]:
+        ...

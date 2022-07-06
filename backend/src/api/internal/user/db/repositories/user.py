@@ -17,7 +17,7 @@ class UserRepository(IUserRepository):
         if amount <= 0:
             raise ValueError("Amount must be greater than 0")
 
-        Profile.objects.select_for_update().filter(id=profile_id)[:1].update(balance=F("balance") - amount)
+        Profile.objects.select_for_update().filter(id=profile_id)[:1].update_amount(balance=F("balance") - amount)
 
     def many_increase_balance(self, profile_ids: Iterable[int], amount: int) -> None:
         Profile.objects.select_for_update().bulk_update(
