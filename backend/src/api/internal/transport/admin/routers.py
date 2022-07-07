@@ -1,11 +1,13 @@
 from rest_framework.routers import SimpleRouter
 
-from api.internal.transport.admin.AdminViewSet import AdminViewSet
-from api.internal.transport.admin.ProductAdministrationViewSet import ProductAdministrationViewSet
-from api.internal.transport.admin.StorageCellAdministrationViewSet import StorageCellAdministrationViewSet
+from api.internal.transport.admin.handlers import (
+    AdminViewSet,
+    ProductAdministrationViewSet,
+    StorageCellAdministrationViewSet,
+)
 
-adminRouter = SimpleRouter()
-adminRouter.register("admin", AdminViewSet, basename="admin")
+admin_router = SimpleRouter()
+admin_router.register("admin", AdminViewSet, basename="admin")
 
 product_admin_router = SimpleRouter()
 product_admin_router.register("admin/products", ProductAdministrationViewSet, basename="admin.products")

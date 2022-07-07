@@ -1,1 +1,0 @@
-from .GiftSerializer import GiftSerializer
