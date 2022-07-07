@@ -1,4 +1,2 @@
-from .ProductIDsSerializer import ProductIDsSerializer
 from .ProductSerializer import ProductSerializer
 from .StorageCellSerializer import StorageCellSerializer
-from .StorageIDsSerializer import StorageIDsSerializer

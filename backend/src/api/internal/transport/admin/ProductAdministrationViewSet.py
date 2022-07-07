@@ -4,20 +4,20 @@ from json import JSONDecodeError
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
-from api.internal.serializers.product import ProductIDsSerializer, ProductSerializer, StorageCellSerializer
+from api.internal.models.store import Product
+from api.internal.serializers.product import ProductSerializer
+from api.internal.serializers.product.StorageInSerializer import StorageInSerializer
 from api.internal.services.admin import try_create_product
-from api.internal.services.admin.service import delete_products
 
 
-class ProductAdministrationView(APIView):
+class ProductAdministrationViewSet(ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
 
-    def post(self, request: Request) -> Response:
-        if request.data is not dict:
-            return Response(status=400)
-
+    def create(self, request: Request, *args, **kwargs) -> Response:
         data = {
             "name": request.data.get("name"),
             "photo": request.FILES.get("photo"),
@@ -31,7 +31,7 @@ class ProductAdministrationView(APIView):
         try:
             cells = json.loads(str(request.data.get("cells")))
 
-            cell_serializer = StorageCellSerializer(data=cells, many=True)
+            cell_serializer = StorageInSerializer(data=cells, many=True)
             cell_serializer.is_valid(raise_exception=True)
         except JSONDecodeError:
             return Response(status=400)
@@ -42,15 +42,3 @@ class ProductAdministrationView(APIView):
 
         return Response(data=ProductSerializer(product, context={"request": request}).data)
 
-    def delete(self, request: Request) -> Response:
-        if request.data is not dict:
-            return Response(status=400)
-
-        data = {"ids": request.data}
-
-        serializer = ProductIDsSerializer(data=data)
-        serializer.is_valid(raise_exception=True)
-
-        delete_products(data["ids"])
-
-        return Response(status=200)

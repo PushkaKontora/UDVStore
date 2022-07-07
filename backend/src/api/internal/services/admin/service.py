@@ -55,11 +55,3 @@ def try_create_product(
             return product
     except IntegrityError:
         return None
-
-
-def delete_products(ids: List[int]) -> None:
-    Product.objects.filter(id__in=ids).delete()
-
-
-def delete_cells(ids: List[int]) -> None:
-    StorageCell.objects.filter(id__in=ids).delete()
