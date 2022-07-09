@@ -1,3 +1,4 @@
+from django.conf import settings
 from rest_framework import serializers
 
 from api.internal.models.product import Product
@@ -17,7 +18,9 @@ class ProductDetailsSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source="product.name")
     photo = serializers.ImageField(source="product.photo")
     description = serializers.CharField(source="product.description")
-    price = serializers.IntegerField(source="product.price")
+    price = serializers.DecimalField(
+        source="product.price", max_digits=settings.COINS_AMOUNT_DIGITS, decimal_places=settings.COINS_DECIMAL_PLACES
+    )
 
     class Meta:
         model = StorageCell

@@ -1,3 +1,4 @@
+from decimal import Decimal
 from typing import Iterable, List, Optional, Union
 
 from django.contrib.auth.models import User
@@ -28,7 +29,7 @@ def get_orders_by_profile(profile: Profile) -> QuerySet[Order]:
     return Order.objects.filter(profile=profile, in_cart=True)
 
 
-def get_total(order: Order) -> int:
+def get_total(order: Order) -> Decimal:
     return order.storage_cell.product.price * order.amount
 
 

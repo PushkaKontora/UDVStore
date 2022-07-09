@@ -1,3 +1,4 @@
+from decimal import Decimal
 from typing import Iterable, List, Optional
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -44,7 +45,7 @@ def try_connect_transactions(old_transaction: Transaction, response: Transaction
 
 
 def try_create_product(
-    name: str, photo: InMemoryUploadedFile, description: str, price: int, cells: List[dict]
+    name: str, photo: InMemoryUploadedFile, description: str, price: Decimal, cells: List[dict]
 ) -> Optional[Product]:
     try:
         with atomic():

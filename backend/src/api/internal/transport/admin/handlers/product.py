@@ -1,4 +1,5 @@
 import json
+from decimal import Decimal
 from json import JSONDecodeError
 
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
@@ -36,7 +37,7 @@ class ProductAdministrationViewSet(ModelViewSet):
         except JSONDecodeError:
             return Response(status=400)
 
-        product = try_create_product(data["name"], data["photo"], data["description"], data["price"], cells)
+        product = try_create_product(data["name"], data["photo"], data["description"], Decimal(data["price"]), cells)
         if not product:
             return Response(status=422)
 

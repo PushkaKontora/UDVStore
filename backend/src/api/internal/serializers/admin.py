@@ -1,5 +1,6 @@
 from typing import List
 
+from django.conf import settings
 from django.core.validators import MinValueValidator
 from rest_framework import serializers
 
@@ -10,7 +11,11 @@ from api.internal.services.user import get_profiles
 
 class AccrualRequestSerializer(serializers.Serializer):
     profile_ids = serializers.PrimaryKeyRelatedField(queryset=get_profiles(), many=True, allow_empty=False)
-    price = serializers.IntegerField(validators=[MinValueValidator(1)])
+    price = serializers.DecimalField(
+        max_digits=settings.COINS_AMOUNT_DIGITS,
+        decimal_places=settings.COINS_DECIMAL_PLACES,
+        validators=[MinValueValidator(1)],
+    )
     comment = serializers.CharField(max_length=Transaction.DESCRIPTION_LENGTH, allow_blank=True, allow_null=True)
 
     def update(self, instance, validated_data):

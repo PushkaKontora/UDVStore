@@ -8,7 +8,7 @@ migrate:
 	make command c="migrate ${o}"
 
 migration:
-	make command c="makemigrations ${o}"
+	make command c="makemigrations -n ${n}"
 
 user:
 	make command c="createsuperuser"

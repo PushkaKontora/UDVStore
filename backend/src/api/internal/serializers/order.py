@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from rest_framework import serializers
 
 from api.internal.models.order import Order
@@ -12,7 +14,7 @@ class OrderSerializer(serializers.ModelSerializer):
     product = ProductDetailsSerializer(source="storage_cell")
     total = serializers.SerializerMethodField(method_name="get_total")
 
-    def get_total(self, order: Order) -> int:
+    def get_total(self, order: Order) -> Decimal:
         return get_total(order)
 
     class Meta:

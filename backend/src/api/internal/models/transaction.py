@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.db.models import IntegerChoices
@@ -23,7 +24,12 @@ class Transaction(models.Model):
     destination = models.ForeignKey(
         Profile, on_delete=models.PROTECT, default=None, null=True, related_name="transactions_to_me"
     )
-    accrual = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    accrual = models.DecimalField(
+        max_digits=settings.COINS_AMOUNT_DIGITS,
+        decimal_places=settings.COINS_DECIMAL_PLACES,
+        default=0,
+        validators=[MinValueValidator(0)],
+    )
     order = models.OneToOneField(Order, null=True, on_delete=models.PROTECT)
     description = models.CharField(max_length=DESCRIPTION_LENGTH, default=None, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)

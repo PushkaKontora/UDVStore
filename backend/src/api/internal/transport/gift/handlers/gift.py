@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -26,7 +28,7 @@ class GiftViewSet(ViewSet):
 
         destinations = get_destinations(source.id, data["destination"])
         description = data["description"]
-        accrual = int(data["accrual"])
+        accrual = Decimal(data["accrual"])
 
         transactions = try_gift(source, destinations, description, accrual)
 
