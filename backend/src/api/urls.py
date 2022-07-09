@@ -1,6 +1,12 @@
 from django.urls import include, path
 
-from api.internal.transport.admin.routers import admin_router, product_admin_router, storage_admin_router
+from api.internal.transport.activity.routers import activities_router
+from api.internal.transport.admin.routers import (
+    activity_admin_router,
+    admin_router,
+    product_admin_router,
+    storage_admin_router,
+)
 from api.internal.transport.cart.routers import cart_router
 from api.internal.transport.gift.routers import gift_router
 from api.internal.transport.order.routers import order_router, orders_router
@@ -15,8 +21,10 @@ urlpatterns = [
     path("", include(orders_router.urls)),
     path("", include(order_router.urls)),
     path("", include(admin_router.urls)),
+    path("", include(activities_router.urls)),
     path("", include(product_admin_router.urls)),
     path("", include(storage_admin_router.urls)),
+    path("", include(activity_admin_router.urls)),
     path("auth/", include("djoser.urls")),
     path("auth/", include("djoser.urls.authtoken")),
 ]
