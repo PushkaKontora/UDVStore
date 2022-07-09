@@ -11,7 +11,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ["id", "name", "description", "price", "photo", "cells"]
+        fields = ["id", "name", "description", "price", "photo", "is_visible", "cells"]
 
 
 class ProductDetailsSerializer(serializers.ModelSerializer):
@@ -25,3 +25,7 @@ class ProductDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = StorageCell
         fields = ["id", "name", "photo", "description", "price", "size", "amount"]
+
+
+class ProductIDSerializer(serializers.Serializer):
+    id = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())

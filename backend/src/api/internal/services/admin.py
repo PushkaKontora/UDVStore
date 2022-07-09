@@ -58,3 +58,14 @@ def try_create_product(
             return product
     except IntegrityError:
         return None
+
+
+def toggle_product_visible(product_id: int) -> bool:
+    product = Product.objects.filter(id=product_id).first()
+    if not product:
+        raise ValueError(f"Unknown product {product_id}")
+
+    product.is_visible = not product.is_visible
+    product.save(update_fields=["is_visible"])
+
+    return product.is_visible

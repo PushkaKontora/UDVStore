@@ -7,7 +7,6 @@ from api.internal.serializers.product import ProductSerializer
 
 
 class ProductViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.filter(is_visible=True)
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
-    http_method_names = ["GET"]

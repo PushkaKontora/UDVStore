@@ -2,15 +2,16 @@ import json
 from decimal import Decimal
 from json import JSONDecodeError
 
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from api.internal.models.product import Product
-from api.internal.serializers.product import ProductSerializer
+from api.internal.serializers.product import ProductIDSerializer, ProductSerializer
 from api.internal.serializers.storage_cell import StorageInSerializer
-from api.internal.services.admin import try_create_product
+from api.internal.services.admin import toggle_product_visible, try_create_product
 
 
 class ProductAdministrationViewSet(ModelViewSet):
@@ -42,3 +43,12 @@ class ProductAdministrationViewSet(ModelViewSet):
             return Response(status=422)
 
         return Response(data=ProductSerializer(product, context={"request": request}).data)
+
+    @action(methods=["PATCH"], detail=True)
+    def switch(self, request: Request, pk=None) -> Response:
+        serializer = ProductIDSerializer(data={"id": pk})
+        serializer.is_valid(raise_exception=True)
+
+        is_visible = toggle_product_visible(pk)
+
+        return Response(data={"is_visible": is_visible})

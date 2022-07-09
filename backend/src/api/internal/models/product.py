@@ -12,6 +12,7 @@ class Product(models.Model):
         decimal_places=settings.COINS_DECIMAL_PLACES,
         validators=[MinValueValidator(0)],
     )
+    is_visible = models.BooleanField(default=True)
 
     class Meta:
         db_table = "products"
