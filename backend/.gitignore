@@ -7,3 +7,4 @@ local_settings.py
 __pycache__
 *.pyc
 src/static
+src/media

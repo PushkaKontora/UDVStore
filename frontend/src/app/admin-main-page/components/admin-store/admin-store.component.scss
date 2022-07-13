@@ -1,0 +1,124 @@
+.wrapper {
+    height: 100%;
+
+    margin: 0 1.5rem 0rem 1.5rem;
+
+    .btn-add-product {
+        height: 8vh;
+    }
+
+    .header-products-list {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1.5fr;
+        padding: 0 0.625rem;
+        background-color: #FFFFFF;
+        color: #A0A0A0;
+        border: 1px solid #CDCDCD;
+        font-size: 1.1rem;
+        line-height: 1.5rem;
+        text-align: center;
+        font-family: "KarpaNuenPro", sans-serif;
+        font-weight: 400;
+    }
+
+    .products-list {
+        height: 73.5vh;
+        margin: 0.5rem 0;
+        overflow: auto;
+
+        &::-webkit-scrollbar {
+            width: 0;
+        }
+
+        .grid-wrapper {
+            text-align: center;
+
+            .color-card {
+                border: 1px solid #CDCDCD;
+                display: grid;
+                grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1.5fr;
+                align-items: center;
+                justify-items: center;
+                padding: 0.625rem;
+                margin-top: 0.5rem;
+
+                &__grey {
+                    background-color: #EFEFEF;
+                }
+
+                &__white {
+                    background: #FFFFFF;
+                }
+
+                .element-grid {
+                    padding: 0.3rem;
+                    font-size: 1.3rem;
+                    font-weight: 500;
+
+                    &__image {
+                        img {
+                            max-width: 100%;
+                            height: auto;
+                        }
+                    }
+
+                    &__name {
+                        color: #373737;
+                        font-family: "Roboto Bold", serif;
+                        font-size: 1.125rem;
+                        line-height: 1.3125rem;
+                    }
+
+                    &__price {
+                        ul {
+                            align-items: center;
+                            background-color: #2CF2B3;
+                            color: #262626;
+                            padding: 0.1em 0.2em 0.1em 0.55em;
+                            border-radius: 1em;
+                            display: flex;
+
+                            li {
+                                display: inline-block;
+                                margin: 0;
+                                padding: 0;
+                                vertical-align: middle;
+
+                                img {
+                                    height: 1.4rem;
+                                }
+                            }
+
+                            li.wrapper_num {
+                                font-size: 1.2rem;
+                                line-height: 1.3rem;
+                                padding-right: 0.1em;
+                            }
+                        }
+                    }
+
+                    &__amount {
+                        text-decoration-line: underline;
+                        font-size: 1.3rem;
+                        font-weight: 500;
+                        color: #383838;
+                    }
+
+                    &__cells {
+                        border-bottom: 1px solid black;
+                        color: #373737;
+                        font-size: 1.2rem;
+                    }
+
+                    &__action {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr 1fr;
+                        .image {
+                            padding: 0.2rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -4,7 +4,7 @@ import {AdminRequestComponent} from "./components/admin-requests/admin-request.c
 import {MerchStoreComponent} from "../main-page/components/merch-store/merch-store.component";
 import {MainRegulationsComponent} from "../main-page/components/main-regulations/main-regulations.component";
 import {AdminMainPageWrapperComponent} from "./components/admin-main-page -wrapper/admin-main-page-wrapper.component";
-import {AdminScoreComponent} from "./components/admin-score/admin-score.component";
+import {AdminStoreComponent} from "./components/admin-store/admin-store.component";
 import {AdminOrdersComponent} from "./components/admin-orders/admin-orders.component";
 import {AdminAccrualComponent} from "./components/admin-accrual/admin-accrual.component";
 import {AdminRulesComponent} from "./components/admin-rules/admin-rules.component";
@@ -28,7 +28,7 @@ const childrenRoutes: Routes = [
             {path: 'processing-orders', component: AdminOrdersProcessingOrdersComponent,}
         ]
     },
-    {path: 'score', component: AdminScoreComponent},
+    {path: 'score', component: AdminStoreComponent},
     {path: 'rules', component: AdminRulesComponent},
 ]
 

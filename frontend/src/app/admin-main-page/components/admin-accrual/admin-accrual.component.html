@@ -11,7 +11,7 @@
                     class="control inputField inputField__name"
                     [tuiTextfieldLabelOutside]="true"
                     [expandable]="true"
-                    [formControl]="testValue"
+                    formControlName="employee"
                     [tuiDropdownMaxHeight]="180"
                     (searchChange)="onSearchChange($event)"
                     tuiTextfieldSize="s"
@@ -40,29 +40,49 @@
             </div>
         </div>
         <div class="value">
-            <div class="title title__coins">UCoins <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
-                                                        alt="greenBlockCoins"></div>
-            <div class="content"><input type="number"
-                                        placeholder="Количество койнов "
-                                        class="inputField"
-                                        formControlName="coins"
-            ></div>
-        </div>
-        <div class="value">
             <div class="title">АКТИВНОСТЬ</div>
             <div class="content">
-                <input type="text"
-                       placeholder="Напишите что-нибудь..."
-                       class="inputField"
-                       formControlName="activity"
+                <tui-combo-box
+                    formControlName="activity"
+                    [stringify]="stringify"
+                    (input)="makeOwnDescriptionActivity($event)"
                 >
-                <button type="submit"
-                        class="button"
-                        [disabled]="writePers.invalid"
-                        (click)="openModel()"
-                >НАЧИСЛИТЬ
-                </button>
+
+                    <tui-data-list *tuiDataList>
+                        <button
+                            *ngFor="let item of activities | tuiFilterByInputWith : stringify"
+                            tuiOption
+                            [value]="item"
+                            (click)="changeNumberCoins(item)"
+                        >
+                            {{item.description}}
+                        </button>
+                    </tui-data-list>
+                </tui-combo-box>
             </div>
+        </div>
+        <div class="value">
+            <div class="title title__coins">UCoins <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
+                                                        alt="greenBlockCoins"></div>
+            <div class="content">
+                <input type="number"
+                       placeholder="Количество койнов "
+                       class="inputField"
+                       formControlName="coins"
+                       #inputAccrualCoins
+
+                       [attr.disabled]="disabledInputCoins"
+                >
+            </div>
+        </div>
+        <div class="value">
+            <button type="submit"
+                    class="btn"
+                    [disabled]="writePers.value.coins === null  "
+                    (click)="openModel()"
+            >
+                НАЧИСЛИТЬ
+            </button>
         </div>
     </form>
     <div class="modal-wrapper" id="modal-1">
@@ -79,7 +99,7 @@
         <div class="title">ИСТОРИЯ</div>
         <div class="content">Разверните карточку, чтобы увидеть историю сотрудника</div>
         <div class="wrapperCard">
-            <div *ngFor="let persona of testValue.value" class="card">
+            <div *ngFor="let persona of writePers.controls['employee'].value" class="card">
                 <div class="selectedEmployee selectedEmployee__photo" *ngIf="persona?.photo === null">
                     <img src="../../../../assets/images-main-page/account.svg" alt="avatar" class="account">
                 </div>
@@ -104,8 +124,13 @@
                             <div class="img"><img src="{{card.photo}}" alt="card photo"></div>
                             <div class="content">
                                 <div class="valueContent valueContent__leftSide">
-                                    <div class="valueTextInformation valueTextInformation__title">
+                                    <div class="valueTextInformation valueTextInformation__title"
+                                         *ngIf="card.type !== 'IDeposit'">
                                         {{card.title}}
+                                    </div>
+                                    <div class="valueTextInformation valueTextInformation__title"
+                                         *ngIf="card.type === 'IDeposit'">
+                                        {{card.title}} начисление
                                     </div>
 
                                     <div class="valueTextInformation valueTextInformation__IBought"

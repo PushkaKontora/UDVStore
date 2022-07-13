@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginReactFormComponent} from "./components/login-react-form/login-react-form.component";
+import {AboutGuard} from "./guards/about.component";
 
 const routes: Routes = [
     {
@@ -8,7 +9,7 @@ const routes: Routes = [
             .then(mod => mod.MainPageModule)
     },
     {
-        path: 'admin', loadChildren: () => import('../admin-main-page/admin-main-page.module')
+        path: 'admin', canActivate: [AboutGuard], loadChildren: () => import('../admin-main-page/admin-main-page.module')
             .then(mod => mod.AdminMainPageModule)
     },
     {path: '', component: LoginReactFormComponent},

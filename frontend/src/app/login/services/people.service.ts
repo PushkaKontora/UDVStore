@@ -1,13 +1,11 @@
-import {ElementRef, Injectable, ViewChild} from '@angular/core';
+import { Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {FormGroup} from "@angular/forms";
-import {IUser, products} from "../../../interfaces/interfaces";
-import {BehaviorSubject, Observable, Subscription} from "rxjs";
-import {SearchStringService} from "../../services/searchString.service";
+import {IUser} from "../../../interfaces/interfaces";
+import {BehaviorSubject, Subscription} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
 import {environment} from "../../../environments/environment";
-import {HistoryEventFactory} from "../../personal-area/components/personal-history/history-event-factory.service";
+import {IProduct} from "../../../interfaces/products";
 
 
 @Injectable({
@@ -115,7 +113,7 @@ export class PeopleService {
     }
 
     public getProducts() {
-        return this._http.get<products[]>(this._urlApiProducts, this.optionsForHttp);
+        return this._http.get<IProduct[]>(this._urlApiProducts, this.optionsForHttp);
     }
 }
 

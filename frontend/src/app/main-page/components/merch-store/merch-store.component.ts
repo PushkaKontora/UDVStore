@@ -1,10 +1,10 @@
 import {Component, OnInit, Renderer2} from '@angular/core';
 import {StoreService} from "../../services/store.service";
-import {IUser, products} from "../../../../interfaces/interfaces";
+import {IUser} from "../../../../interfaces/interfaces";
 import {PeopleService} from "../../../login/services/people.service";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Observable, Subscription} from "rxjs";
+import {FormBuilder} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
+import {IProduct} from "../../../../interfaces/products";
 
 
 @Component({
@@ -13,12 +13,12 @@ import {ActivatedRoute, Router} from "@angular/router";
     styleUrls: ['./merch-store.component.scss']
 })
 export class MerchStoreComponent implements OnInit {
-    public storeProducts!: products[];
+    public storeProducts!: IProduct[];
     public loaded: boolean = false;
     public amountMerch: number = 1;
     public priceMerchValue: number = 0;
     public user: IUser;
-    public selectedProduct!: products;
+    public selectedProduct!: IProduct;
 
     private _cellsId: number = 1;
 
@@ -36,7 +36,7 @@ export class MerchStoreComponent implements OnInit {
     ngOnInit(): void {
         this._peopleService.getProducts()
             .subscribe({
-                next: (res: products[]) => this.storeProducts = res,
+                next: (res: IProduct[]) => this.storeProducts = res,
                 complete: () => {
                     this.loaded = true;
                     this._peopleService.findUser.subscribe((res) => {
@@ -56,7 +56,7 @@ export class MerchStoreComponent implements OnInit {
     }
 
 
-    public chooseProduct(product: products, amountProduct: number) {
+    public chooseProduct(product: IProduct, amountProduct: number) {
         this._storeService.postSelectedProduct(amountProduct, product.cells[this._cellsId - 1].id)
             .subscribe({
                 next: () => {
@@ -70,7 +70,7 @@ export class MerchStoreComponent implements OnInit {
         });
     }
 
-    public openModel(nameModel: string, itemMerch: products) {
+    public openModel(nameModel: string, itemMerch: IProduct) {
         this.selectedProduct = itemMerch;
         this.priceMerchValue = itemMerch.price;
         document.getElementById(nameModel)!.style.display = 'block';
@@ -101,7 +101,7 @@ export class MerchStoreComponent implements OnInit {
         this.openModel('modal2', this.selectedProduct);
         this._cellsId = 1;
         this.amountMerch = 1;
-        this.priceMerchValue= 0;
+        this.priceMerchValue = 0;
     }
 
     public reduceAmount() {

@@ -1,14 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {IUser, products, UsersSearch} from "../../../../interfaces/interfaces";
+import {IUser, UsersSearch} from "../../../../interfaces/interfaces";
 import {PeopleService} from "../../../login/services/people.service";
 import {StoreService} from "../../services/store.service";
-import {delay, filter, Observable, of, startWith, Subject, Subscription, switchMap} from "rxjs";
+import {delay, filter, Observable, of, startWith, Subject, switchMap} from "rxjs";
 import {SearchStringService} from "../../../services/searchString.service";
 import {User} from "../../../../generalClasses/User";
 import {TuiBooleanHandler} from "@taiga-ui/cdk";
-import {MerchStoreComponent} from "../merch-store/merch-store.component";
 
 
 @Component({

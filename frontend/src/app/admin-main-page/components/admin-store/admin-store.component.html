@@ -1,0 +1,98 @@
+<div class="wrapper">
+
+    <div class="btn-add-product">
+        fffff
+    </div>
+    <div class="header-products-list">
+        <div class="header-element">обложка</div>
+        <div class="header-element">наименование</div>
+        <div class="header-element">стоимость</div>
+        <div class="header-element">количество</div>
+        <div class="header-element">размер</div>
+        <div class="header-element">действия</div>
+    </div>
+    <div class="products-list">
+        <div class="grid-wrapper" *ngFor="let product of storageElements">
+            <div class="color-card__grey color-card" *ngIf="!product?.is_visible">
+                <div class="element-grid element-grid__image">
+                    <img src="{{product?.photo}}" alt="image product">
+                </div>
+                <div class="element-grid">{{product?.name}}</div>
+                <div class="element-grid">{{product?.price}}</div>
+                <div class="element-grid">{{product?.generalAmount}}</div>
+                <div class="element-grid" *ngIf="product.cells.length === 1">-</div>
+                <div class="element-grid" *ngIf="product.cells.length > 1">{{product?.dimensionLine}}</div>
+                <div class="element-grid element-grid__action ">
+                    <div class="image" *ngIf="product?.is_visible">
+                        <img src="../../../../assets/images-admin/store-action/visibleGoods.svg" alt="visibleGoods"
+                             class="image-action">
+                    </div>
+                    <div class="image" *ngIf="!product?.is_visible">
+                        <img src="../../../../assets/images-admin/store-action/invisibleGoods.svg" alt="invisibleGoods"
+                             class="image-action">
+                    </div>
+                    <div class="image" *ngIf="!product?.is_visible">
+                        <img src="../../../../assets/images-admin/store-action/changeProductWhite.svg"
+                             alt="changeProduct"
+                             class="image-action">
+                    </div>
+                    <div class="image" *ngIf="product?.is_visible">
+                        <img src="../../../../assets/images-admin/store-action/changeProductGrey.svg"
+                             alt="changeProduct"
+                             class="image-action">
+                    </div>
+                    <div class="image">
+                        <img src="../../../../assets/images-admin/store-action/deleteProduct.svg" alt="deleteProduct"
+                             class="image-action">
+                    </div>
+                </div>
+            </div>
+            <div class="color-card__white color-card" *ngIf="product?.is_visible">
+                <div class="element-grid element-grid__image">
+                    <img src="{{product?.photo}}" alt="image product">
+                </div>
+                <div class="element-grid element-grid__name">{{product?.name}}</div>
+                <div class="element-grid element-grid__price ">
+                    <ul>
+                        <li class="wrapper_num">
+                            {{product?.price}}
+                        </li>
+                        <li>
+                            <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
+                                 alt="greenBlockCoins">
+                        </li>
+                    </ul>
+                </div>
+                <div class="element-grid element-grid__amount">{{product?.generalAmount}}</div>
+                <div class="element-grid element-grid" *ngIf="product.cells.length === 1">-</div>
+                <div class="element-grid element-grid__cells"
+                     *ngIf="product.cells.length > 1">{{product?.dimensionLine}}</div>
+                <div class="element-grid element-grid__action ">
+                    <div class="image">
+                        <img *ngIf="product?.is_visible"
+                             src="../../../../assets/images-admin/store-action/visibleGoods.svg" alt="visibleGoods"
+                             class="image-action">
+                        <img *ngIf="!product?.is_visible"
+                             src="../../../../assets/images-admin/store-action/invisibleGoods.svg" alt="invisibleGoods"
+                             class="image-action">
+                    </div>
+                    <div class="image">
+                        <img *ngIf="!product?.is_visible"
+                             src="../../../../assets/images-admin/store-action/changeProductWhite.svg"
+                             alt="changeProduct"
+                             class="image-action">
+                        <img *ngIf="product?.is_visible"
+                             src="../../../../assets/images-admin/store-action/changeProductGrey.svg"
+                             alt="changeProduct"
+                             class="image-action">
+                    </div>
+
+                    <div class="image">
+                        <img src="../../../../assets/images-admin/store-action/deleteProduct.svg" alt="deleteProduct"
+                             class="image-action">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

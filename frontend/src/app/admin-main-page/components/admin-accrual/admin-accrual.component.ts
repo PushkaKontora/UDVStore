@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {delay, EMPTY, filter, first, Observable, of, retry, startWith, Subject, switchMap, takeUntil} from "rxjs";
+import {delay, filter, Observable, of, startWith, Subject, switchMap} from "rxjs";
 import {IUser, UsersSearch} from "../../../../interfaces/interfaces";
 import {SearchStringService} from "../../../services/searchString.service";
 import {User} from "../../../../generalClasses/User";
@@ -10,6 +10,8 @@ import {PeopleService} from "../../../login/services/people.service";
 import {ITransaction} from "../../../../interfaces/transaction";
 import {IHistoryEvent} from "../../../personal-area/components/personal-history/interfaces/components/IHistoryEvent";
 import {HistoryEventFactory} from "../../../personal-area/components/personal-history/history-event-factory.service";
+import {ICoinsActivity} from "../../../../interfaces/coinsActivity";
+import {RequestService} from "../../services/request.service";
 
 
 const databaseMockData: UsersSearch[] = [];
@@ -18,22 +20,43 @@ const databaseMockData: UsersSearch[] = [];
     selector: 'personal-activity',
     templateUrl: './admin-accrual.component.html',
     styleUrls: ['./admin-accrual.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminAccrualComponent implements OnInit {
-    public writePers: FormGroup = new FormGroup({});
-    search$ = new Subject<string>();
-    public testValue = new FormControl();
+    public search$ = new Subject<string>();
     public foundUsers!: UsersSearch[];
     public events: IHistoryEvent[];
     public pers: IUser;
-
     public click: boolean = false;
+    public disabledInputCoins: true | null = null;
+    public activities?: ICoinsActivity[] ;
+
+    @ViewChild('inputAccrualCoins')
+    inputAccrualCoins: ElementRef;
+
+    readonly stringify = ({description}: { description: string }): string => description;
+
+
+    readonly writePers = new FormGroup({
+        employee: new FormControl(),
+        coins: new FormControl(null, [Validators.required, Validators.min(1)]),
+        activity: new FormControl(null),
+    });
+
+    readonly items$: Observable<readonly UsersSearch[] | null> = this.search$.pipe(
+        filter(value => value !== null),
+        switchMap(search =>
+            this.serverRequest(search).pipe(startWith<readonly UsersSearch[] | null>(null)),
+        ),
+        startWith(databaseMockData),
+    );
 
     constructor(
         private _searchStringService: SearchStringService,
         private _router: Router,
         private _historyService: PersonalHistoryService,
         private _peopleService: PeopleService,
+        private _requestService: RequestService,
     ) {
         if (this._searchStringService.foundUsers) {
             this.foundUsers = this._searchStringService.foundUsers;
@@ -47,21 +70,18 @@ export class AdminAccrualComponent implements OnInit {
             }, () => {
                 this.makeUserArray();
             });
-
-        this.createForm();
+        this._requestService.getActivities()
+            .subscribe((activities: ICoinsActivity[]) => {
+                this.activities = activities;
+            });
     }
 
     ngOnInit(): void {
     }
 
-    public toTop(){
-
-    }
-
     public handleClick(event: Event): void {
         event.stopPropagation();
     }
-
 
     public openModel() {
         console.log("modal-1 was opened");
@@ -77,60 +97,38 @@ export class AdminAccrualComponent implements OnInit {
     }
 
     public onSubmit() {
-        this.writePers.patchValue({employee: this.testValue.value});
         let arrayId = [];
         for (let user of this.writePers.value.employee) {
             arrayId.push(user.id);
         }
-
+        console.log(arrayId + ' arrayId')
+        console.log(this.writePers.value.activity + ' acti')
+        console.log(this.writePers.value.coins + ' coins')
         this._searchStringService.postAdminAccrualCoins(arrayId, this.writePers.value.coins, this.writePers.value.activity)
             .subscribe(
                 (res: any) => {
                     this.writePers.reset();
                 });
         this.search$.next('');
-        // this.makeUserArray();
-        this.testValue = new FormControl();
+        this.disabledInputCoins = null;
+
     }
 
-    private createForm(): void {
-        this.writePers = new FormGroup({
-            employee: new FormControl(),
-            coins: new FormControl('', [Validators.required, Validators.min(1)]),
-            activity: new FormControl('', [Validators.required]),
-        });
+    public changeNumberCoins(item: ICoinsActivity) {
+        this.disabledInputCoins = true;
+        this.inputAccrualCoins.nativeElement.value = item.price;
+        this.inputAccrualCoins.nativeElement.classList.add('anotherChoice');
+
+        this.writePers.value.coins = item.price;
+        this.writePers.value.activity = item.description;
+        console.log(item.description)
     }
 
-    private makeUserArray(): void {
-        for (let user of this.foundUsers) {
-            databaseMockData.push(new User(user.id, user.username, user.first_name, user.last_name, user.email,
-                user.patronymic, user.balance, user.photo, user.is_staff));
-        }
-    }
-
-
-    readonly items$: Observable<readonly UsersSearch[] | null> = this.search$.pipe(
-        filter(value => value !== null),
-        switchMap(search =>
-            this.serverRequest(search).pipe(startWith<readonly UsersSearch[] | null>(null)),
-        ),
-        startWith(databaseMockData),
-    );
-
-
-    public onSearchChange(search: string | null) {
-        this.search$.next(search || '');
-    }
-
-    /**
-     * Server request emulation
-     */
-    private serverRequest(searchQuery: string): Observable<readonly UsersSearch[]> {
-        const result = databaseMockData.filter(user =>
-            user.toString().toLowerCase().includes(searchQuery.toLowerCase()),
-        );
-
-        return of(result).pipe(delay(Math.random() * 1000 + 500));
+    public makeOwnDescriptionActivity(event: any) {
+        this.disabledInputCoins = null;
+        this.inputAccrualCoins.nativeElement.value = event.target.value;
+        this.writePers.value.activity = event.target.value
+        //this.writePers.value.coins = this.writePers.value.coins;
     }
 
     public openHistory(user: IUser) {
@@ -144,5 +142,30 @@ export class AdminAccrualComponent implements OnInit {
                     .filter((event: IHistoryEvent | null) => event !== null);
             });
     }
+
+    public onSearchChange(search: string | null) {
+        this.search$.next(search || '');
+    }
+
+    private makeUserArray(): void {
+        for (let user of this.foundUsers) {
+            databaseMockData.push(new User(user.id, user.username, user.first_name, user.last_name, user.email,
+                user.patronymic, user.balance, user.photo, user.is_staff));
+        }
+    }
+
+    /**
+     * Server request emulation
+     */
+    private serverRequest(searchQuery: string): Observable<readonly UsersSearch[]> {
+        const result = databaseMockData.filter(user =>
+            user.toString().toLowerCase().includes(searchQuery.toLowerCase()),
+        );
+
+        return of(result).pipe(delay(Math.random() * 1000 + 500));
+    }
+
 }
+
+// при нажатии на элемент выпадающего списка - срабатывает activity формы. ха отсутствием этого, выводить значение по функции fff
 
