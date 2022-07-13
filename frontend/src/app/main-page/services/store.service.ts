@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Subscription} from "rxjs";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {cell, IUser, products} from "../../../interfaces/interfaces";
+import {HttpClient} from "@angular/common/http";
 import {PeopleService} from "../../login/services/people.service";
 import {environment} from "../../../environments/environment";
+import {IProduct} from "../../../interfaces/products";
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +10,7 @@ import {environment} from "../../../environments/environment";
 export class StoreService {
     private _urlApiCartPost: string = environment.api_address + '/cart/';
     private _urlApiBuyPost: string = environment.api_address + '/cart/pay/';
-    public storeProducts!: products[];
+    public storeProducts!:IProduct[];
     public token?: string;
 
     constructor(private _http: HttpClient, private _peopleService: PeopleService) {

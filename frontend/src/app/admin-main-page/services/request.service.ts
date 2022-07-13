@@ -5,15 +5,18 @@ import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {ICoinsActivity} from "../../../interfaces/coinsActivity";
+import {IProduct} from "../../../interfaces/products";
 
 @Injectable({
     providedIn: 'root'
 })
 export class RequestService {
-    private readonly _depositsUrl: string = environment.api_address + "/admin/deposits/"
+    private readonly _depositsUrl: string = environment.api_address + "/admin/deposits/";
     private readonly _approveUrl: string = environment.api_address + "/admin/approve/"
     private readonly _cancelUrl: string = environment.api_address + "/admin/cancel/";
-    private readonly _getActivitiesUrl: string = environment.api_address + "/activities/"
+    private readonly _getActivitiesUrl: string = environment.api_address + "/activities/";
+    private readonly _getStorageElementsUrl: string = environment.api_address + "/admin/products/";
+
 
     constructor(private _http: HttpClient, private _peopleService: PeopleService) {
     }
@@ -39,5 +42,9 @@ export class RequestService {
 
     public getActivities(): Observable<ICoinsActivity[]> {
         return this._http.get<ICoinsActivity[]>(this._getActivitiesUrl, this._peopleService.optionsForHttp)
+    }
+
+    public getStorageElements(): Observable<IProduct[]> {
+        return this._http.get<IProduct[]>(this._getStorageElementsUrl, this._peopleService.optionsForHttp)
     }
 }

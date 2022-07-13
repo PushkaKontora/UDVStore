@@ -22,14 +22,6 @@ export interface UsersSearch{
     is_staff: boolean
 }
 
-export interface products {
-    id: number,
-    name: string,
-    description: string,
-    price: number,
-    photo: string,
-    cells: cell[],
-}
 
 export interface cell {
     id: number,
