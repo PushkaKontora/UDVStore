@@ -102,7 +102,7 @@
                 <div class="modal-container2">
                     <div class="title">
                         Вы уверены, что хотите навсегда удалить
-                        "ТОЛСТОВКА UDVтельная" из магазина?
+                        "{{elementForInteraction?.name}}" из магазина?
                     </div>
                     <div class="btn-action-container">
                         <button class="btn-action btn-action__cancel" (click)="closeModel('deleteProduct')">
@@ -130,20 +130,30 @@
                         </div>
                     </div>
                     <div class="modal-content">
-                        <div class="content-flex-container">
+                        <div class="content-flex-container"  *ngIf="elementForInteraction">
                             <div class="element-flex">
                                 <div class="field-change">
                                     <label for="name">НАЗВАНИЕ</label>
                                     <input type="text" id="name" placeholder="{{elementForInteraction?.name}}">
                                 </div>
                                 <div class="field-change">
-                                    <label for="price">НАЗВАНИЕ</label>
-                                    <input type="text" id="price" placeholder="{{elementForInteraction?.name}}">
+                                    <label for="price">
+                                        UCoins <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
+                                                    alt="greenBlockCoins">
+                                    </label>
+                                    <input type="text" id="price" placeholder="{{elementForInteraction?.price}}">
                                 </div>
-                                <div class="field-change">
-                                    <label for="bb">НАЗВАНИЕ</label>
-                                    <input type="text" id="bb" placeholder="{{elementForInteraction?.name}}">
+                                <div class="field-change"
+                                     *ngIf="elementForInteraction?.dimensionLine ; else uncountable">
+<!--                                    <label for="quantityStock">КОЛИЧЕСТВО НА СКЛАДЕ </label>-->
+<!--                                    <input type="text" id="quantityStock"-->
+<!--                                           placeholder="{{elementForInteraction.cells[0].amount}}">-->
                                 </div>
+                                <ng-template #uncountable>
+                                    <label for="quantityStockUncountable">КОЛИЧЕСТВО НА СКЛАДЕ </label>
+                                    <input type="text" id="quantityStockUncountable"
+                                           placeholder="{{elementForInteraction.cells[0].amount}}">
+                                </ng-template>
                             </div>
                             <div class="element-flex">
                                 <img src='{{elementForInteraction?.photo}}' alt="{{elementForInteraction?.name}}">

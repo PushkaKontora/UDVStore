@@ -35,6 +35,7 @@ export class AdminStoreComponent implements OnInit {
         document.body.style.overflow = "hidden";
         document.body.classList.add('modalOpen');
         this.elementForInteraction = product;
+        console.log(product)
     }
 
     public closeModel(nameModel: string) {
@@ -47,6 +48,7 @@ export class AdminStoreComponent implements OnInit {
         this._requestService.deleteProduct(this.elementForInteraction.id)
             .subscribe();
         this.closeModel(nameModal);
+        this.getStorageElements();
     }
 
 
