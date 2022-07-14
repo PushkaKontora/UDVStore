@@ -4,6 +4,7 @@ from rest_framework import serializers
 from api.internal.models.product import Product
 from api.internal.models.storage_cell import StorageCell
 from api.internal.serializers.storage_cell import StorageCellSerializer
+from api.internal.services.product import get_products
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -28,4 +29,4 @@ class ProductDetailsSerializer(serializers.ModelSerializer):
 
 
 class ProductIDSerializer(serializers.Serializer):
-    id = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
+    id = serializers.PrimaryKeyRelatedField(queryset=get_products())

@@ -8,14 +8,14 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from api.internal.models.product import Product
 from api.internal.serializers.product import ProductIDSerializer, ProductSerializer
 from api.internal.serializers.storage_cell import StorageInSerializer
 from api.internal.services.admin import toggle_product_visible, try_create_product
+from api.internal.services.product import get_products
 
 
 class ProductAdministrationViewSet(ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = get_products()
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
 
@@ -43,6 +43,11 @@ class ProductAdministrationViewSet(ModelViewSet):
             return Response(status=422)
 
         return Response(data=ProductSerializer(product, context={"request": request}).data)
+
+    def destroy(self, request, pk=None, **kwargs) -> Response:
+        self.get_queryset().filter(id=pk).update(is_deleted=True)
+
+        return Response(status=200)
 
     @action(methods=["PATCH"], detail=True)
     def switch(self, request: Request, pk=None) -> Response:

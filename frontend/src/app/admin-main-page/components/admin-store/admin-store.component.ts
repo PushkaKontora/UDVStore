@@ -5,10 +5,14 @@ import {IProduct} from "../../../../interfaces/products";
 @Component({
     selector: 'personal-orders',
     templateUrl: './admin-store.component.html',
-    styleUrls: ['./admin-store.component.scss']
+    styleUrls: [
+        './styles/admin-store.component.scss',
+        './styles/admin-store-popup.component.scss'
+    ]
 })
 export class AdminStoreComponent implements OnInit {
     public storageElements?: IProduct[];
+    public elementForInteraction: IProduct;
 
     constructor(private _requestService: RequestService) {
     }
@@ -17,13 +21,41 @@ export class AdminStoreComponent implements OnInit {
         this.getStorageElements();
     }
 
+    //
+    // public checkTypeNumber(number: number): boolean{
+    //     return Number.isInteger(number);
+    // }
+
+    public handleClick(event: Event): void {
+        event.stopPropagation();
+    }
+
+    public openModel(nameModel: string, product: IProduct) {
+        document.getElementById(nameModel)!.style.display = 'block';
+        document.body.style.overflow = "hidden";
+        document.body.classList.add('modalOpen');
+        this.elementForInteraction = product;
+    }
+
+    public closeModel(nameModel: string) {
+        document.getElementById(nameModel)!.style.display = 'none';
+        document.body.style.overflow = "visible";
+        document.body.classList.remove('modalOpen');
+    }
+
+    public deleteProduct(nameModal: string) {
+        this._requestService.deleteProduct(this.elementForInteraction.id)
+            .subscribe();
+        this.closeModel(nameModal);
+    }
+
+
     private getStorageElements(): void {
         let products: IProduct[];
         this._requestService.getStorageElements()
             .subscribe({
                 next: (elements: IProduct[]) => {
                     products = elements;
-                    console.log(products, 'storEl')
                 },
                 complete: () => {
                     products!.map((element: IProduct) => {
@@ -84,3 +116,8 @@ export class AdminStoreComponent implements OnInit {
         return lineSize.join(', ');
     }
 }
+
+
+/*
+   попапы изменения отличаются наличием dimensionLine
+ */

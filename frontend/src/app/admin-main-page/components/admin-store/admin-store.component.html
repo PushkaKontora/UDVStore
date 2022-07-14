@@ -76,7 +76,7 @@
                              src="../../../../assets/images-admin/store-action/invisibleGoods.svg" alt="invisibleGoods"
                              class="image-action">
                     </div>
-                    <div class="image">
+                    <div class="image" (click)="openModel('editProduct', product)">
                         <img *ngIf="!product?.is_visible"
                              src="../../../../assets/images-admin/store-action/changeProductWhite.svg"
                              alt="changeProduct"
@@ -87,12 +87,78 @@
                              class="image-action">
                     </div>
 
-                    <div class="image">
+                    <div class="image" (click)="openModel('deleteProduct', product)">
                         <img src="../../../../assets/images-admin/store-action/deleteProduct.svg" alt="deleteProduct"
                              class="image-action">
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="modal-wrapper" id="deleteProduct">
+        <div class="model" (click)="closeModel('deleteProduct')">
+            <div class="modal-container" (click)="handleClick($event)">
+                <div class="modal-container2">
+                    <div class="title">
+                        Вы уверены, что хотите навсегда удалить
+                        "ТОЛСТОВКА UDVтельная" из магазина?
+                    </div>
+                    <div class="btn-action-container">
+                        <button class="btn-action btn-action__cancel" (click)="closeModel('deleteProduct')">
+                            Отмена
+                        </button>
+                        <button class="btn-action btn-action__confirm" (click)="deleteProduct('deleteProduct')">
+                            Удалить из магазина
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modelBackground"></div>
+    </div>
+
+    <div class="modal-wrapper" id="editProduct">
+        <div class="model" (click)="closeModel('editProduct')">
+            <div class="center-modal-container" (click)="handleClick($event)">
+                <div class="modal-container2">
+                    <div class="header-modal-container">
+                        <div class="header-modal">ИЗМЕНЕНИЕ ТОВАРА</div>
+                        <div class="header-modal">
+                            <img src="../../../../assets/images-main-page/cross.svg" alt="cross"
+                                 (click)="closeModel('editProduct')">
+                        </div>
+                    </div>
+                    <div class="modal-content">
+                        <div class="content-flex-container">
+                            <div class="element-flex">
+                                <div class="field-change">
+                                    <label for="name">НАЗВАНИЕ</label>
+                                    <input type="text" id="name" placeholder="{{elementForInteraction?.name}}">
+                                </div>
+                                <div class="field-change">
+                                    <label for="price">НАЗВАНИЕ</label>
+                                    <input type="text" id="price" placeholder="{{elementForInteraction?.name}}">
+                                </div>
+                                <div class="field-change">
+                                    <label for="bb">НАЗВАНИЕ</label>
+                                    <input type="text" id="bb" placeholder="{{elementForInteraction?.name}}">
+                                </div>
+                            </div>
+                            <div class="element-flex">
+                                <img src='{{elementForInteraction?.photo}}' alt="{{elementForInteraction?.name}}">
+                            </div>
+                        </div>
+                        <div class="closerField">
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button>СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modelBackground"></div>
     </div>
 </div>

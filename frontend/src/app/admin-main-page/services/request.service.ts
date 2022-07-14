@@ -15,7 +15,8 @@ export class RequestService {
     private readonly _approveUrl: string = environment.api_address + "/admin/approve/"
     private readonly _cancelUrl: string = environment.api_address + "/admin/cancel/";
     private readonly _getActivitiesUrl: string = environment.api_address + "/activities/";
-    private readonly _getStorageElementsUrl: string = environment.api_address + "/admin/products/";
+    private readonly _getProductsUrl: string = environment.api_address + "/admin/products/";
+    private readonly _storageUrl: string = environment.api_address + "/admin/storage/";
 
 
     constructor(private _http: HttpClient, private _peopleService: PeopleService) {
@@ -45,6 +46,10 @@ export class RequestService {
     }
 
     public getStorageElements(): Observable<IProduct[]> {
-        return this._http.get<IProduct[]>(this._getStorageElementsUrl, this._peopleService.optionsForHttp)
+        return this._http.get<IProduct[]>(this._getProductsUrl, this._peopleService.optionsForHttp)
+    }
+
+    public deleteProduct(productId: number): Observable<IProduct> {
+        return this._http.delete<IProduct>(this._getProductsUrl + productId + '/', this._peopleService.optionsForHttp)
     }
 }
