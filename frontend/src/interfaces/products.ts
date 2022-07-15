@@ -9,5 +9,6 @@ export interface IProduct {
     cells: cell[],
     is_visible: boolean,
     generalAmount?: number,
-    dimensionLine ?: string,
+    dimensionLine?: string,
+    dimensionArray?: string[]
 }

@@ -49,20 +49,87 @@
 .center-modal-container {
     margin: 9rem auto auto auto;
     width: 39vw;
+    font-family: "Roboto Medium", sans-serif;
+    font-weight: 600;
+    color: #1C1B1B;
 
     .header-modal-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-family: "Roboto Medium", sans-serif;
-        font-weight: 600;
         font-size: 1.1rem;
         line-height: 1.3rem;
 
-        color: #1C1B1B;
+        img {
+            width: 1.3rem;
+        }
+    }
 
-        .img {
-            width:0.9rem;
+    .modal-content {
+
+        margin: 2rem 0 2rem 2rem;
+
+        .content-flex-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            column-gap: 1rem;
+
+            .field-change {
+                margin-bottom: 0.5rem;
+
+                label {
+                    width: 100%;
+                    text-align: start;
+                    display: block;
+                    font-size: 1.05rem;
+                    line-height: 1.275rem;
+                    margin-bottom: 0.2rem;
+
+                    img {
+                        width: 1.1rem;
+                        margin: auto 0;
+                    }
+                }
+
+                input {
+                    display: block;
+                    width: 100%;
+                    letter-spacing: 0.05em;
+                    color: #302E2E;
+                    border: #C4C4C4 solid 1px;
+                    font-size: 1rem;
+                    line-height: 1.2rem;
+
+                    &[type="text"],
+                    &[type="number"] {
+                        padding: 0.2rem;
+                    }
+                }
+            }
+
+            .right-side {
+                height: 100%;
+                display: flex;
+
+                img {
+                    width: 100%;
+                    margin: auto 0;
+
+                }
+            }
+        }
+    }
+
+    .modal-footer {
+        button {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: #2CF2B3;
+            border-radius: 0px 0px 2px 2px;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+            font-size: 1.2rem;
+            line-height: 1.4rem;
         }
     }
 }

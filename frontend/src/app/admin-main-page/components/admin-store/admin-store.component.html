@@ -130,7 +130,7 @@
                         </div>
                     </div>
                     <div class="modal-content">
-                        <div class="content-flex-container"  *ngIf="elementForInteraction">
+                        <div class="content-flex-container" *ngIf="elementForInteraction">
                             <div class="element-flex">
                                 <div class="field-change">
                                     <label for="name">НАЗВАНИЕ</label>
@@ -141,22 +141,29 @@
                                         UCoins <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
                                                     alt="greenBlockCoins">
                                     </label>
-                                    <input type="text" id="price" placeholder="{{elementForInteraction?.price}}">
+                                    <input type="number" id="price" placeholder="{{elementForInteraction?.price}}">
                                 </div>
-                                <div class="field-change"
-                                     *ngIf="elementForInteraction?.dimensionLine ; else uncountable">
-<!--                                    <label for="quantityStock">КОЛИЧЕСТВО НА СКЛАДЕ </label>-->
-<!--                                    <input type="text" id="quantityStock"-->
-<!--                                           placeholder="{{elementForInteraction.cells[0].amount}}">-->
+                                <div class="field-change">
+                                    <div *ngIf="elementForInteraction?.dimensionLine ; else uncountable">
+
+                                        <label for="sizeActive">ДОБАВИТЬ/УДАЛИТЬ РАЗМЕР</label>
+                                        <input type="text" id="sizeActive" disabled>
+                                        <div class="lineSize" *ngFor="let elementSize of elementForInteraction.dimensionArray">
+                                            {{elementSize}}
+                                        </div>
+                                    </div>
+                                    <ng-template #uncountable>
+                                        <label for="quantityStockUncountable">КОЛИЧЕСТВО НА СКЛАДЕ </label>
+                                        <input type="number" id="quantityStockUncountable"
+                                               placeholder="{{elementForInteraction.cells[0].amount}}"
+                                        >
+                                    </ng-template>
                                 </div>
-                                <ng-template #uncountable>
-                                    <label for="quantityStockUncountable">КОЛИЧЕСТВО НА СКЛАДЕ </label>
-                                    <input type="text" id="quantityStockUncountable"
-                                           placeholder="{{elementForInteraction.cells[0].amount}}">
-                                </ng-template>
                             </div>
                             <div class="element-flex">
-                                <img src='{{elementForInteraction?.photo}}' alt="{{elementForInteraction?.name}}">
+                                <div class="right-side">
+                                    <img src='{{elementForInteraction?.photo}}' alt="{{elementForInteraction?.name}}">
+                                </div>
                             </div>
                         </div>
                         <div class="closerField">

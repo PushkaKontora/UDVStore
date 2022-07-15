@@ -62,7 +62,8 @@ export class AdminStoreComponent implements OnInit {
                 complete: () => {
                     products!.map((element: IProduct) => {
                         if (element.cells.length > 1) {
-                            element['dimensionLine'] = this.getDimensionLineSize(element);
+                            element['dimensionLine'] = this.getDimensionLineSize(element)[0];
+                            element['dimensionArray'] = this.getDimensionLineSize(element)[1];
                         }
 
                         let counterAmount = 0;
@@ -79,7 +80,7 @@ export class AdminStoreComponent implements OnInit {
             });
     }
 
-    private getDimensionLineSize(element: IProduct): string {
+    private getDimensionLineSize(element: IProduct): any[] {
         let lineSize: string[] = [];
         for (let i of element.cells) {
             switch (i.size) {
@@ -115,7 +116,7 @@ export class AdminStoreComponent implements OnInit {
             }
         }
 
-        return lineSize.join(', ');
+        return [lineSize.join(', '), lineSize];
     }
 }
 
