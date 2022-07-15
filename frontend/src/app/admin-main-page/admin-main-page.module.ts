@@ -19,7 +19,7 @@ import {
     TuiDropdownControllerModule,
     TuiTextfieldControllerModule
 } from "@taiga-ui/core";
-import {TuiLetModule} from "@taiga-ui/cdk";
+import {TuiForModule, TuiLetModule} from "@taiga-ui/cdk";
 import {SearchStringService} from "../services/searchString.service";
 import { AdminOrdersAllOrdersComponent } from './components/admin-orders/childrens/admin-orders-all-orders/admin-orders-all-orders.component';
 import { AdminOrdersNewOrdersComponent } from './components/admin-orders/childrens/admin-orders-new-orders/admin-orders-new-orders.component';
@@ -61,6 +61,7 @@ import {CastTypeNumberPipe} from "./components/admin-accrual/pipes/cast-type-num
         TuiFilterByInputPipeModule,
         TuiInputModule,
         TuiComboBoxModule,
+        TuiForModule,
     ],
      providers: [
          SearchStringService,

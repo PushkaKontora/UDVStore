@@ -148,8 +148,18 @@
 
                                         <label for="sizeActive">ДОБАВИТЬ/УДАЛИТЬ РАЗМЕР</label>
                                         <input type="text" id="sizeActive" disabled>
-                                        <div class="lineSize" *ngFor="let elementSize of elementForInteraction.dimensionArray">
-                                            {{elementSize}}
+                                        <div class="line-size-container">
+                                            <div class="lineSize"
+                                                 *ngFor="let elementSize of elementForInteraction.dimensionArray">
+                                                <div class="elementSize-container">
+                                                    <div class="elementSize">{{elementSize}}</div>
+                                                    <div class="elementSize elementSize__image">
+                                                        <img
+                                                            src="../../../../assets/images-admin/store-action/grey-cross.svg"
+                                                            alt="cross">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <ng-template #uncountable>
@@ -160,14 +170,73 @@
                                     </ng-template>
                                 </div>
                             </div>
-                            <div class="element-flex">
+                            <div class="element-flex element-flex__rightSide">
                                 <div class="right-side">
-                                    <img src='{{elementForInteraction?.photo}}' alt="{{elementForInteraction?.name}}">
+                                    <img  class='image image__main-image' src='{{elementForInteraction?.photo}}' alt="{{elementForInteraction?.name}}">
+                                    <img class="image image__hover-image" src='../../../../assets/images-admin/store-action/refactor-min.svg'
+                                         alt="{{elementForInteraction?.name}}">
                                 </div>
+
                             </div>
                         </div>
-                        <div class="closerField">
-
+                        <div class="closerField" *ngIf="elementForInteraction?.dimensionLine">
+                            <div class="title">КОЛИЧЕСТВО НА СКЛАДЕ</div>
+                            <div class="content-close-field-container">
+                                <div class="content-close-field" *ngFor="let element of elementForInteraction.cells">
+                                    <div class="gridBtn-container">
+                                        <div *ngIf="element.amount===0"
+                                             class="grid-element grid-element__size grid-element__size__grey">
+                                            <div *ngIf="element.size === 1">
+                                                <span class="borderElement">XS</span>
+                                            </div>
+                                            <div *ngIf="element.size === 2">
+                                                <span class="borderElement">S</span>
+                                            </div>
+                                            <div *ngIf="element.size === 3">
+                                                <span class="borderElement">M</span>
+                                            </div>
+                                            <div *ngIf="element.size === 4">
+                                                <span class="borderElement">L</span>
+                                            </div>
+                                            <div *ngIf="element.size === 5">
+                                                <span class="borderElement">XL</span>
+                                            </div>
+                                            <div *ngIf="element.size === 6">
+                                                <span class="borderElement">XXL</span>
+                                            </div>
+                                            <div *ngIf="element.size === 7">
+                                                <span class="borderElement">XXXL</span>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="element.amount!==0" class="grid-element grid-element__size ">
+                                            <div *ngIf="element.size === 1">
+                                                <span class="borderElement">XS</span>
+                                            </div>
+                                            <div *ngIf="element.size === 2">
+                                                <span class="borderElement">S</span>
+                                            </div>
+                                            <div *ngIf="element.size === 3">
+                                                <span class="borderElement">M</span>
+                                            </div>
+                                            <div *ngIf="element.size === 4">
+                                                <span class="borderElement">L</span>
+                                            </div>
+                                            <div *ngIf="element.size === 5">
+                                                <span class="borderElement">XL</span>
+                                            </div>
+                                            <div *ngIf="element.size === 6">
+                                                <span class="borderElement">XXL</span>
+                                            </div>
+                                            <div *ngIf="element.size === 7">
+                                                <span class="borderElement">XXXL</span>
+                                            </div>
+                                        </div>
+                                        <div class="grid-element grid-element__amount">
+                                            <input type="number" placeholder="{{element.amount}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
