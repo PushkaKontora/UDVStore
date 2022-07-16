@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RequestService} from "../../services/request.service";
 import {IProduct} from "../../../../interfaces/products";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
     selector: 'personal-orders',
@@ -13,6 +14,12 @@ import {IProduct} from "../../../../interfaces/products";
 export class AdminStoreComponent implements OnInit {
     public storageElements?: IProduct[];
     public elementForInteraction: IProduct;
+
+    public productGroup = new FormGroup({
+        name: new FormControl(null),
+        coins: new FormControl(null,[Validators.min(0)]),
+       // amountStorage: new FormControl(null,[Validators.min(0)])
+    })
 
     constructor(private _requestService: RequestService) {
     }
@@ -35,6 +42,7 @@ export class AdminStoreComponent implements OnInit {
         document.body.style.overflow = "hidden";
         document.body.classList.add('modalOpen');
         this.elementForInteraction = product;
+        this.fillInControls(product);
         console.log(product)
     }
 
@@ -72,12 +80,18 @@ export class AdminStoreComponent implements OnInit {
                         }
                         element['generalAmount'] = counterAmount;
                     })
-                    this.storageElements = products
+                    this.storageElements = products;
                 },
                 error: (error) => {
                     console.log(error)
                 }
             });
+    }
+
+    private fillInControls(product: IProduct): void {
+        this.productGroup.value.name = product.name;
+        this.productGroup.value.coins = product.price;
+        //this.productGroup.value.name = products.name;
     }
 
     private getDimensionLineSize(element: IProduct): any[] {

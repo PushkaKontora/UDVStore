@@ -52,4 +52,8 @@ export class RequestService {
     public deleteProduct(productId: number): Observable<IProduct> {
         return this._http.delete<IProduct>(this._getProductsUrl + productId + '/', this._peopleService.optionsForHttp)
     }
+
+    public changeProduct(productId: number): Observable<IProduct>{
+        return  this._http.put<IProduct>(this._getProductsUrl + productId + '/', this._peopleService.optionsForHttp)
+    }
 }
