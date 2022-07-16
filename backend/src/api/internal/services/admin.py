@@ -60,6 +60,25 @@ def try_create_product(
         return None
 
 
+def try_update_product(
+    product_id: int, name: str, photo: InMemoryUploadedFile, description: str, price: Decimal, cells: List[dict]
+) -> bool:
+    try:
+        with atomic():
+            Product.objects.filter(id=product_id).update(name=name, photo=photo, description=description, price=price)
+
+            StorageCell.objects.filter(product_id=product_id).update(amount=0)
+
+            for cell in cells:
+                StorageCell.objects.update_or_create(
+                    product_id=product_id, size=cell["size"], defaults={"amount": cell["amount"]}
+                )
+
+        return True
+    except IntegrityError:
+        return False
+
+
 def toggle_product_visible(product_id: int) -> bool:
     product = Product.objects.filter(id=product_id).first()
     if not product:
