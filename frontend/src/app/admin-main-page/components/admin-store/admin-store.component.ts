@@ -4,6 +4,7 @@ import {IProduct} from "../../../../interfaces/products";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {parseJson} from "@angular/cli/utilities/json-file";
 
+
 @Component({
     selector: 'personal-orders',
     templateUrl: './admin-store.component.html',
@@ -21,11 +22,14 @@ export class AdminStoreComponent implements OnInit {
         coins: new FormControl(null, [Validators.min(0)]),
     });
 
+    private _newPhotoFile: File;
+
     constructor(private _requestService: RequestService) {
     }
 
     ngOnInit(): void {
         this.getStorageElements();
+
     }
 
     //
@@ -72,26 +76,25 @@ export class AdminStoreComponent implements OnInit {
 
     public onSubmitChanges(): void {
         this.closeModel('editProduct');
-        let newValue =this.createFormData();
+        let newValue = this.createFormData();
         this._requestService.changeProduct(this.elementForInteraction.id, newValue)
             .subscribe();
         this.getStorageElements();
     }
 
 
-    public onChangePhoto(event: any): void{
-
-        console.log(event)
+    public onChangePhoto(event: any): void {
+        this.elementForInteraction.photo = event.target.files[0];
+        this._newPhotoFile = event.target.files[0];
     }
 
     private createFormData(): any {
         let newValue = new FormData();
-        newValue.append('name', this.elementForInteraction.name);
+        newValue.append('name', JSON.stringify(this.elementForInteraction.name));
         newValue.append('description', this.elementForInteraction.description);
-        newValue.append('price', JSON.stringify(this.elementForInteraction.price));
-        newValue.append('photo', this.elementForInteraction.photo);
+        newValue.append('price', this.elementForInteraction.price.toString());
+        newValue.append('photo', this._newPhotoFile);
         newValue.append('cells', JSON.stringify(this.elementForInteraction.cells));
-
 
         console.log(newValue.get('name'), newValue.get('price'), newValue.get('photo'))
         return newValue

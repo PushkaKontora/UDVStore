@@ -18,7 +18,7 @@ export class RequestService {
     private readonly _getProductsUrl: string = environment.api_address + "/admin/products/";
     private _httpOptions = {
         headers: new HttpHeaders({
-            'Content-Type':  'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+
             'Authorization': "Token " + localStorage.getItem('token'),
         })
     };
@@ -58,6 +58,6 @@ export class RequestService {
     }
 
     public changeProduct(productId: number, data: any): Observable<IProduct> {
-        return this._http.put<IProduct>(this._getProductsUrl + productId + '/', data, this._httpOptions)
+        return this._http.patch<IProduct>(this._getProductsUrl + productId + '/', data, this._httpOptions)
     }
 }
