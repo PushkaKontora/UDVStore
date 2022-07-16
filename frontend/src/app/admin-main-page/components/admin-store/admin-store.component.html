@@ -122,6 +122,7 @@
         <div class="model" (click)="closeModel('editProduct')">
             <div class="center-modal-container" (click)="handleClick($event)">
                 <div class="modal-container2">
+                    <form [formGroup]="productGroup" (submit)="onSubmitChanges()">
                     <div class="header-modal-container">
                         <div class="header-modal">ИЗМЕНЕНИЕ ТОВАРА</div>
                         <div class="header-modal">
@@ -134,14 +135,24 @@
                             <div class="element-flex">
                                 <div class="field-change">
                                     <label for="name">НАЗВАНИЕ</label>
-                                    <input type="text" id="name" placeholder="{{elementForInteraction?.name}}">
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        placeholder="{{elementForInteraction?.name}}"
+                                        formControlName="name"
+                                    >
                                 </div>
                                 <div class="field-change">
                                     <label for="price">
                                         UCoins <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
                                                     alt="greenBlockCoins">
                                     </label>
-                                    <input type="number" id="price" placeholder="{{elementForInteraction?.price}}">
+                                    <input
+                                        type="number"
+                                        id="price"
+                                        placeholder="{{elementForInteraction?.price}}"
+                                        formControlName="coins"
+                                    >
                                 </div>
                                 <div class="field-change">
                                     <div *ngIf="elementForInteraction?.dimensionLine ; else uncountable">
@@ -164,7 +175,9 @@
                                     </div>
                                     <ng-template #uncountable>
                                         <label for="quantityStockUncountable">КОЛИЧЕСТВО НА СКЛАДЕ </label>
-                                        <input type="number" id="quantityStockUncountable"
+                                        <input type="number"
+                                               id="quantityStockUncountable"
+                                               (input)="onChangeAmountSizeStorage($event, elementForInteraction.cells[0].amount)"
                                                placeholder="{{elementForInteraction.cells[0].amount}}"
                                         >
                                     </ng-template>
@@ -172,8 +185,10 @@
                             </div>
                             <div class="element-flex element-flex__rightSide">
                                 <div class="right-side">
-                                    <img  class='image image__main-image' src='{{elementForInteraction?.photo}}' alt="{{elementForInteraction?.name}}">
-                                    <img class="image image__hover-image" src='../../../../assets/images-admin/store-action/refactor-min.svg'
+                                    <img class='image image__main-image' src='{{elementForInteraction?.photo}}'
+                                         alt="{{elementForInteraction?.name}}">
+                                    <img class="image image__hover-image"
+                                         src='../../../../assets/images-admin/store-action/refactor-min.svg'
                                          alt="{{elementForInteraction?.name}}">
                                 </div>
 
@@ -232,7 +247,8 @@
                                             </div>
                                         </div>
                                         <div class="grid-element grid-element__amount">
-                                            <input type="number" placeholder="{{element.amount}}">
+                                            <input (input)="onChangeAmountSizeStorage($event, element.id)" type="number"
+                                                   placeholder="{{element.amount}}">
                                         </div>
                                     </div>
                                 </div>
@@ -240,8 +256,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button>СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
+                        <button [disabled]="productGroup.invalid" type="submit">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>

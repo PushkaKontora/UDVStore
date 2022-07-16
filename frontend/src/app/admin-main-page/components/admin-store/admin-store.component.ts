@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RequestService} from "../../services/request.service";
 import {IProduct} from "../../../../interfaces/products";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {parseJson} from "@angular/cli/utilities/json-file";
 
 @Component({
     selector: 'personal-orders',
@@ -17,9 +18,8 @@ export class AdminStoreComponent implements OnInit {
 
     public productGroup = new FormGroup({
         name: new FormControl(null),
-        coins: new FormControl(null,[Validators.min(0)]),
-       // amountStorage: new FormControl(null,[Validators.min(0)])
-    })
+        coins: new FormControl(null, [Validators.min(0)]),
+    });
 
     constructor(private _requestService: RequestService) {
     }
@@ -59,6 +59,36 @@ export class AdminStoreComponent implements OnInit {
         this.getStorageElements();
     }
 
+    public onChangeAmountSizeStorage(event: any, elementId: number) {
+        let newValue = event.target.value;
+        for (let i = 0; i < this.elementForInteraction.cells.length; i++) {
+            const enumerableElement = this.elementForInteraction.cells[i];
+            if (elementId === enumerableElement.id) {
+                this.elementForInteraction.cells[i].amount = Number(newValue)
+            }
+        }
+        console.log(newValue, elementId, this.elementForInteraction.cells)
+    }
+
+    public onSubmitChanges(): void {
+        this.closeModel('editProduct');
+        let newValue = this.createFormData();
+        this._requestService.changeProduct(this.elementForInteraction.id, newValue)
+            .subscribe();
+        this.getStorageElements();
+    }
+
+    private createFormData(): any {
+        let newValue = new FormData();
+        newValue.set('id', JSON.stringify(this.elementForInteraction.id));
+        newValue.set('name', JSON.stringify(this.productGroup.value.name));
+        newValue.set('description', JSON.stringify(this.elementForInteraction.description));
+        newValue.set('price', JSON.stringify(this.productGroup.value.coins));
+        newValue.set('photo', JSON.stringify(this.elementForInteraction.photo));
+        newValue.set('cells', JSON.stringify(this.elementForInteraction.cells));
+        newValue.set('is_visible', JSON.stringify(this.elementForInteraction.is_visible));
+        console.log( JSON.stringify(this.productGroup.value.coins))
+    }
 
     private getStorageElements(): void {
         let products: IProduct[];
