@@ -33,11 +33,11 @@ class ProductAdministrationViewSet(ModelViewSet):
 
         return Response(data=ProductSerializer(product, context={"request": request}).data)
 
-    def update(self, request, pk=None, **kwargs) -> Response:
+    def partial_update(self, request: Request, pk=None, **kwargs) -> Response:
         if not self.queryset.filter(id=pk).exists():
             return Response(status=404)
 
-        data = self._validate_data(request)
+        data = self._validate_data(request, partial=True)
         if not data:
             return Response(status=400)
 
@@ -61,7 +61,7 @@ class ProductAdministrationViewSet(ModelViewSet):
 
         return Response(data={"is_visible": is_visible})
 
-    def _validate_data(self, request: Request) -> Optional[dict]:
+    def _validate_data(self, request: Request, partial=False) -> Optional[dict]:
         data = {
             "name": request.data.get("name"),
             "photo": request.FILES.get("photo"),
@@ -70,7 +70,9 @@ class ProductAdministrationViewSet(ModelViewSet):
         }
         print(data)
 
-        product_serializer = ProductSerializer(data=data)
+        ser_data = dict((key, value) for key, value in data.items() if value is not None) if partial else data
+
+        product_serializer = ProductSerializer(data=ser_data, partial=partial)
         product_serializer.is_valid(raise_exception=True)
         print(111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111)
         try:
