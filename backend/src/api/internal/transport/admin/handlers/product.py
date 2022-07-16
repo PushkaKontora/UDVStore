@@ -68,10 +68,11 @@ class ProductAdministrationViewSet(ModelViewSet):
             "description": request.data.get("description"),
             "price": request.data.get("price"),
         }
+        print(data)
 
         product_serializer = ProductSerializer(data=data)
         product_serializer.is_valid(raise_exception=True)
-
+        print(111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111)
         try:
             cells = json.loads(str(request.data.get("cells")))
 

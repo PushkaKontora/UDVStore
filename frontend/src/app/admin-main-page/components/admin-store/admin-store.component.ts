@@ -72,22 +72,29 @@ export class AdminStoreComponent implements OnInit {
 
     public onSubmitChanges(): void {
         this.closeModel('editProduct');
-        let newValue = this.createFormData();
+        let newValue =this.createFormData();
         this._requestService.changeProduct(this.elementForInteraction.id, newValue)
             .subscribe();
         this.getStorageElements();
     }
 
+
+    public onChangePhoto(event: any): void{
+
+        console.log(event)
+    }
+
     private createFormData(): any {
         let newValue = new FormData();
-        newValue.set('id', JSON.stringify(this.elementForInteraction.id));
-        newValue.set('name', JSON.stringify(this.productGroup.value.name));
-        newValue.set('description', JSON.stringify(this.elementForInteraction.description));
-        newValue.set('price', JSON.stringify(this.productGroup.value.coins));
-        newValue.set('photo', JSON.stringify(this.elementForInteraction.photo));
-        newValue.set('cells', JSON.stringify(this.elementForInteraction.cells));
-        newValue.set('is_visible', JSON.stringify(this.elementForInteraction.is_visible));
-        console.log( JSON.stringify(this.productGroup.value.coins))
+        newValue.append('name', this.elementForInteraction.name);
+        newValue.append('description', this.elementForInteraction.description);
+        newValue.append('price', JSON.stringify(this.elementForInteraction.price));
+        newValue.append('photo', this.elementForInteraction.photo);
+        newValue.append('cells', JSON.stringify(this.elementForInteraction.cells));
+
+
+        console.log(newValue.get('name'), newValue.get('price'), newValue.get('photo'))
+        return newValue
     }
 
     private getStorageElements(): void {
