@@ -63,9 +63,10 @@ def try_create_product(
 def try_update_product(
     product_id: int, name: str, photo: InMemoryUploadedFile, description: str, price: Decimal, cells: List[dict]
 ) -> bool:
+    attributes = dict((name, value) for name, value in [["name", name], ["photo", photo], ["description", description], ["price", price]] if value is not None)
     try:
         with atomic():
-            Product.objects.filter(id=product_id).update(name=name, photo=photo, description=description, price=price)
+            Product.objects.filter(id=product_id).update(**attributes)
 
             StorageCell.objects.filter(product_id=product_id).update(amount=0)
 
