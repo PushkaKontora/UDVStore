@@ -110,9 +110,9 @@ class CartViewSet(ViewSet):
         if not orders:
             return Response(status=404)
 
-        transactions = pay(orders)
+        transactions = pay(profile, orders)
         if not transactions:
-            return Response(status=406)
+            return Response(status=500)
 
         return Response(data=TransactionSerializer(transactions, many=True, context={"request": request}).data)
 
