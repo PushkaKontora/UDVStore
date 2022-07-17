@@ -3,6 +3,7 @@ import {RequestService} from "../../services/request.service";
 import {IProduct} from "../../../../interfaces/products";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {parseJson} from "@angular/cli/utilities/json-file";
+import Cropper from 'cropperjs';
 
 
 @Component({
@@ -32,6 +33,17 @@ export class AdminStoreComponent implements OnInit {
 
     }
 
+    public onChangeVisibility(product: IProduct) {
+        let productVisibility = product.is_visible;
+        console.log(productVisibility)
+        this._requestService.changeProductVisibility(product.id, {'is_visible': !productVisibility})
+            .subscribe({
+                complete: () => this.getStorageElements()
+            })
+
+        console.log(product)
+    }
+
     //
     // public checkTypeNumber(number: number): boolean{
     //     return Number.isInteger(number);
@@ -47,7 +59,7 @@ export class AdminStoreComponent implements OnInit {
         document.body.classList.add('modalOpen');
         this.elementForInteraction = product;
         this.fillInControls(product);
-        console.log(product)
+        console.log(this.storageElements)
     }
 
     public closeModel(nameModel: string) {
@@ -84,16 +96,19 @@ export class AdminStoreComponent implements OnInit {
 
 
     public onChangePhoto(event: any): void {
-        this.elementForInteraction.photo = event.target.files[0];
+        let selectedFile = event.target.files[0];
+
         this._newPhotoFile = event.target.files[0];
     }
 
     private createFormData(): any {
         let newValue = new FormData();
-        newValue.append('name', JSON.stringify(this.elementForInteraction.name));
+        newValue.append('name', this.elementForInteraction.name);
         newValue.append('description', this.elementForInteraction.description);
         newValue.append('price', this.elementForInteraction.price.toString());
-        newValue.append('photo', this._newPhotoFile);
+        if (this._newPhotoFile !== undefined) {
+            newValue.append('photo', this._newPhotoFile);
+        }
         newValue.append('cells', JSON.stringify(this.elementForInteraction.cells));
 
         console.log(newValue.get('name'), newValue.get('price'), newValue.get('photo'))

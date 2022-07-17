@@ -152,6 +152,14 @@
                 }
             }
 
+            .visually-hidden {
+                position: absolute !important;
+                height: 1px;
+                width: 1px;
+                overflow: hidden;
+                clip: rect(1px, 1px, 1px, 1px);
+            }
+
             .right-side {
                 height: 100%;
                 display: flex;
@@ -159,9 +167,12 @@
 
                 .image {
                     width: 100%;
+                    height: auto;
                     margin: auto;
                     transition: 0.2s linear;
                     cursor: pointer;
+                    object-fit: cover;
+                    aspect-ratio: 1/1;
 
                     &__hover-image {
                         position: relative;

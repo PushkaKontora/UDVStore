@@ -60,4 +60,8 @@ export class RequestService {
     public changeProduct(productId: number, data: any): Observable<IProduct> {
         return this._http.patch<IProduct>(this._getProductsUrl + productId + '/', data, this._httpOptions)
     }
+
+    public changeProductVisibility(productId: number, data: any): Observable<IProduct> {
+        return this._http.patch<IProduct>(this._getProductsUrl + productId + '/switch/' , data, this._httpOptions)
+    }
 }

@@ -22,26 +22,29 @@
                 <div class="element-grid">{{product?.generalAmount}}</div>
                 <div class="element-grid" *ngIf="product.cells.length === 1">-</div>
                 <div class="element-grid" *ngIf="product.cells.length > 1">{{product?.dimensionLine}}</div>
-                <div class="element-grid element-grid__action ">
-                    <div class="image" *ngIf="product?.is_visible">
-                        <img src="../../../../assets/images-admin/store-action/visibleGoods.svg" alt="visibleGoods"
-                             class="image-action">
-                    </div>
-                    <div class="image" *ngIf="!product?.is_visible">
-                        <img src="../../../../assets/images-admin/store-action/invisibleGoods.svg" alt="invisibleGoods"
-                             class="image-action">
-                    </div>
-                    <div class="image" *ngIf="!product?.is_visible">
-                        <img src="../../../../assets/images-admin/store-action/changeProductWhite.svg"
-                             alt="changeProduct"
-                             class="image-action">
-                    </div>
-                    <div class="image" *ngIf="product?.is_visible">
-                        <img src="../../../../assets/images-admin/store-action/changeProductGrey.svg"
-                             alt="changeProduct"
-                             class="image-action">
-                    </div>
+                <div class="element-grid element-grid__action " (click)="onChangeVisibility(product)">
                     <div class="image">
+                        <img *ngIf="product?.is_visible"
+                             src="../../../../assets/images-admin/store-action/visibleGoods.svg" alt="visibleGoods"
+                             class="image-action"
+                        >
+                        <img *ngIf="!product?.is_visible"
+                             src="../../../../assets/images-admin/store-action/invisibleGoods.svg" alt="invisibleGoods"
+                             class="image-action"
+                        >
+                    </div>
+                    <div class="image" (click)="openModel('editProduct', product)">
+                        <img *ngIf="!product?.is_visible"
+                             src="../../../../assets/images-admin/store-action/changeProductWhite.svg"
+                             alt="changeProduct"
+                             class="image-action">
+                        <img *ngIf="product?.is_visible"
+                             src="../../../../assets/images-admin/store-action/changeProductGrey.svg"
+                             alt="changeProduct"
+                             class="image-action">
+                    </div>
+
+                    <div class="image" (click)="openModel('deleteProduct', product)">
                         <img src="../../../../assets/images-admin/store-action/deleteProduct.svg" alt="deleteProduct"
                              class="image-action">
                     </div>
@@ -67,14 +70,16 @@
                 <div class="element-grid element-grid" *ngIf="product.cells.length === 1">-</div>
                 <div class="element-grid element-grid__cells"
                      *ngIf="product.cells.length > 1">{{product?.dimensionLine}}</div>
-                <div class="element-grid element-grid__action ">
+                <div class="element-grid element-grid__action " (click)="onChangeVisibility(product)">
                     <div class="image">
                         <img *ngIf="product?.is_visible"
                              src="../../../../assets/images-admin/store-action/visibleGoods.svg" alt="visibleGoods"
-                             class="image-action">
+                             class="image-action"
+                        >
                         <img *ngIf="!product?.is_visible"
                              src="../../../../assets/images-admin/store-action/invisibleGoods.svg" alt="invisibleGoods"
-                             class="image-action">
+                             class="image-action"
+                        >
                     </div>
                     <div class="image" (click)="openModel('editProduct', product)">
                         <img *ngIf="!product?.is_visible"
@@ -93,6 +98,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -123,143 +129,149 @@
             <div class="center-modal-container" (click)="handleClick($event)">
                 <div class="modal-container2">
                     <form [formGroup]="productGroup" (submit)="onSubmitChanges()">
-                    <div class="header-modal-container">
-                        <div class="header-modal">ИЗМЕНЕНИЕ ТОВАРА</div>
-                        <div class="header-modal">
-                            <img src="../../../../assets/images-main-page/cross.svg" alt="cross"
-                                 (click)="closeModel('editProduct')">
+                        <div class="header-modal-container">
+                            <div class="header-modal">ИЗМЕНЕНИЕ ТОВАРА</div>
+                            <div class="header-modal">
+                                <img src="../../../../assets/images-main-page/cross.svg" alt="cross"
+                                     (click)="closeModel('editProduct')">
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-content">
-                        <div class="content-flex-container" *ngIf="elementForInteraction">
-                            <div class="element-flex">
-                                <div class="field-change">
-                                    <label for="name">НАЗВАНИЕ</label>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        placeholder="{{elementForInteraction?.name}}"
-                                        formControlName="name"
-                                    >
-                                </div>
-                                <div class="field-change">
-                                    <label for="price">
-                                        UCoins <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
-                                                    alt="greenBlockCoins">
-                                    </label>
-                                    <input
-                                        type="number"
-                                        id="price"
-                                        placeholder="{{elementForInteraction?.price}}"
-                                        formControlName="coins"
-                                    >
-                                </div>
-                                <div class="field-change">
-                                    <div *ngIf="elementForInteraction?.dimensionLine ; else uncountable">
+                        <div class="modal-content">
+                            <div class="content-flex-container" *ngIf="elementForInteraction">
+                                <div class="element-flex">
+                                    <div class="field-change">
+                                        <label for="name">НАЗВАНИЕ</label>
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            placeholder="{{elementForInteraction?.name}}"
+                                            formControlName="name"
+                                        >
+                                    </div>
+                                    <div class="field-change">
+                                        <label for="price">
+                                            UCoins <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
+                                                        alt="greenBlockCoins">
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="price"
+                                            placeholder="{{elementForInteraction?.price}}"
+                                            formControlName="coins"
+                                        >
+                                    </div>
+                                    <div class="field-change">
+                                        <div *ngIf="elementForInteraction?.dimensionLine ; else uncountable">
 
-                                        <label for="sizeActive">ДОБАВИТЬ/УДАЛИТЬ РАЗМЕР</label>
-                                        <input type="text" id="sizeActive" disabled>
-                                        <div class="line-size-container">
-                                            <div class="lineSize"
-                                                 *ngFor="let elementSize of elementForInteraction.dimensionArray">
-                                                <div class="elementSize-container">
-                                                    <div class="elementSize">{{elementSize}}</div>
-                                                    <div class="elementSize elementSize__image">
-                                                        <img
-                                                            src="../../../../assets/images-admin/store-action/grey-cross.svg"
-                                                            alt="cross">
+                                            <label for="sizeActive">ДОБАВИТЬ/УДАЛИТЬ РАЗМЕР</label>
+                                            <input type="text" id="sizeActive" disabled>
+                                            <div class="line-size-container">
+                                                <div class="lineSize"
+                                                     *ngFor="let elementSize of elementForInteraction.dimensionArray">
+                                                    <div class="elementSize-container">
+                                                        <div class="elementSize">{{elementSize}}</div>
+                                                        <div class="elementSize elementSize__image">
+                                                            <img
+                                                                src="../../../../assets/images-admin/store-action/grey-cross.svg"
+                                                                alt="cross">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <ng-template #uncountable>
-                                        <label for="quantityStockUncountable">КОЛИЧЕСТВО НА СКЛАДЕ </label>
-                                        <input type="number"
-                                               id="quantityStockUncountable"
-                                               (input)="onChangeAmountSizeStorage($event, elementForInteraction.cells[0].amount)"
-                                               placeholder="{{elementForInteraction.cells[0].amount}}"
-                                        >
-                                    </ng-template>
-                                </div>
-                                <input (change)="onChangePhoto($event)" type="file"  id="inputFile" placeholder="gggggggg">
-                            </div>
-                            <div class="element-flex element-flex__rightSide">
-                                <div class="right-side">
-                                    <img class='image image__main-image' src='{{elementForInteraction?.photo}}'
-                                         alt="{{elementForInteraction?.name}}">
-                                    <img class="image image__hover-image"
-                                         src='../../../../assets/images-admin/store-action/refactor-min.svg'
-                                         alt="{{elementForInteraction?.name}}">
-
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="closerField" *ngIf="elementForInteraction?.dimensionLine">
-                            <div class="title">КОЛИЧЕСТВО НА СКЛАДЕ</div>
-                            <div class="content-close-field-container">
-                                <div class="content-close-field" *ngFor="let element of elementForInteraction.cells">
-                                    <div class="gridBtn-container">
-                                        <div *ngIf="element.amount===0"
-                                             class="grid-element grid-element__size grid-element__size__grey">
-                                            <div *ngIf="element.size === 1">
-                                                <span class="borderElement">XS</span>
-                                            </div>
-                                            <div *ngIf="element.size === 2">
-                                                <span class="borderElement">S</span>
-                                            </div>
-                                            <div *ngIf="element.size === 3">
-                                                <span class="borderElement">M</span>
-                                            </div>
-                                            <div *ngIf="element.size === 4">
-                                                <span class="borderElement">L</span>
-                                            </div>
-                                            <div *ngIf="element.size === 5">
-                                                <span class="borderElement">XL</span>
-                                            </div>
-                                            <div *ngIf="element.size === 6">
-                                                <span class="borderElement">XXL</span>
-                                            </div>
-                                            <div *ngIf="element.size === 7">
-                                                <span class="borderElement">XXXL</span>
-                                            </div>
-                                        </div>
-                                        <div *ngIf="element.amount!==0" class="grid-element grid-element__size ">
-                                            <div *ngIf="element.size === 1">
-                                                <span class="borderElement">XS</span>
-                                            </div>
-                                            <div *ngIf="element.size === 2">
-                                                <span class="borderElement">S</span>
-                                            </div>
-                                            <div *ngIf="element.size === 3">
-                                                <span class="borderElement">M</span>
-                                            </div>
-                                            <div *ngIf="element.size === 4">
-                                                <span class="borderElement">L</span>
-                                            </div>
-                                            <div *ngIf="element.size === 5">
-                                                <span class="borderElement">XL</span>
-                                            </div>
-                                            <div *ngIf="element.size === 6">
-                                                <span class="borderElement">XXL</span>
-                                            </div>
-                                            <div *ngIf="element.size === 7">
-                                                <span class="borderElement">XXXL</span>
-                                            </div>
-                                        </div>
-                                        <div class="grid-element grid-element__amount">
-                                            <input (input)="onChangeAmountSizeStorage($event, element.id)" type="number"
-                                                   placeholder="{{element.amount}}">
-                                        </div>
+                                        <ng-template #uncountable>
+                                            <label for="quantityStockUncountable">КОЛИЧЕСТВО НА СКЛАДЕ </label>
+                                            <input type="number"
+                                                   id="quantityStockUncountable"
+                                                   (input)="onChangeAmountSizeStorage($event, elementForInteraction.cells[0].amount)"
+                                                   placeholder="{{elementForInteraction.cells[0].amount}}"
+                                            >
+                                        </ng-template>
                                     </div>
                                 </div>
+                                <div class="element-flex element-flex__rightSide">
+                                    <input (change)="onChangePhoto($event)" type="file"
+                                           accept="image/jpg, image/jpeg, image/png, image/svg" id="inputFile"
+                                           class="visually-hidden">
+                                    <label for="inputFile">
+                                        <div class="right-side">
+                                            <img class='image image__main-image' id="myimage"
+                                                 src='{{elementForInteraction?.photo}}'
+                                                 alt="{{elementForInteraction?.name}}">
+                                            <img class="image image__hover-image"
+                                                 src='../../../../assets/images-admin/store-action/refactor-min.svg'
+                                                 alt="{{elementForInteraction?.name}}">
+
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="closerField" *ngIf="elementForInteraction?.dimensionLine">
+                                <div class="title">КОЛИЧЕСТВО НА СКЛАДЕ</div>
+                                <div class="content-close-field-container">
+                                    <div class="content-close-field"
+                                         *ngFor="let element of elementForInteraction.cells">
+                                        <div class="gridBtn-container">
+                                            <div *ngIf="element.amount===0"
+                                                 class="grid-element grid-element__size grid-element__size__grey">
+                                                <div *ngIf="element.size === 1">
+                                                    <span class="borderElement">XS</span>
+                                                </div>
+                                                <div *ngIf="element.size === 2">
+                                                    <span class="borderElement">S</span>
+                                                </div>
+                                                <div *ngIf="element.size === 3">
+                                                    <span class="borderElement">M</span>
+                                                </div>
+                                                <div *ngIf="element.size === 4">
+                                                    <span class="borderElement">L</span>
+                                                </div>
+                                                <div *ngIf="element.size === 5">
+                                                    <span class="borderElement">XL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 6">
+                                                    <span class="borderElement">XXL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 7">
+                                                    <span class="borderElement">XXXL</span>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="element.amount!==0" class="grid-element grid-element__size ">
+                                                <div *ngIf="element.size === 1">
+                                                    <span class="borderElement">XS</span>
+                                                </div>
+                                                <div *ngIf="element.size === 2">
+                                                    <span class="borderElement">S</span>
+                                                </div>
+                                                <div *ngIf="element.size === 3">
+                                                    <span class="borderElement">M</span>
+                                                </div>
+                                                <div *ngIf="element.size === 4">
+                                                    <span class="borderElement">L</span>
+                                                </div>
+                                                <div *ngIf="element.size === 5">
+                                                    <span class="borderElement">XL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 6">
+                                                    <span class="borderElement">XXL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 7">
+                                                    <span class="borderElement">XXXL</span>
+                                                </div>
+                                            </div>
+                                            <div class="grid-element grid-element__amount">
+                                                <input (input)="onChangeAmountSizeStorage($event, element.id)"
+                                                       type="number"
+                                                       placeholder="{{element.amount}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button [disabled]="productGroup.invalid" type="submit">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
-                    </div>
+                        <div class="modal-footer">
+                            <button [disabled]="productGroup.invalid" type="submit">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
+                        </div>
                     </form>
                 </div>
             </div>
