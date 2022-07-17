@@ -30,7 +30,6 @@ export class AdminStoreComponent implements OnInit {
 
     ngOnInit(): void {
         this.getStorageElements();
-
     }
 
     public onChangeVisibility(product: IProduct) {
@@ -90,8 +89,12 @@ export class AdminStoreComponent implements OnInit {
         this.closeModel('editProduct');
         let newValue = this.createFormData();
         this._requestService.changeProduct(this.elementForInteraction.id, newValue)
-            .subscribe();
-        this.getStorageElements();
+            .subscribe({
+                complete: () => {
+                    this.getStorageElements();
+                    this.productGroup.reset()
+                }
+            });
     }
 
 
@@ -103,9 +106,17 @@ export class AdminStoreComponent implements OnInit {
 
     private createFormData(): any {
         let newValue = new FormData();
-        newValue.append('name', this.elementForInteraction.name);
+        if (this.productGroup.value.name !== null) {
+            newValue.append('name', this.productGroup.value.name);
+        } else {
+            newValue.append('name', this.elementForInteraction.name);
+        }
         newValue.append('description', this.elementForInteraction.description);
-        newValue.append('price', this.elementForInteraction.price.toString());
+        if (this.productGroup.value.coins !== null) {
+            newValue.append('price', this.productGroup.value.coins.toString());
+        } else {
+            newValue.append('price', this.elementForInteraction.price.toString());
+        }
         if (this._newPhotoFile !== undefined) {
             newValue.append('photo', this._newPhotoFile);
         }
