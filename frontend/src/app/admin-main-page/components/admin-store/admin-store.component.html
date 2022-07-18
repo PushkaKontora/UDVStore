@@ -1,7 +1,10 @@
 <div class="wrapper">
 
     <div class="btn-add-product">
-        fffff
+        <img src="../../../../assets/images-admin/store-action/add-new-element.svg" class="add-new-element"
+             alt="add-new-element"
+             (click)="openModelForAddItem('additNewProduct')"
+        >
     </div>
     <div class="header-products-list">
         <div class="header-element">обложка</div>
@@ -31,7 +34,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="element-grid">{{product?.generalAmount}}</div>
+                <div class="element-grid element-grid__amount">{{product?.generalAmount}}</div>
                 <div class="element-grid" *ngIf="product.cells.length === 1">-</div>
                 <div class="element-grid" *ngIf="product.cells.length > 1">{{product?.dimensionLine}}</div>
                 <div class="element-grid element-grid__action " (click)="onChangeVisibility(product)">
@@ -292,6 +295,183 @@
                                                     (input)="onChangeAmountSizeStorage($event, element.size)"
                                                     type="number"
                                                     placeholder="{{element.amount}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button [disabled]="productGroup.invalid" type="submit">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modelBackground"></div>
+    </div>
+
+    <div class="modal-wrapper" id="additNewProduct">
+        <div class="model" (click)="closeModel('additNewProduct')">
+            <div class="center-modal-container" (click)="handleClick($event)">
+                <div class="modal-container2">
+                    <form [formGroup]="productGroup" (submit)="onAddNewProduct()">
+                        <div class="header-modal-container">
+                            <div class="header-modal">ДОБАВЛЕНИЕ НОВОГО ТОВАРА</div>
+                            <div class="header-modal">
+                                <img src="../../../../assets/images-main-page/cross.svg" alt="cross"
+                                     (click)="closeModel('editProduct')">
+                            </div>
+                        </div>
+                        <div class="btnDimensionalGrid-container">
+                            <div class="element-dimensional-grid">
+                                <div class="black" *ngIf="!productWithDimensionalGrid">Без размерной сетки</div>
+                                <div class="grey" *ngIf="productWithDimensionalGrid"
+                                     (click)="onProductWithDimensionalGrid(false)">Без размерной сетки
+                                </div>
+                            </div>
+                            <div class="element-dimensional-grid">
+                                <div class="black" *ngIf="productWithDimensionalGrid">С размерной сеткой</div>
+                                <div class="grey" *ngIf="!productWithDimensionalGrid"
+                                     (click)="onProductWithDimensionalGrid(true)">С размерной сеткой
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-content">
+                            <div class="content-flex-container">
+                                <div class="element-flex">
+                                    <div class="field-change">
+                                        <label for="nameDimensionalGrid">НАЗВАНИЕ</label>
+                                        <input
+                                            type="text"
+                                            id="nameDimensionalGrid"
+                                            formControlName="name"
+                                        >
+                                    </div>
+                                    <div class="field-change">
+                                        <label for="priceDimensionalGrid">
+                                            UCoins <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
+                                                        alt="greenBlockCoins">
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="priceDimensionalGrid"
+                                            formControlName="coins"
+
+                                        >
+                                    </div>
+                                    <div class="field-change">
+                                        <div *ngIf="productWithDimensionalGrid ; else uncountable">
+                                            <label for="sizeActiveDimensionalGrid">ДОБАВИТЬ/УДАЛИТЬ РАЗМЕР</label>
+                                            <tui-multi-select
+                                                tuiTextfieldExampleText="Ignored text"
+                                                class="b-form"
+                                                formControlName="selectionSize"
+                                                [tuiTextfieldLabelOutside]="true"
+                                                [editable]="false"
+                                                [(search)]="search"
+                                                tuiTextfieldSize="s"
+                                                id="sizeActiveDimensionalGrid"
+                                                [tuiDropdownMaxHeight]="150"
+                                                (click)="onChangeSizeLine()"
+                                            >
+                                                <tui-data-list-wrapper
+                                                    *tuiDataList
+                                                    tuiMultiSelectGroup
+                                                    size="xs"
+                                                    [items]="filter(search)"
+                                                    (click)="onChangeSizeLine()"
+                                                ></tui-data-list-wrapper>
+                                            </tui-multi-select>
+                                        </div>
+                                        <ng-template #uncountable>
+                                            <label for="quantityStockUncountableDimensionalGrid">КОЛИЧЕСТВО НА
+                                                СКЛАДЕ </label>
+                                            <input type="number"
+                                                   id="quantityStockUncountableDimensionalGrid"
+                                                   (input)="onChangeAmountSizeStorage($event, 0)"
+                                            >
+                                        </ng-template>
+                                    </div>
+                                </div>
+                                <div class="element-flex element-flex__rightSide">
+                                    <input (change)="onChangePhoto($event)" type="file"
+                                           accept="image/jpg, image/jpeg, image/png, image/svg" id="inputFileAddProduct"
+                                           class="visually-hidden">
+                                    <label for="inputFile">
+                                        <div class="right-side">
+                                            <img class='image image__main-image' id="myimageAddProduct"
+                                                 src='../../../../assets/images-admin/store-action/add-photo-min.svg'
+                                                 alt="add-new-element">
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="closerField" *ngIf="productWithDimensionalGrid">
+                                <div class="title">КОЛИЧЕСТВО НА СКЛАДЕ</div>
+                                <div class="content-close-field-container">
+                                    <div class="content-close-field"
+                                         *ngFor="let element of sizeInteraction">
+                                        <div class="gridBtn-container">
+                                            <div *ngIf="element.amount===0"
+                                                 class="grid-element grid-element__size grid-element__size__grey">
+                                                <div *ngIf="element.size === 1">
+                                                    <span class="borderElement">XS</span>
+                                                </div>
+                                                <div *ngIf="element.size === 2">
+                                                    <span class="borderElement">S</span>
+                                                </div>
+                                                <div *ngIf="element.size === 3">
+                                                    <span class="borderElement">M</span>
+                                                </div>
+                                                <div *ngIf="element.size === 4">
+                                                    <span class="borderElement">L</span>
+                                                </div>
+                                                <div *ngIf="element.size === 5">
+                                                    <span class="borderElement">XL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 6">
+                                                    <span class="borderElement">XXL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 7">
+                                                    <span class="borderElement">XXXL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 8">
+                                                    <span class="borderElement">XXS</span>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="element.amount!==0" class="grid-element grid-element__size ">
+                                                <div *ngIf="element.size === 1">
+                                                    <span class="borderElement">XS</span>
+                                                </div>
+                                                <div *ngIf="element.size === 2">
+                                                    <span class="borderElement">S</span>
+                                                </div>
+                                                <div *ngIf="element.size === 3">
+                                                    <span class="borderElement">M</span>
+                                                </div>
+                                                <div *ngIf="element.size === 4">
+                                                    <span class="borderElement">L</span>
+                                                </div>
+                                                <div *ngIf="element.size === 5">
+                                                    <span class="borderElement">XL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 6">
+                                                    <span class="borderElement">XXL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 7">
+                                                    <span class="borderElement">XXXL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 8">
+                                                    <span class="borderElement">XXS</span>
+                                                </div>
+                                            </div>
+                                            <div class="grid-element grid-element__amount">
+                                                <input
+                                                    (input)="onChangeAmountSizeStorage($event, element.size)"
+                                                    type="number"
+                                                    placeholder="0"
+                                                >
                                             </div>
                                         </div>
                                     </div>

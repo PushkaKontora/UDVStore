@@ -6,7 +6,11 @@
     margin: 0 1.5rem 0rem 1.5rem;
 
     .btn-add-product {
-        height: 8vh;
+        .add-new-element{
+            width: 100%;
+            margin: 1.5rem 0;
+            cursor: pointer;
+        }
     }
 
     .header-products-list {

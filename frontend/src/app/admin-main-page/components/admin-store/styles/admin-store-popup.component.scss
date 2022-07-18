@@ -67,6 +67,29 @@
         }
     }
 
+    .btnDimensionalGrid-container {
+        margin: 1rem 0 1rem 2rem;
+        display: grid;
+        grid-template-columns: 10rem 10rem;
+
+        .element-dimensional-grid {
+            font-size: 0.8rem;
+
+            .black {
+                padding: 0.3rem;
+                color: #FFFFFF;
+                background: #302E2E;
+            }
+
+            .grey {
+                padding: 0.3rem;
+                background: #EDEDED;
+                color: #302E2E;
+            }
+        }
+
+    }
+
     .modal-content {
         margin: 2rem 0 2rem 2rem;
 

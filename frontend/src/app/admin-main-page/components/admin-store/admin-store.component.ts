@@ -41,6 +41,7 @@ export class AdminStoreComponent implements OnInit {
     public storageElements?: IProduct[];
     public elementForInteraction: IProduct;
     public sizeInteraction: ISize[];
+    public productWithDimensionalGrid: boolean = false;
     public itemsNewCells: readonly cell[];
     public search: string | null = '';
     public arraySize: string[] = []
@@ -65,6 +66,9 @@ export class AdminStoreComponent implements OnInit {
         this.getStorageElements();
     }
 
+    public onProductWithDimensionalGrid(value: boolean): void {
+        this.productWithDimensionalGrid = value;
+    }
 
     public onChangeVisibility(product: IProduct) {
         let productVisibility = product.is_visible;
@@ -87,13 +91,19 @@ export class AdminStoreComponent implements OnInit {
         document.getElementById(nameModel)!.style.display = 'block';
         document.body.style.overflow = "hidden";
         document.body.classList.add('modalOpen');
-        console.log(this.storageElements)
+    }
+
+    public openModelForAddItem(nameModel: string): void {
+        document.getElementById(nameModel)!.style.display = 'block';
+        document.body.style.overflow = "hidden";
+        document.body.classList.add('modalOpen');
     }
 
     public closeModel(nameModel: string) {
         document.getElementById(nameModel)!.style.display = 'none';
         document.body.style.overflow = "visible";
         document.body.classList.remove('modalOpen');
+        this.sizeInteraction = []
     }
 
     public deleteProduct(nameModal: string) {
@@ -111,7 +121,25 @@ export class AdminStoreComponent implements OnInit {
                 this.sizeInteraction[i].amount = Number(newValue)
             }
         }
-        console.log(newValue, productSize, this.sizeInteraction)
+    }
+
+
+    public onChangePhoto(event: any): void {
+        this._newPhotoFile = event.target.files[0];
+    }
+
+    public onChangeSizeLine() {
+        let arraySize: any[] = [];
+        const lineSize = this.productGroup.value.selectionSize;
+        for (let i = 0; i < lineSize.length; i++) {
+            const enumerableElement = lineSize[i];
+            let newElement = this.getValueByKey(sizeDictionary, enumerableElement)
+            if (newElement != undefined) {
+                arraySize.push(newElement);
+            }
+        }
+
+        this.sizeInteraction = this.createNewSizeArrayForIterations(arraySize);
     }
 
     public onSubmitChanges(): void {
@@ -126,24 +154,16 @@ export class AdminStoreComponent implements OnInit {
             });
     }
 
-
-    public onChangePhoto(event: any): void {
-        this._newPhotoFile = event.target.files[0];
-    }
-
-    public onChangeSizeLine() {
-        console.log(this.search)
-        let arraySize: any[] = [];
-        const lineSize = this.productGroup.value.selectionSize;
-        for (let i = 0; i < lineSize.length; i++) {
-            const enumerableElement = lineSize[i];
-            let newElement = this.getValueByKey(sizeDictionary, enumerableElement)
-            if (newElement != undefined) {
-                arraySize.push(newElement);
-            }
-        }
-
-        this.sizeInteraction = this.createNewSizeArrayForIterations(arraySize);
+    public onAddNewProduct() {
+        this.closeModel('additNewProduct');
+        let newValue = this.createFormDataNewProduct();
+        this._requestService.addProduct(newValue)
+            .subscribe({
+                complete: () => {
+                    this.getStorageElements();
+                    this.productGroup.reset()
+                }
+            });
     }
 
     private createNewSizeArrayForIterations(arraySize: any[]): ISize[] {
@@ -194,6 +214,17 @@ export class AdminStoreComponent implements OnInit {
         newValue.append('cells', JSON.stringify(this.sizeInteraction));
 
         console.log(newValue.get('name'), newValue.get('price'), newValue.get('photo'))
+        return newValue
+    }
+
+    private createFormDataNewProduct(): any {
+        let newValue = new FormData();
+        newValue.append('name', this.productGroup.value.name);
+        newValue.append('description', 'oops? later?');
+        newValue.append('price', this.productGroup.value.coins.toString());
+        newValue.append('photo', this._newPhotoFile);
+        newValue.append('cells', JSON.stringify(this.sizeInteraction));
+
         return newValue
     }
 
@@ -286,7 +317,3 @@ export class AdminStoreComponent implements OnInit {
     }
 }
 
-
-/*
-   попапы изменения отличаются наличием dimensionLine
- */
