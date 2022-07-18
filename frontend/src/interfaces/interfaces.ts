@@ -1,3 +1,5 @@
+import {ISize} from "./size";
+
 export interface IUser {
     username: string; // email;
     password: string;

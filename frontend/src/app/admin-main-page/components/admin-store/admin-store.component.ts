@@ -2,9 +2,32 @@ import {Component, OnInit} from '@angular/core';
 import {RequestService} from "../../services/request.service";
 import {IProduct} from "../../../../interfaces/products";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {parseJson} from "@angular/cli/utilities/json-file";
-import Cropper from 'cropperjs';
+import {cell} from "../../../../interfaces/interfaces";
+import {TUI_DEFAULT_MATCHER, tuiPure} from "@taiga-ui/cdk";
+import {ISize} from "../../../../interfaces/size";
 
+
+const ITEMS: readonly string[] = [
+    'XXS',
+    'XS',
+    'S',
+    'M',
+    'L',
+    'XL',
+    'XXL',
+    'XXXL',
+];
+
+const sizeDictionary = {
+    'XXS': 8,
+    'XS': 1,
+    'S': 2,
+    'M': 3,
+    'L': 4,
+    'XL': 5,
+    'XXL': 6,
+    'XXXL': 7,
+}
 
 @Component({
     selector: 'personal-orders',
@@ -17,11 +40,21 @@ import Cropper from 'cropperjs';
 export class AdminStoreComponent implements OnInit {
     public storageElements?: IProduct[];
     public elementForInteraction: IProduct;
-
+    public sizeInteraction: ISize[];
+    public itemsNewCells: readonly cell[];
+    public search: string | null = '';
+    public arraySize: string[] = []
     public productGroup = new FormGroup({
         name: new FormControl(null),
         coins: new FormControl(null, [Validators.min(0)]),
+        selectionSize: new FormControl(this.arraySize),
     });
+
+
+    @tuiPure
+    filter(search: string | null): readonly string[] {
+        return ITEMS.filter(item => TUI_DEFAULT_MATCHER(item, search || ''));
+    }
 
     private _newPhotoFile: File;
 
@@ -32,32 +65,28 @@ export class AdminStoreComponent implements OnInit {
         this.getStorageElements();
     }
 
+
     public onChangeVisibility(product: IProduct) {
         let productVisibility = product.is_visible;
-        console.log(productVisibility)
         this._requestService.changeProductVisibility(product.id, {'is_visible': !productVisibility})
             .subscribe({
                 complete: () => this.getStorageElements()
             })
-
-        console.log(product)
     }
-
-    //
-    // public checkTypeNumber(number: number): boolean{
-    //     return Number.isInteger(number);
-    // }
 
     public handleClick(event: Event): void {
         event.stopPropagation();
     }
 
     public openModel(nameModel: string, product: IProduct) {
+        this.elementForInteraction = product;
+        this.sizeInteraction = product.cells
+        //this.createItemsEnumeration(product)
+        this.fillInControls(product);
+
         document.getElementById(nameModel)!.style.display = 'block';
         document.body.style.overflow = "hidden";
         document.body.classList.add('modalOpen');
-        this.elementForInteraction = product;
-        this.fillInControls(product);
         console.log(this.storageElements)
     }
 
@@ -74,15 +103,15 @@ export class AdminStoreComponent implements OnInit {
         this.getStorageElements();
     }
 
-    public onChangeAmountSizeStorage(event: any, elementId: number) {
+    public onChangeAmountSizeStorage(event: any, productSize: number) {
         let newValue = event.target.value;
-        for (let i = 0; i < this.elementForInteraction.cells.length; i++) {
-            const enumerableElement = this.elementForInteraction.cells[i];
-            if (elementId === enumerableElement.id) {
-                this.elementForInteraction.cells[i].amount = Number(newValue)
+        for (let i = 0; i < this.sizeInteraction.length; i++) {
+            const enumerableElement = this.sizeInteraction[i];
+            if (productSize === enumerableElement.size) {
+                this.sizeInteraction[i].amount = Number(newValue)
             }
         }
-        console.log(newValue, elementId, this.elementForInteraction.cells)
+        console.log(newValue, productSize, this.sizeInteraction)
     }
 
     public onSubmitChanges(): void {
@@ -99,10 +128,52 @@ export class AdminStoreComponent implements OnInit {
 
 
     public onChangePhoto(event: any): void {
-        let selectedFile = event.target.files[0];
-
         this._newPhotoFile = event.target.files[0];
     }
+
+    public onChangeSizeLine() {
+        console.log(this.search)
+        let arraySize: any[] = [];
+        const lineSize = this.productGroup.value.selectionSize;
+        for (let i = 0; i < lineSize.length; i++) {
+            const enumerableElement = lineSize[i];
+            let newElement = this.getValueByKey(sizeDictionary, enumerableElement)
+            if (newElement != undefined) {
+                arraySize.push(newElement);
+            }
+        }
+
+        this.sizeInteraction = this.createNewSizeArrayForIterations(arraySize);
+    }
+
+    private createNewSizeArrayForIterations(arraySize: any[]): ISize[] {
+        let newSizeArrayForIterations: any[] = [];
+        for (let j = 0; j < arraySize.length; j++) {
+            let booleanCheck: boolean = false;
+            let elementSizeInteraction: any;
+            for (let i = 0; i < this.sizeInteraction.length; i++) {
+                const enumerableElement = this.sizeInteraction[i];
+                if (enumerableElement.size === arraySize[j]) {
+                    booleanCheck = true;
+                    elementSizeInteraction = enumerableElement;
+                }
+            }
+
+            if (!booleanCheck) {
+                newSizeArrayForIterations.push({
+                    size: arraySize[j],
+                    amount: 0
+                })
+            } else {
+                if (elementSizeInteraction) {
+                    newSizeArrayForIterations.push(elementSizeInteraction)
+                }
+            }
+        }
+
+        return newSizeArrayForIterations
+    }
+
 
     private createFormData(): any {
         let newValue = new FormData();
@@ -120,7 +191,7 @@ export class AdminStoreComponent implements OnInit {
         if (this._newPhotoFile !== undefined) {
             newValue.append('photo', this._newPhotoFile);
         }
-        newValue.append('cells', JSON.stringify(this.elementForInteraction.cells));
+        newValue.append('cells', JSON.stringify(this.sizeInteraction));
 
         console.log(newValue.get('name'), newValue.get('price'), newValue.get('photo'))
         return newValue
@@ -155,9 +226,24 @@ export class AdminStoreComponent implements OnInit {
     }
 
     private fillInControls(product: IProduct): void {
+        for (let i = 0; i < product.cells.length; i++) {
+            const enumerableElement = product.cells[i];
+            let newElement = this.getKeyByValue(sizeDictionary, enumerableElement.size)
+            if (newElement !== undefined) {
+                this.arraySize.push(newElement);
+            }
+        }
         this.productGroup.value.name = product.name;
         this.productGroup.value.coins = product.price;
-        //this.productGroup.value.name = products.name;
+        this.productGroup.value.selectionSize = this.arraySize;
+    }
+
+    private getKeyByValue(object: any, value: number) {
+        return Object.keys(object).find(key => object[key] === value);
+    }
+
+    private getValueByKey(object: any, key: number) {
+        return Object.values(object).find(value => object[key] === value);
     }
 
     private getDimensionLineSize(element: IProduct): any[] {

@@ -1,3 +1,4 @@
+
 .modal-container2 {
     height: 100%;
     width: 100%;
@@ -111,6 +112,11 @@
                     }
                 }
 
+
+                tui-multi-select {
+                    margin-bottom: 2rem;
+                }
+
                 .line-size-container {
                     display: flex;
                     flex-wrap: wrap;
@@ -183,10 +189,11 @@
                 }
 
                 &:hover {
-                    .image__main-image{
+                    .image__main-image {
                         opacity: 0;
                     }
-                    .image__hover-image{
+
+                    .image__hover-image {
                         opacity: 1;
                     }
                 }
@@ -213,7 +220,7 @@
 
                 .gridBtn-container {
                     display: grid;
-                    grid-template-columns:2.1rem 2.1rem;
+                    grid-template-columns:2.3rem 2.1rem;
 
                     .grid-element {
                         padding: 0.4rem;
@@ -222,12 +229,13 @@
                         text-align: center;
 
                         &__size {
+                            padding: 0.1rem;
                             background: #FFFFFF;
                             border: 0.8px solid #C4C4C4;
-
                             border-radius: 1px;
                             font-weight: 400;
                             color: #1C1B1B;
+                            line-height: 1.6rem;
 
                             &__grey {
                                 background: #EEEEEE;
@@ -280,4 +288,18 @@
             }
         }
     }
+}
+
+tui-wrapper[data-appearance='textfield'], [tuiWrapper][data-appearance='textfield'] {
+    ._no-hover {
+        letter-spacing: 0.05em;
+        color: #302E2E;
+        border: #C4C4C4 solid 1px;
+        font-size: 1rem;
+        line-height: 1.2rem;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+
 }
