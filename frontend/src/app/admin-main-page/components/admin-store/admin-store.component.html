@@ -36,8 +36,8 @@
                 <div class="element-grid element-grid__amount">{{product?.generalAmount}}</div>
                 <div class="element-grid" *ngIf="product.cells.length === 1">-</div>
                 <div class="element-grid" *ngIf="product.cells.length > 1">{{product?.dimensionLine}}</div>
-                <div class="element-grid element-grid__action " (click)="onChangeVisibility(product)">
-                    <div class="image">
+                <div class="element-grid element-grid__action " >
+                    <div class="image" (click)="onChangeVisibility(product)">
                         <img *ngIf="product?.is_visible"
                              src="../../../../assets/images-admin/store-action/visibleGoods.svg" alt="visibleGoods"
                              class="image-action"
@@ -83,11 +83,11 @@
                     </ul>
                 </div>
                 <div class="element-grid element-grid__amount">{{product?.generalAmount}}</div>
-                <div class="element-grid element-grid" *ngIf="product.cells.length === 1">-</div>
+                <div class="element-grid element-grid" *ngIf="product.cells.length === 1 || product.cells.length === 0">-</div>
                 <div class="element-grid element-grid__cells"
                      *ngIf="product.cells.length > 1">{{product?.dimensionLine}}</div>
-                <div class="element-grid element-grid__action " (click)="onChangeVisibility(product)">
-                    <div class="image">
+                <div class="element-grid element-grid__action ">
+                    <div class="image"  (click)="onChangeVisibility(product)">
                         <img *ngIf="product?.is_visible"
                              src="../../../../assets/images-admin/store-action/visibleGoods.svg" alt="visibleGoods"
                              class="image-action"
@@ -236,34 +236,8 @@
                                     <div class="content-close-field"
                                          *ngFor="let element of sizeInteraction">
                                         <div class="gridBtn-container">
-                                            <div *ngIf="element.amount===0"
-                                                 class="grid-element grid-element__size grid-element__size__grey">
-                                                <div *ngIf="element.size === 1">
-                                                    <span class="borderElement">XS</span>
-                                                </div>
-                                                <div *ngIf="element.size === 2">
-                                                    <span class="borderElement">S</span>
-                                                </div>
-                                                <div *ngIf="element.size === 3">
-                                                    <span class="borderElement">M</span>
-                                                </div>
-                                                <div *ngIf="element.size === 4">
-                                                    <span class="borderElement">L</span>
-                                                </div>
-                                                <div *ngIf="element.size === 5">
-                                                    <span class="borderElement">XL</span>
-                                                </div>
-                                                <div *ngIf="element.size === 6">
-                                                    <span class="borderElement">XXL</span>
-                                                </div>
-                                                <div *ngIf="element.size === 7">
-                                                    <span class="borderElement">XXXL</span>
-                                                </div>
-                                                <div *ngIf="element.size === 8">
-                                                    <span class="borderElement">XXS</span>
-                                                </div>
-                                            </div>
-                                            <div *ngIf="element.amount!==0" class="grid-element grid-element__size ">
+                                            <div
+                                                 class="grid-element grid-element__size ">
                                                 <div *ngIf="element.size === 1">
                                                     <span class="borderElement">XS</span>
                                                 </div>
@@ -319,7 +293,7 @@
                             <div class="header-modal">ДОБАВЛЕНИЕ НОВОГО ТОВАРА</div>
                             <div class="header-modal">
                                 <img src="../../../../assets/images-main-page/cross.svg" alt="cross"
-                                     (click)="closeModel('editProduct')">
+                                     (click)="closeModel('additNewProduct')">
                             </div>
                         </div>
                         <div class="btnDimensionalGrid-container">
@@ -388,7 +362,7 @@
                                                 СКЛАДЕ </label>
                                             <input type="number"
                                                    id="quantityStockUncountableDimensionalGrid"
-                                                   (input)="onChangeAmountSizeStorage($event, 0)"
+                                                   (input)="onChangeAmountSizeStorageAdd($event)"
                                             >
                                         </ng-template>
                                     </div>
@@ -397,9 +371,12 @@
                                     <input (change)="onChangePhoto($event)" type="file"
                                            accept="image/jpg, image/jpeg, image/png, image/svg" id="inputFileAddProduct"
                                            class="visually-hidden">
-                                    <label for="inputFile">
+                                    <label for="inputFileAddProduct">
                                         <div class="right-side">
                                             <img class='image image__main-image' id="myimageAddProduct"
+                                                 src='../../../../assets/images-admin/store-action/add-photo-min.svg'
+                                                 alt="add-new-element">
+                                            <img class="image image__hover-image"
                                                  src='../../../../assets/images-admin/store-action/add-photo-min.svg'
                                                  alt="add-new-element">
                                         </div>
@@ -412,34 +389,8 @@
                                     <div class="content-close-field"
                                          *ngFor="let element of sizeInteraction">
                                         <div class="gridBtn-container">
-                                            <div *ngIf="element.amount===0"
-                                                 class="grid-element grid-element__size grid-element__size__grey">
-                                                <div *ngIf="element.size === 1">
-                                                    <span class="borderElement">XS</span>
-                                                </div>
-                                                <div *ngIf="element.size === 2">
-                                                    <span class="borderElement">S</span>
-                                                </div>
-                                                <div *ngIf="element.size === 3">
-                                                    <span class="borderElement">M</span>
-                                                </div>
-                                                <div *ngIf="element.size === 4">
-                                                    <span class="borderElement">L</span>
-                                                </div>
-                                                <div *ngIf="element.size === 5">
-                                                    <span class="borderElement">XL</span>
-                                                </div>
-                                                <div *ngIf="element.size === 6">
-                                                    <span class="borderElement">XXL</span>
-                                                </div>
-                                                <div *ngIf="element.size === 7">
-                                                    <span class="borderElement">XXXL</span>
-                                                </div>
-                                                <div *ngIf="element.size === 8">
-                                                    <span class="borderElement">XXS</span>
-                                                </div>
-                                            </div>
-                                            <div *ngIf="element.amount!==0" class="grid-element grid-element__size ">
+                                            <div
+                                                 class="grid-element grid-element__size ">
                                                 <div *ngIf="element.size === 1">
                                                     <span class="borderElement">XS</span>
                                                 </div>

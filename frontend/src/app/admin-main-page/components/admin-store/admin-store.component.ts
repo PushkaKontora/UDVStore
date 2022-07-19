@@ -58,6 +58,7 @@ export class AdminStoreComponent implements OnInit {
     }
 
     private _newPhotoFile: File;
+    private _withoutDimensionalGridAmount: number = 0;
 
     constructor(private _requestService: RequestService) {
     }
@@ -108,9 +109,12 @@ export class AdminStoreComponent implements OnInit {
 
     public deleteProduct(nameModal: string) {
         this._requestService.deleteProduct(this.elementForInteraction.id)
-            .subscribe();
-        this.closeModel(nameModal);
-        this.getStorageElements();
+            .subscribe({
+                complete: () => {
+                    this.closeModel(nameModal);
+                    this.getStorageElements();
+                }
+            });
     }
 
     public onChangeAmountSizeStorage(event: any, productSize: number) {
@@ -123,6 +127,11 @@ export class AdminStoreComponent implements OnInit {
         }
     }
 
+    public onChangeAmountSizeStorageAdd(event: any) {
+        let newValue = Number(event.target.value);
+        this._withoutDimensionalGridAmount = newValue
+
+    }
 
     public onChangePhoto(event: any): void {
         this._newPhotoFile = event.target.files[0];
@@ -143,24 +152,24 @@ export class AdminStoreComponent implements OnInit {
     }
 
     public onSubmitChanges(): void {
-        this.closeModel('editProduct');
         let newValue = this.createFormData();
         this._requestService.changeProduct(this.elementForInteraction.id, newValue)
             .subscribe({
                 complete: () => {
                     this.getStorageElements();
-                    this.productGroup.reset()
+                    this.closeModel('editProduct');
+                    this.productGroup.reset();
                 }
             });
     }
 
     public onAddNewProduct() {
-        this.closeModel('additNewProduct');
         let newValue = this.createFormDataNewProduct();
         this._requestService.addProduct(newValue)
             .subscribe({
                 complete: () => {
                     this.getStorageElements();
+                    this.closeModel('additNewProduct');
                     this.productGroup.reset()
                 }
             });
@@ -218,12 +227,23 @@ export class AdminStoreComponent implements OnInit {
     }
 
     private createFormDataNewProduct(): any {
+        console.log(this._newPhotoFile)
         let newValue = new FormData();
         newValue.append('name', this.productGroup.value.name);
         newValue.append('description', 'oops? later?');
         newValue.append('price', this.productGroup.value.coins.toString());
-        newValue.append('photo', this._newPhotoFile);
-        newValue.append('cells', JSON.stringify(this.sizeInteraction));
+        if (this._newPhotoFile !== undefined) {
+            newValue.append('photo', this._newPhotoFile);
+        }
+        if (this.sizeInteraction === undefined) {
+            const cell = [{
+                size: 0,
+                amount: this._withoutDimensionalGridAmount
+            }]
+            newValue.append('cells', JSON.stringify(cell));
+        } else {
+            newValue.append('cells', JSON.stringify(this.sizeInteraction));
+        }
 
         return newValue
     }
