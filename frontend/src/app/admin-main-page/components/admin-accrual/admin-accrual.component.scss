@@ -2,12 +2,29 @@
 @import '../../../../../node_modules/@taiga-ui/core/styles/taiga-ui-local';
 @import "../../../../usedCSS/model-popUp";
 @import "../../../../usedCSS/historyPerson";
+@import '~@taiga-ui/core/styles/taiga-ui-local';
 
 
-.wrapper {
-    margin: 2rem;
+
+tui-wrapper[data-appearance='textfield'] {
+   //box-shadow: none;
+   // padding-top: 0;
+   // border: 1px solid #C4C4C4;
+   // border-radius: 0;
+}
+tui-wrapper, [tuiWrapper] {
+    box-shadow: none;
+     padding-top: 0;
+     border: 1px solid #C4C4C4;
+     border-radius: 0;
+    padding: 0;
+}
+
+.wrapper-admin {
+    margin: 1.5rem;
     height: calc(100vh - 4rem - 5rem);
     overflow: auto;
+    line-height: 1.2rem;
 
     &::-webkit-scrollbar {
         width: 0;
@@ -31,6 +48,8 @@
     width: 100%;
     padding: 0.3em 0;
     letter-spacing: 0.05em;
+    background: #2CF2B3;
+    color: #1C1B1B;
 
     &[disabled] {
         background-color: #B5FCE5;

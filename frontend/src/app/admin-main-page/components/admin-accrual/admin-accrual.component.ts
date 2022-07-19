@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {delay, filter, Observable, of, startWith, Subject, switchMap} from "rxjs";
 import {IUser, UsersSearch} from "../../../../interfaces/interfaces";
@@ -12,7 +12,7 @@ import {IHistoryEvent} from "../../../personal-area/components/personal-history/
 import {HistoryEventFactory} from "../../../personal-area/components/personal-history/history-event-factory.service";
 import {ICoinsActivity} from "../../../../interfaces/coinsActivity";
 import {RequestService} from "../../services/request.service";
-
+import {TUI_TEXTFIELD_APPEARANCE, tuiCheckboxOptionsProvider} from '@taiga-ui/core';
 
 const databaseMockData: UsersSearch[] = [];
 
@@ -21,6 +21,20 @@ const databaseMockData: UsersSearch[] = [];
     templateUrl: './admin-accrual.component.html',
     styleUrls: ['./admin-accrual.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        {
+            provide: TUI_TEXTFIELD_APPEARANCE,
+            useValue: 'material-textfield',
+        },
+        tuiCheckboxOptionsProvider({
+            appearances: {
+                unchecked: 'material-checkbox-off',
+                checked: 'material-checkbox-on',
+                indeterminate: 'material-checkbox-on',
+            },
+        }),
+    ]
 })
 export class AdminAccrualComponent implements OnInit {
     public search$ = new Subject<string>();
@@ -29,7 +43,7 @@ export class AdminAccrualComponent implements OnInit {
     public pers: IUser;
     public click: boolean = false;
     public disabledInputCoins: true | null = null;
-    public activities?: ICoinsActivity[] ;
+    public activities?: ICoinsActivity[];
 
     @ViewChild('inputAccrualCoins')
     inputAccrualCoins: ElementRef;

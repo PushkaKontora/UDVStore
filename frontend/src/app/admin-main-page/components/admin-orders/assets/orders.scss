@@ -1,4 +1,4 @@
-.wrapper {
+.wrapper-orders {
     height: 98%;
     margin: 0 1.5rem 0rem 1.5rem;
 
@@ -8,6 +8,7 @@
 
         .ordr {
             .card {
+                width: 100%;
                 border: 1px solid #CDCDCD;
                 margin-top: 0.5rem;
                 padding: 0.5rem 0;
@@ -56,6 +57,8 @@
                         img {
                             margin-right: 0.2rem;
                             width: 3rem;
+                            object-fit: cover;
+                            aspect-ratio: 1/1;
                         }
 
 

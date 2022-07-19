@@ -1,5 +1,5 @@
 <link rel="prefetch prerender " href="../../../../assets/images/loadingImage.svg">
-<div class="wrapper">
+<div class="wrapper-merch-store">
     <div class="banner">
         <img src="../../../../assets/images-main-page/banner.svg" alt="banner">
     </div>
@@ -10,7 +10,8 @@
         <div class="content">
             <div class="wrapperGrid">
                 <div class="contentGrid" *ngFor="let item  of storeProducts" (click)="openModel('modal1', item)">
-                    <div class="content_image"><img src="{{item?.photo }}" alt="product image" loading="lazy"></div>
+                    <div *ngIf="item.is_visible">
+                        <div class="content_image"><img src="{{item?.photo }}" alt="product image" loading="lazy"></div>
                     <div class="cardFilling">
                         <div class="text">{{item?.name | uppercase}}</div>
                         <div class="price">
@@ -26,6 +27,7 @@
                                 </ul>
                             </button>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

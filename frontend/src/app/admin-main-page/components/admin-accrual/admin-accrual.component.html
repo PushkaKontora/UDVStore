@@ -1,4 +1,5 @@
-<div class="wrapper">
+<link rel="stylesheet" href="admin-accrual.component.scss">
+<div class="wrapper-admin">
     <form [formGroup]="writePers"
           (ngSubmit)="onSubmit()">
         <div class="value">
@@ -8,7 +9,7 @@
                     *tuiLet="items$ | async as items"
                     #component
                     tuiTextfieldExampleText="Фамилия Имя Отчество"
-                    class="control inputField inputField__name"
+                    class="control  inputField__name"
                     [tuiTextfieldLabelOutside]="true"
                     [expandable]="true"
                     formControlName="employee"
@@ -20,12 +21,15 @@
                         *tuiDataList
                         [items]="items | tuiHideSelected : component "
                         [itemContent]="itemContent"
+                        size="xs"
+                        data-appearance="textField"
                     ></tui-data-list-wrapper>
                 </tui-multi-select>
 
                 <ng-template
                     #itemContent
                     let-data
+                    tuiTextfieldSize="s"
                 >
                     <div class="template">
                         <tui-avatar
@@ -46,14 +50,19 @@
                     formControlName="activity"
                     [stringify]="stringify"
                     (input)="makeOwnDescriptionActivity($event)"
+                    data-appearance="textField"
+                    tuiTextfieldSize="s"
                 >
 
-                    <tui-data-list *tuiDataList>
+                    <tui-data-list *tuiDataList tuiTextfieldSize="s">
                         <button
                             *ngFor="let item of activities | tuiFilterByInputWith : stringify"
                             tuiOption
                             [value]="item"
                             (click)="changeNumberCoins(item)"
+                            size="xs"
+                            data-appearance="textField"
+                            tuiTextfieldSize="s"
                         >
                             {{item.description}}
                         </button>
