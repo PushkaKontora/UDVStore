@@ -62,11 +62,14 @@ class ProductAdministrationViewSet(ModelViewSet):
         return Response(data={"is_visible": is_visible})
 
     def _validate_data(self, request: Request, partial=False) -> Optional[dict]:
+        if type(request.data) is not dict:
+            return None
+
         data = {
             "name": request.data.get("name"),
             "photo": request.FILES.get("photo"),
             "description": request.data.get("description"),
-            "price": request.data.get("price"),
+            "price": request.data.get("price") or 0,
         }
 
         ser_data = dict((key, value) for key, value in data.items() if value is not None) if partial else data
