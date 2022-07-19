@@ -68,13 +68,11 @@ class ProductAdministrationViewSet(ModelViewSet):
             "description": request.data.get("description"),
             "price": request.data.get("price"),
         }
-        print(data)
 
         ser_data = dict((key, value) for key, value in data.items() if value is not None) if partial else data
 
         product_serializer = ProductSerializer(data=ser_data, partial=partial)
         product_serializer.is_valid(raise_exception=True)
-        print(111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111)
         try:
             cells = json.loads(str(request.data.get("cells")))
 
