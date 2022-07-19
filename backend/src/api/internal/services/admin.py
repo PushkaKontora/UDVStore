@@ -93,3 +93,7 @@ def toggle_product_visible(product_id: int) -> bool:
     product.save(update_fields=["is_visible"])
 
     return product.is_visible
+
+
+def update_storage(cell_id: int, amount: int) -> None:
+    StorageCell.objects.filter(id=cell_id).update(amount=amount)
