@@ -1,6 +1,7 @@
 from decimal import Decimal
 from typing import Iterable, List, Optional
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import IntegrityError
 from django.db.models import F, QuerySet
@@ -61,33 +62,40 @@ def try_create_product(
 
 
 def try_update_product(
-    product_id: int, name: str, photo: InMemoryUploadedFile, description: str, price: Decimal, cells: List[dict]
+    product_id: int,
+    name: Optional[str],
+    photo: Optional[InMemoryUploadedFile],
+    description: Optional[str],
+    price: Optional[float],
+    cells: Optional[List[dict]],
 ) -> bool:
+    product_attr = dict(
+        (key, value)
+        for key, value in [["name", name], ["photo", photo], ["description", description], ["price", price]]
+        if value is not None
+    )
+
     try:
         with atomic():
-            product = Product.objects.get(id=product_id)
-            product.name = name if name else product.name
-            product.photo = photo if photo else product.photo
-            product.description = description if description else product.description
-            product.price = price if price else product.price
-            product.save()
+            was_updated = Product.objects.filter(id=product_id).select_for_update().update(**product_attr) > 0
+            if not was_updated:
+                raise ObjectDoesNotExist()
 
-            StorageCell.objects.filter(product_id=product_id).update(amount=0)
+            if cells is not None:
+                StorageCell.objects.filter(product_id=product_id).update(amount=0)
 
-            for cell in cells:
-                StorageCell.objects.update_or_create(
-                    product_id=product_id, size=cell["size"], defaults={"amount": cell["amount"]}
-                )
+                for cell in cells:
+                    StorageCell.objects.update_or_create(
+                        product_id=product_id, size=cell["size"], defaults={"amount": cell["amount"]}
+                    )
 
         return True
-    except IntegrityError:
+    except (IntegrityError, ObjectDoesNotExist):
         return False
 
 
 def toggle_product_visible(product_id: int) -> bool:
-    product = Product.objects.filter(id=product_id).first()
-    if not product:
-        raise ValueError(f"Unknown product {product_id}")
+    product = Product.objects.get(id=product_id)
 
     product.is_visible = not product.is_visible
     product.save(update_fields=["is_visible"])

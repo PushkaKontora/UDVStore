@@ -8,4 +8,4 @@ def get_existed_products() -> QuerySet[Product]:
 
 
 def exists_product(product_id: int) -> bool:
-    return Product.objects.filter(id=product_id).exists()
+    return get_existed_products().filter(id=product_id).exists()
