@@ -69,24 +69,22 @@ def try_update_product(
     price: Optional[float],
     cells: Optional[List[dict]],
 ) -> bool:
-    product_attr = dict(
-        (key, value)
-        for key, value in [["name", name], ["photo", photo], ["description", description], ["price", price]]
-        if value is not None
-    )
 
     try:
         with atomic():
-            was_updated = Product.objects.filter(id=product_id).select_for_update().update(**product_attr) > 0
-            if not was_updated:
-                raise ObjectDoesNotExist()
+            product = Product.objects.get(id=product_id)
+            product.name = name or product.name
+            product.photo = photo or product.photo
+            product.description = description or product.description
+            product.price = price or product.price
+            product.save()
 
             if cells is not None:
-                StorageCell.objects.filter(product_id=product_id).update(amount=0)
+                StorageCell.objects.filter(product=product).update(amount=0)
 
                 for cell in cells:
                     StorageCell.objects.update_or_create(
-                        product_id=product_id, size=cell["size"], defaults={"amount": cell["amount"]}
+                        product=product, size=cell["size"], defaults={"amount": cell["amount"]}
                     )
 
         return True
