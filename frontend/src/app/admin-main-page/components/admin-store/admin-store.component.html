@@ -214,7 +214,7 @@
                                     </div>
                                 </div>
                                 <div class="element-flex element-flex__rightSide">
-                                    <input (change)="onChangePhoto($event)" type="file"
+                                    <input (change)="onChangePhoto($event, 'myimage')" type="file"
                                            accept="image/jpg, image/jpeg, image/png, image/svg" id="inputFile"
                                            class="visually-hidden">
                                     <label for="inputFile">
@@ -330,7 +330,6 @@
                                             type="number"
                                             id="priceDimensionalGrid"
                                             formControlName="coins"
-
                                         >
                                     </div>
                                     <div class="field-change">
@@ -368,15 +367,12 @@
                                     </div>
                                 </div>
                                 <div class="element-flex element-flex__rightSide">
-                                    <input (change)="onChangePhoto($event)" type="file"
+                                    <input (change)="onChangePhoto($event, 'myimageAddProduct')" type="file"
                                            accept="image/jpg, image/jpeg, image/png, image/svg" id="inputFileAddProduct"
                                            class="visually-hidden">
                                     <label for="inputFileAddProduct">
                                         <div class="right-side">
-                                            <img class='image image__main-image' id="myimageAddProduct"
-                                                 src='../../../../assets/images-admin/store-action/add-photo-min.svg'
-                                                 alt="add-new-element">
-                                            <img class="image image__hover-image"
+                                            <img class='image image__add-new-product' id="myimageAddProduct"
                                                  src='../../../../assets/images-admin/store-action/add-photo-min.svg'
                                                  alt="add-new-element">
                                         </div>

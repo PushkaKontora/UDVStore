@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {RequestService} from "../../services/request.service";
 import {IProduct} from "../../../../interfaces/products";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {cell} from "../../../../interfaces/interfaces";
 import {TUI_DEFAULT_MATCHER, tuiPure} from "@taiga-ui/cdk";
 import {ISize} from "../../../../interfaces/size";
-
+import * as $ from "jquery";
 
 const ITEMS: readonly string[] = [
     'XXS',
@@ -51,7 +51,6 @@ export class AdminStoreComponent implements OnInit {
         selectionSize: new FormControl(this.arraySize),
     });
 
-
     @tuiPure
     filter(search: string | null): readonly string[] {
         return ITEMS.filter(item => TUI_DEFAULT_MATCHER(item, search || ''));
@@ -86,7 +85,6 @@ export class AdminStoreComponent implements OnInit {
     public openModel(nameModel: string, product: IProduct) {
         this.elementForInteraction = product;
         this.sizeInteraction = product.cells
-        //this.createItemsEnumeration(product)
         this.fillInControls(product);
 
         document.getElementById(nameModel)!.style.display = 'block';
@@ -104,7 +102,8 @@ export class AdminStoreComponent implements OnInit {
         document.getElementById(nameModel)!.style.display = 'none';
         document.body.style.overflow = "visible";
         document.body.classList.remove('modalOpen');
-        this.sizeInteraction = []
+        this.sizeInteraction = [];
+        this.productGroup.reset()
     }
 
     public deleteProduct(nameModal: string) {
@@ -130,11 +129,21 @@ export class AdminStoreComponent implements OnInit {
     public onChangeAmountSizeStorageAdd(event: any) {
         let newValue = Number(event.target.value);
         this._withoutDimensionalGridAmount = newValue
-
     }
 
-    public onChangePhoto(event: any): void {
+    public onChangePhoto(event: any, elementChange: string): void {
         this._newPhotoFile = event.target.files[0];
+        if (event.target.files && event.target.files[0]) {
+            let reader = new FileReader();
+
+            reader.onload = function (e) {
+                if (e.target && e.target.result) {
+                    $(`#${elementChange}`).attr('src', e.target.result.toString());
+                }
+            }
+
+            reader.readAsDataURL(event.target.files[0]);
+        }
     }
 
     public onChangeSizeLine() {
@@ -158,7 +167,6 @@ export class AdminStoreComponent implements OnInit {
                 complete: () => {
                     this.getStorageElements();
                     this.closeModel('editProduct');
-                    this.productGroup.reset();
                 }
             });
     }
@@ -170,7 +178,6 @@ export class AdminStoreComponent implements OnInit {
                 complete: () => {
                     this.getStorageElements();
                     this.closeModel('additNewProduct');
-                    this.productGroup.reset()
                 }
             });
     }
@@ -222,12 +229,10 @@ export class AdminStoreComponent implements OnInit {
         }
         newValue.append('cells', JSON.stringify(this.sizeInteraction));
 
-        console.log(newValue.get('name'), newValue.get('price'), newValue.get('photo'))
         return newValue
     }
 
     private createFormDataNewProduct(): any {
-        console.log(this._newPhotoFile)
         let newValue = new FormData();
         newValue.append('name', this.productGroup.value.name);
         newValue.append('description', 'oops? later?');
