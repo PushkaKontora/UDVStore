@@ -1,5 +1,5 @@
 
-.wrapper {
+.wrapper-personal-orders {
     overflow: hidden !important;
     height: 100%;
     font-family: "Roboto Medium", sans-serif;
@@ -27,6 +27,8 @@
             .img {
                 img {
                     width: 5.5rem;
+                    object-fit: cover;
+                    aspect-ratio: 1/1;
                 }
             }
 

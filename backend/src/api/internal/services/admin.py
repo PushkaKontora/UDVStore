@@ -1,6 +1,7 @@
 from decimal import Decimal
 from typing import Iterable, List, Optional
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import IntegrityError
 from django.db.models import F, QuerySet
@@ -60,12 +61,45 @@ def try_create_product(
         return None
 
 
+def try_update_product(
+    product_id: int,
+    name: Optional[str],
+    photo: Optional[InMemoryUploadedFile],
+    description: Optional[str],
+    price: Optional[float],
+    cells: Optional[List[dict]],
+) -> bool:
+
+    try:
+        with atomic():
+            product = Product.objects.get(id=product_id)
+            product.name = name or product.name
+            product.photo = photo or product.photo
+            product.description = description or product.description
+            product.price = price or product.price
+            product.save()
+
+            if cells is not None:
+                StorageCell.objects.filter(product=product).update(amount=0)
+
+                for cell in cells:
+                    StorageCell.objects.update_or_create(
+                        product=product, size=cell["size"], defaults={"amount": cell["amount"]}
+                    )
+
+        return True
+    except (IntegrityError, ObjectDoesNotExist):
+        return False
+
+
 def toggle_product_visible(product_id: int) -> bool:
-    product = Product.objects.filter(id=product_id).first()
-    if not product:
-        raise ValueError(f"Unknown product {product_id}")
+    product = Product.objects.get(id=product_id)
 
     product.is_visible = not product.is_visible
     product.save(update_fields=["is_visible"])
 
     return product.is_visible
+
+
+def update_storage(cell_id: int, amount: int) -> None:
+    StorageCell.objects.filter(id=cell_id).update(amount=amount)

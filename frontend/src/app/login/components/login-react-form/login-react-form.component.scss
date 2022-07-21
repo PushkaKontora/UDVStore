@@ -1,6 +1,6 @@
 $widthFieldForm: 392px;
 
-.wrapper {
+.wrapper-login {
     font-weight: 400;
     color: #1C1B1B;
     size: 18px;
@@ -8,6 +8,10 @@ $widthFieldForm: 392px;
     background-color: #1C1B1B;
     min-height: 100vh;
     position: relative;
+
+    .value{
+        margin-bottom: 0;
+    }
 
     .left_leg {
         position: absolute;

@@ -1,7 +1,9 @@
-<div class="wrapper">
-
+<div class="wrapper-admin-store">
     <div class="btn-add-product">
-        fffff
+        <img src="../../../../assets/images-admin/store-action/add-new-element.svg" class="add-new-element"
+             alt="add-new-element"
+             (click)="openModelForAddItem('additNewProduct')"
+        >
     </div>
     <div class="header-products-list">
         <div class="header-element">обложка</div>
@@ -18,30 +20,47 @@
                     <img src="{{product?.photo}}" alt="image product">
                 </div>
                 <div class="element-grid">{{product?.name}}</div>
-                <div class="element-grid">{{product?.price}}</div>
-                <div class="element-grid">{{product?.generalAmount}}</div>
-                <div class="element-grid" *ngIf="product.cells.length === 1">-</div>
+                <div class="element-grid">
+                    <div class="element-grid element-grid__price ">
+                        <ul>
+                            <li class="wrapper_num">
+                                {{product?.price}}
+                            </li>
+                            <li>
+                                <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
+                                     alt="greenBlockCoins">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="element-grid element-grid__amount">{{product?.generalAmount}}</div>
+                <div class="element-grid" *ngIf="product.cells.length === 1 || product.cells.length === 0">-</div>
                 <div class="element-grid" *ngIf="product.cells.length > 1">{{product?.dimensionLine}}</div>
-                <div class="element-grid element-grid__action ">
-                    <div class="image" *ngIf="product?.is_visible">
-                        <img src="../../../../assets/images-admin/store-action/visibleGoods.svg" alt="visibleGoods"
-                             class="image-action">
+                <div class="element-grid element-grid__action " >
+                    <div class="image" (click)="onChangeVisibility(product)">
+                        <img *ngIf="product?.is_visible"
+                             src="../../../../assets/images-admin/store-action/visibleGoods.svg" alt="visibleGoods"
+                             class="image-action"
+                             title="Скрыть товар"
+                        >
+                        <img *ngIf="!product?.is_visible"
+                             src="../../../../assets/images-admin/store-action/invisibleGoods.svg" alt="invisibleGoods"
+                             class="image-action"
+                             title="Показать товар"
+                        >
                     </div>
-                    <div class="image" *ngIf="!product?.is_visible">
-                        <img src="../../../../assets/images-admin/store-action/invisibleGoods.svg" alt="invisibleGoods"
+                    <div class="image" (click)="openModel('editProduct', product)" title="Изменить товар">
+                        <img *ngIf="!product?.is_visible"
+                             src="../../../../assets/images-admin/store-action/changeProductWhite.svg"
+                             alt="changeProduct"
                              class="image-action">
-                    </div>
-                    <div class="image" *ngIf="!product?.is_visible">
-                        <img src="../../../../assets/images-admin/store-action/changeProductWhite.svg"
+                        <img *ngIf="product?.is_visible"
+                             src="../../../../assets/images-admin/store-action/changeProductGrey.svg"
                              alt="changeProduct"
                              class="image-action">
                     </div>
-                    <div class="image" *ngIf="product?.is_visible">
-                        <img src="../../../../assets/images-admin/store-action/changeProductGrey.svg"
-                             alt="changeProduct"
-                             class="image-action">
-                    </div>
-                    <div class="image">
+
+                    <div class="image" (click)="openModel('deleteProduct', product)" title="Удалить товар">
                         <img src="../../../../assets/images-admin/store-action/deleteProduct.svg" alt="deleteProduct"
                              class="image-action">
                     </div>
@@ -64,19 +83,23 @@
                     </ul>
                 </div>
                 <div class="element-grid element-grid__amount">{{product?.generalAmount}}</div>
-                <div class="element-grid element-grid" *ngIf="product.cells.length === 1">-</div>
+                <div class="element-grid element-grid" *ngIf="product.cells.length === 1 || product.cells.length === 0 ">-</div>
                 <div class="element-grid element-grid__cells"
                      *ngIf="product.cells.length > 1">{{product?.dimensionLine}}</div>
                 <div class="element-grid element-grid__action ">
-                    <div class="image">
+                    <div class="image"  (click)="onChangeVisibility(product)">
                         <img *ngIf="product?.is_visible"
                              src="../../../../assets/images-admin/store-action/visibleGoods.svg" alt="visibleGoods"
-                             class="image-action">
+                             class="image-action"
+                             title="Скрыть товар"
+                        >
                         <img *ngIf="!product?.is_visible"
                              src="../../../../assets/images-admin/store-action/invisibleGoods.svg" alt="invisibleGoods"
-                             class="image-action">
+                             class="image-action"
+                             title="Показать товар"
+                        >
                     </div>
-                    <div class="image">
+                    <div class="image" (click)="openModel('editProduct', product)" title="Изменить товар">
                         <img *ngIf="!product?.is_visible"
                              src="../../../../assets/images-admin/store-action/changeProductWhite.svg"
                              alt="changeProduct"
@@ -87,12 +110,329 @@
                              class="image-action">
                     </div>
 
-                    <div class="image">
+                    <div class="image" (click)="openModel('deleteProduct', product)" title="Удалить товар">
                         <img src="../../../../assets/images-admin/store-action/deleteProduct.svg" alt="deleteProduct"
                              class="image-action">
                     </div>
                 </div>
             </div>
+
         </div>
+    </div>
+
+    <div class="modal-wrapper" id="deleteProduct">
+        <div class="model" (click)="closeModel('deleteProduct')">
+            <div class="modal-container" (click)="handleClick($event)">
+                <div class="modal-container2">
+                    <div class="title">
+                        Вы уверены, что хотите навсегда удалить
+                        "{{elementForInteraction?.name}}" из магазина?
+                    </div>
+                    <div class="btn-action-container">
+                        <button class="btn-action btn-action__cancel" (click)="closeModel('deleteProduct')">
+                            Отмена
+                        </button>
+                        <button class="btn-action btn-action__confirm" (click)="deleteProduct('deleteProduct')">
+                            Удалить из магазина
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modelBackground"></div>
+    </div>
+
+    <div class="modal-wrapper" id="editProduct">
+        <div class="model" (click)="closeModel('editProduct')">
+            <div class="center-modal-container" (click)="handleClick($event)">
+                <div class="modal-container2">
+                    <form [formGroup]="productGroup" (submit)="onSubmitChanges()">
+                        <div class="header-modal-container">
+                            <div class="header-modal">ИЗМЕНЕНИЕ ТОВАРА</div>
+                            <div class="header-modal">
+                                <img src="../../../../assets/images-main-page/cross.svg" alt="cross"
+                                     (click)="closeModel('editProduct')">
+                            </div>
+                        </div>
+                        <div class="modal-content">
+                            <div class="content-flex-container" *ngIf="elementForInteraction">
+                                <div class="element-flex">
+                                    <div class="field-change">
+                                        <label for="name">НАЗВАНИЕ</label>
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            placeholder="{{elementForInteraction?.name}}"
+                                            formControlName="name"
+                                        >
+                                    </div>
+                                    <div class="field-change">
+                                        <label for="price">
+                                            UCoins <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
+                                                        alt="greenBlockCoins">
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="price"
+                                            placeholder="{{elementForInteraction?.price}}"
+                                            formControlName="coins"
+
+                                        >
+                                    </div>
+                                    <div class="field-change">
+                                        <div *ngIf="elementForInteraction?.dimensionLine ; else uncountable">
+                                            <label for="sizeActive">ДОБАВИТЬ/УДАЛИТЬ РАЗМЕР</label>
+                                            <tui-multi-select
+                                                tuiTextfieldExampleText="Ignored text"
+                                                class="b-form"
+                                                formControlName="selectionSize"
+                                                [tuiTextfieldLabelOutside]="true"
+                                                [editable]="false"
+                                                [(search)]="search"
+                                                tuiTextfieldSize="s"
+                                                id="sizeActive"
+                                                [tuiDropdownMaxHeight]="150"
+                                                (click)="onChangeSizeLine()"
+                                            >
+                                                <tui-data-list-wrapper
+                                                    *tuiDataList
+                                                    tuiMultiSelectGroup
+                                                    size="xs"
+                                                    [items]="filter(search)"
+                                                    (click)="onChangeSizeLine()"
+                                                ></tui-data-list-wrapper>
+                                            </tui-multi-select>
+                                        </div>
+                                        <ng-template #uncountable>
+                                            <label for="quantityStockUncountable">КОЛИЧЕСТВО НА СКЛАДЕ </label>
+                                            <input type="number"
+                                                   min="1"
+                                                   id="quantityStockUncountable"
+                                                   (input)="onChangeAmountSizeStorage($event, elementForInteraction.cells[0].size)"
+                                                   placeholder="{{elementForInteraction.cells[0].amount}}"
+                                            >
+                                        </ng-template>
+                                    </div>
+                                </div>
+                                <div class="element-flex element-flex__rightSide">
+                                    <input (change)="onChangePhoto($event, 'myimage')" type="file"
+                                           accept="image/jpg, image/jpeg, image/png, image/svg" id="inputFile"
+                                           class="visually-hidden">
+                                    <label for="inputFile">
+                                        <div class="right-side">
+                                            <img class='image image__main-image' id="myimage"
+                                                 src='{{elementForInteraction?.photo}}'
+                                                 alt="{{elementForInteraction?.name}}">
+                                            <img class="image image__hover-image"
+                                                 src='../../../../assets/images-admin/store-action/refactor-min.svg'
+                                                 alt="{{elementForInteraction?.name}}">
+
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="closerField" *ngIf="elementForInteraction?.dimensionLine">
+                                <div class="title">КОЛИЧЕСТВО НА СКЛАДЕ</div>
+                                <div class="content-close-field-container">
+                                    <div class="content-close-field"
+                                         *ngFor="let element of sizeInteraction">
+                                        <div class="gridBtn-container">
+                                            <div
+                                                 class="grid-element grid-element__size ">
+                                                <div *ngIf="element.size === 1">
+                                                    <span class="borderElement">XS</span>
+                                                </div>
+                                                <div *ngIf="element.size === 2">
+                                                    <span class="borderElement">S</span>
+                                                </div>
+                                                <div *ngIf="element.size === 3">
+                                                    <span class="borderElement">M</span>
+                                                </div>
+                                                <div *ngIf="element.size === 4">
+                                                    <span class="borderElement">L</span>
+                                                </div>
+                                                <div *ngIf="element.size === 5">
+                                                    <span class="borderElement">XL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 6">
+                                                    <span class="borderElement">XXL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 7">
+                                                    <span class="borderElement">XXXL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 8">
+                                                    <span class="borderElement">XXS</span>
+                                                </div>
+                                            </div>
+                                            <div class="grid-element grid-element__amount">
+                                                <input
+                                                    (input)="onChangeAmountSizeStorage($event, element.size)"
+                                                    type="number"
+                                                    placeholder="{{element.amount}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button [disabled]="productGroup.invalid" type="submit">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modelBackground"></div>
+    </div>
+
+    <div class="modal-wrapper" id="additNewProduct">
+        <div class="model" (click)="closeModel('additNewProduct')">
+            <div class="center-modal-container" (click)="handleClick($event)">
+                <div class="modal-container2">
+                    <form [formGroup]="productGroup" (submit)="onAddNewProduct()">
+                        <div class="header-modal-container">
+                            <div class="header-modal">ДОБАВЛЕНИЕ НОВОГО ТОВАРА</div>
+                            <div class="header-modal">
+                                <img src="../../../../assets/images-main-page/cross.svg" alt="cross"
+                                     (click)="closeModel('additNewProduct')">
+                            </div>
+                        </div>
+                        <div class="btnDimensionalGrid-container">
+                            <div class="element-dimensional-grid">
+                                <div class="black" *ngIf="!productWithDimensionalGrid">Без размерной сетки</div>
+                                <div class="grey" *ngIf="productWithDimensionalGrid"
+                                     (click)="onProductWithDimensionalGrid(false)">Без размерной сетки
+                                </div>
+                            </div>
+                            <div class="element-dimensional-grid">
+                                <div class="black" *ngIf="productWithDimensionalGrid">С размерной сеткой</div>
+                                <div class="grey" *ngIf="!productWithDimensionalGrid"
+                                     (click)="onProductWithDimensionalGrid(true)">С размерной сеткой
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-content">
+                            <div class="content-flex-container">
+                                <div class="element-flex">
+                                    <div class="field-change">
+                                        <label for="nameDimensionalGrid">НАЗВАНИЕ</label>
+                                        <input
+                                            type="text"
+                                            id="nameDimensionalGrid"
+                                            formControlName="name"
+                                        >
+                                    </div>
+                                    <div class="field-change">
+                                        <label for="priceDimensionalGrid">
+                                            UCoins <img src="../../../../assets/images-main-page/greenBlockCoins.svg"
+                                                        alt="greenBlockCoins">
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="priceDimensionalGrid"
+                                            formControlName="coins"
+                                        >
+                                    </div>
+                                    <div class="field-change">
+                                        <div *ngIf="productWithDimensionalGrid ; else uncountable">
+                                            <label for="sizeActiveDimensionalGrid">ДОБАВИТЬ/УДАЛИТЬ РАЗМЕР</label>
+                                            <tui-multi-select
+                                                tuiTextfieldExampleText="Ignored text"
+                                                class="b-form"
+                                                formControlName="selectionSize"
+                                                [tuiTextfieldLabelOutside]="true"
+                                                [editable]="false"
+                                                [(search)]="search"
+                                                tuiTextfieldSize="s"
+                                                id="sizeActiveDimensionalGrid"
+                                                [tuiDropdownMaxHeight]="150"
+                                                (click)="onChangeSizeLine()"
+                                            >
+                                                <tui-data-list-wrapper
+                                                    *tuiDataList
+                                                    tuiMultiSelectGroup
+                                                    size="xs"
+                                                    [items]="filter(search)"
+                                                    (click)="onChangeSizeLine()"
+                                                ></tui-data-list-wrapper>
+                                            </tui-multi-select>
+                                        </div>
+                                        <ng-template #uncountable>
+                                            <label for="quantityStockUncountableDimensionalGrid">КОЛИЧЕСТВО НА
+                                                СКЛАДЕ </label>
+                                            <input type="number"
+                                                   id="quantityStockUncountableDimensionalGrid"
+                                                   (input)="onChangeAmountSizeStorageAdd($event)"
+                                            >
+                                        </ng-template>
+                                    </div>
+                                </div>
+                                <div class="element-flex element-flex__rightSide">
+                                    <input (change)="onChangePhoto($event, 'myimageAddProduct')" type="file"
+                                           accept="image/jpg, image/jpeg, image/png, image/svg" id="inputFileAddProduct"
+                                           class="visually-hidden">
+                                    <label for="inputFileAddProduct">
+                                        <div class="right-side">
+                                            <img class='image image__add-new-product' id="myimageAddProduct"
+                                                 src='../../../../assets/images-admin/store-action/add-photo-min.svg'
+                                                 alt="add-new-element">
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="closerField" *ngIf="productWithDimensionalGrid">
+                                <div class="title">КОЛИЧЕСТВО НА СКЛАДЕ</div>
+                                <div class="content-close-field-container">
+                                    <div class="content-close-field"
+                                         *ngFor="let element of sizeInteraction">
+                                        <div class="gridBtn-container">
+                                            <div
+                                                 class="grid-element grid-element__size ">
+                                                <div *ngIf="element.size === 1">
+                                                    <span class="borderElement">XS</span>
+                                                </div>
+                                                <div *ngIf="element.size === 2">
+                                                    <span class="borderElement">S</span>
+                                                </div>
+                                                <div *ngIf="element.size === 3">
+                                                    <span class="borderElement">M</span>
+                                                </div>
+                                                <div *ngIf="element.size === 4">
+                                                    <span class="borderElement">L</span>
+                                                </div>
+                                                <div *ngIf="element.size === 5">
+                                                    <span class="borderElement">XL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 6">
+                                                    <span class="borderElement">XXL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 7">
+                                                    <span class="borderElement">XXXL</span>
+                                                </div>
+                                                <div *ngIf="element.size === 8">
+                                                    <span class="borderElement">XXS</span>
+                                                </div>
+                                            </div>
+                                            <div class="grid-element grid-element__amount">
+                                                <input
+                                                    (input)="onChangeAmountSizeStorage($event, element.size)"
+                                                    type="number"
+                                                    placeholder="0"
+                                                    min="1"
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button [disabled]="productGroup.invalid" type="submit">ДОБАВИТЬ ТОВАР</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modelBackground"></div>
     </div>
 </div>

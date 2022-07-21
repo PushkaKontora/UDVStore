@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper-personal-history">
     <div class="titleText">ИСТОРИЯ</div>
     <div class="contentWrapper">
         <div *ngFor="let card of events" class="ordr">
@@ -35,6 +35,9 @@
                             </div>
                             <div *ngIf="(card | castType: 'IBoughtProduct').size === 7">
                                 Размер: <span class="borderElement">XXXL</span>
+                            </div>
+                            <div *ngIf="(card | castType: 'IBoughtProduct').size === 8">
+                                Размер: <span class="borderElement">XXS</span>
                             </div>
                         </div>
                         <div class="amount">

@@ -1,14 +1,14 @@
 from django.core.validators import MinValueValidator
 from rest_framework import serializers
 
+from api.internal.models import StorageCell
 from api.internal.models.order import Order
 from api.internal.models.profile import Profile
-from api.internal.models.storage_cell import StorageCell
 
 
 class CartSerializer(serializers.Serializer):
     profile = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
-    storage_cell = serializers.PrimaryKeyRelatedField(queryset=StorageCell.objects.all())
+    storage_cell = serializers.PrimaryKeyRelatedField(queryset=StorageCell.objects.filter(amount__gt=0))
     amount = serializers.IntegerField(validators=[MinValueValidator(1)])
 
     def update(self, instance: Order, validated_data: dict) -> Order:

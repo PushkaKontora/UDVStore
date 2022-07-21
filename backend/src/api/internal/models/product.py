@@ -13,6 +13,7 @@ class Product(models.Model):
         validators=[MinValueValidator(0)],
     )
     is_visible = models.BooleanField(default=True)
+    is_deleted = models.BooleanField(default=False)
 
     class Meta:
         db_table = "products"

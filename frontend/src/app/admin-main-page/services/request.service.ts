@@ -1,5 +1,5 @@
 import {ITransaction} from "../../../interfaces/transaction";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {PeopleService} from "../../login/services/people.service";
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
@@ -15,8 +15,13 @@ export class RequestService {
     private readonly _approveUrl: string = environment.api_address + "/admin/approve/"
     private readonly _cancelUrl: string = environment.api_address + "/admin/cancel/";
     private readonly _getActivitiesUrl: string = environment.api_address + "/activities/";
-    private readonly _getStorageElementsUrl: string = environment.api_address + "/admin/products/";
+    private readonly _getProductsUrl: string = environment.api_address + "/admin/products/";
+    private _httpOptions = {
+        headers: new HttpHeaders({
 
+            'Authorization': "Token " + localStorage.getItem('token'),
+        })
+    };
 
     constructor(private _http: HttpClient, private _peopleService: PeopleService) {
     }
@@ -45,6 +50,22 @@ export class RequestService {
     }
 
     public getStorageElements(): Observable<IProduct[]> {
-        return this._http.get<IProduct[]>(this._getStorageElementsUrl, this._peopleService.optionsForHttp)
+        return this._http.get<IProduct[]>(this._getProductsUrl, this._peopleService.optionsForHttp)
+    }
+
+    public deleteProduct(productId: number): Observable<IProduct> {
+        return this._http.delete<IProduct>(this._getProductsUrl + productId + '/', this._peopleService.optionsForHttp)
+    }
+
+    public changeProduct(productId: number, data: any): Observable<IProduct> {
+        return this._http.patch<IProduct>(this._getProductsUrl + productId + '/', data, this._httpOptions)
+    }
+
+    public changeProductVisibility(productId: number, data: any): Observable<IProduct> {
+        return this._http.patch<IProduct>(this._getProductsUrl + productId + '/switch/' , data, this._httpOptions)
+    }
+
+    public addProduct(data: any): Observable<IProduct> {
+        return this._http.post<IProduct>(this._getProductsUrl, data, this._httpOptions)
     }
 }
