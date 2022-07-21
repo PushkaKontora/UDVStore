@@ -47,7 +47,7 @@ export class AdminStoreComponent implements OnInit {
     public arraySize: string[] = []
     public productGroup = new FormGroup({
         name: new FormControl(null),
-        coins: new FormControl(null, [Validators.min(0)]),
+        coins: new FormControl(null),
         selectionSize: new FormControl(this.arraySize),
     });
 
@@ -58,6 +58,7 @@ export class AdminStoreComponent implements OnInit {
 
     private _newPhotoFile: File;
     private _withoutDimensionalGridAmount: number = 0;
+    private  _newElementBoolean: boolean = false;
 
     constructor(private _requestService: RequestService) {
     }
@@ -103,7 +104,8 @@ export class AdminStoreComponent implements OnInit {
         document.body.style.overflow = "visible";
         document.body.classList.remove('modalOpen');
         this.sizeInteraction = [];
-        this.productGroup.reset()
+        this.productGroup.reset();
+        this._newElementBoolean = false;
     }
 
     public deleteProduct(nameModal: string) {
@@ -128,7 +130,8 @@ export class AdminStoreComponent implements OnInit {
 
     public onChangeAmountSizeStorageAdd(event: any) {
         let newValue = Number(event.target.value);
-        this._withoutDimensionalGridAmount = newValue
+        this._withoutDimensionalGridAmount = newValue;
+        this._newElementBoolean = true
     }
 
     public onChangePhoto(event: any, elementChange: string): void {
@@ -222,7 +225,7 @@ export class AdminStoreComponent implements OnInit {
         if (this.productGroup.value.coins !== null) {
             newValue.append('price', this.productGroup.value.coins.toString());
         } else {
-            newValue.append('price', this.elementForInteraction.price.toString());
+            newValue.append('price', this.elementForInteraction?.price.toString());
         }
         if (this._newPhotoFile !== undefined) {
             newValue.append('photo', this._newPhotoFile);
@@ -240,7 +243,7 @@ export class AdminStoreComponent implements OnInit {
         if (this._newPhotoFile !== undefined) {
             newValue.append('photo', this._newPhotoFile);
         }
-        if (this.sizeInteraction === undefined) {
+        if (this._newElementBoolean) {
             const cell = [{
                 size: 0,
                 amount: this._withoutDimensionalGridAmount
@@ -249,7 +252,7 @@ export class AdminStoreComponent implements OnInit {
         } else {
             newValue.append('cells', JSON.stringify(this.sizeInteraction));
         }
-
+console.log(newValue.get('cells'))
         return newValue
     }
 
